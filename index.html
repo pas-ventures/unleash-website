@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unleash — For South African Founders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #FF6719; --dark: #111; --card: #181818; --border: rgba(255,255,255,0.06); --text: #c8c8c8; --muted: #777; --white: #f0f0f0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--dark); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(17,17,17,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
+  nav img { height: 26px; opacity: 0.85; }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--white); color: var(--dark) !important; padding: 7px 20px; border-radius: 5px; font-weight: 600; font-size: 13px; }
+  .nav-cta:hover { background: #ddd; }
+
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0.15; filter: grayscale(30%); }
+  .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(17,17,17,0.97) 35%, rgba(17,17,17,0.75) 100%); }
+  .hero-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; padding: 140px 28px 100px; }
+  .hero-tag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-family: 'Spectral', serif; font-size: clamp(34px, 4.5vw, 52px); font-weight: 700; color: var(--white); line-height: 1.12; margin-bottom: 22px; max-width: 600px; }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 460px; margin-bottom: 36px; line-height: 1.7; }
+  .btn-w { display: inline-block; background: var(--white); color: var(--dark); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+  .btn-w:hover { background: #ddd; transform: translateY(-1px); }
+  .btn-o { display: inline-block; border: 1px solid rgba(255,255,255,0.12); color: var(--white); padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .btn-o:hover { border-color: rgba(255,255,255,0.25); }
+  .hero-sub { margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .hero-stats { display: flex; gap: 36px; margin-top: 56px; }
+  .hero-stat .n { font-family: 'Spectral', serif; font-size: 26px; font-weight: 700; color: var(--white); }
+  .hero-stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  section { padding: 90px 28px; max-width: 980px; margin: 0 auto; }
+  .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+  h2 { font-family: 'Spectral', serif; font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
+  .sub { font-size: 14px; color: var(--muted); max-width: 500px; margin-bottom: 44px; line-height: 1.6; }
+  .sep { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+  .sep hr { border: none; border-top: 1px solid var(--border); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 260px 1fr; gap: 44px; align-items: start; }
+  .about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; filter: grayscale(20%); }
+  .about-body h3 { font-family: 'Spectral', serif; font-size: 22px; color: var(--white); margin-bottom: 16px; line-height: 1.3; }
+  .about-body p { font-size: 14px; color: var(--text); margin-bottom: 14px; line-height: 1.7; }
+  .about-body .hl { color: var(--white); font-weight: 600; }
+  .about-metrics { display: flex; gap: 32px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .about-metric .n { font-family: 'Spectral', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .about-metric .l { font-size: 11px; color: var(--muted); }
+
+  /* BELIEFS */
+  .beliefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .belief { padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .belief h3 { font-size: 13px; color: var(--white); font-weight: 600; margin-bottom: 3px; }
+  .belief p { font-size: 12px; color: var(--muted); }
+
+  /* FUNNEL */
+  .funnel { display: flex; flex-direction: column; max-width: 560px; }
+  .funnel-step { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; position: relative; }
+  .funnel-step:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 52px; bottom: -2px; width: 1px; background: rgba(255,255,255,0.04); }
+  .funnel-num { min-width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; background: var(--card); border: 1px solid var(--border); color: var(--muted); position: relative; z-index: 1; }
+  .funnel-step.active .funnel-num { background: var(--accent); color: white; border-color: var(--accent); }
+  .funnel-body h3 { font-size: 14px; color: var(--white); font-weight: 600; margin-bottom: 3px; }
+  .funnel-body p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* TESTIMONIALS */
+  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .test { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+  .test blockquote { font-size: 13px; color: var(--text); line-height: 1.65; margin-bottom: 18px; }
+  .test blockquote::before { content: '\201C'; font-family: 'Spectral', serif; font-size: 28px; color: var(--accent); display: block; margin-bottom: -8px; }
+  .test .author { display: flex; align-items: center; gap: 10px; }
+  .test .avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--muted); font-size: 12px; }
+  .test .name { font-size: 12px; color: var(--white); font-weight: 600; }
+  .test .name a { color: var(--white); } .test .name a:hover { color: var(--accent); }
+  .test .role { font-size: 11px; color: var(--muted); }
+
+  /* SUBSTACK ARTICLES */
+  .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+  .art { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; display: block; color: var(--text); }
+  .art:hover { border-color: rgba(255,255,255,0.12); }
+  .art-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .art-body { padding: 18px; }
+  .art-tag { font-size: 10px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .art h3 { font-size: 14px; color: var(--white); font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+  .art p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .art .read { font-size: 11px; color: var(--accent); margin-top: 8px; display: inline-block; }
+
+  /* EVENTS */
+  .events-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .ev { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+  .ev:hover { border-color: rgba(255,255,255,0.1); }
+  .ev .thumb { width: 100%; aspect-ratio: 16/9; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; }
+  .ev .thumb .play { width: 44px; height: 44px; background: rgba(255,103,25,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .ev .thumb .play::after { content: ''; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent white; margin-left: 2px; }
+  .ev .thumb a { position: absolute; inset: 0; z-index: 1; }
+  .ev-info { padding: 16px; }
+  .ev-date { font-size: 10px; color: var(--accent); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .ev h3 { font-size: 14px; color: var(--white); margin-bottom: 4px; font-weight: 600; }
+  .ev p { font-size: 11px; color: var(--muted); }
+  .ev.next { border-color: var(--accent); }
+  .ev.next .thumb { background: linear-gradient(135deg, #cc5210, var(--accent)); }
+
+  .talks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 24px; }
+  .talk { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; display: flex; align-items: center; gap: 8px; transition: border-color 0.2s; color: var(--text); }
+  .talk:hover { border-color: rgba(255,255,255,0.1); }
+  .talk-play { color: var(--accent); font-size: 14px; }
+  .talk-name { font-size: 12px; }
+  .talk-name small { color: var(--muted); display: block; font-size: 11px; }
+
+  .final-cta { text-align: center; padding: 110px 28px; }
+  .final-cta h2 { font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 14px; }
+  .final-cta p { max-width: 420px; margin: 0 auto 32px; font-size: 15px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
+  footer .copy { font-size: 11px; color: #383838; }
+
+  @media (max-width: 700px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero-stats { flex-direction: column; gap: 16px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { max-width: 260px; }
+    .about-metrics { flex-wrap: wrap; }
+    .testimonials { grid-template-columns: 1fr; }
+    .articles-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <img src="img/logo.png" alt="Unleash">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#how">How It Works</a>
+      <a href="#founders">Founders</a>
+      <a href="#playbooks">Playbooks</a>
+      <a href="https://tally.so/r/7Rx9z2" target="_blank" class="nav-cta">Apply</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"><img src="img/phil-cape-town.jpg" alt=""></div>
+  <div class="hero-content">
+    <div class="hero-tag">For South African Founders</div>
+    <h1>Get the support you need to get truly unleashed.</h1>
+    <p>A community approach to unleashing founders — giving them the right access to capital and mentorship at the right time. We invest our own money. No fund. No LPs. Full skin in the game.</p>
+    <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply as Founder</a>
+    <div class="hero-sub">Free to join. No commitment. Apply in 5 minutes.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="n">15+</div><div class="l">Years Building</div></div>
+      <div class="hero-stat"><div class="n">Multiple</div><div class="l">Businesses Built & Exited</div></div>
+      <div class="hero-stat"><div class="n">50+</div><div class="l">SA Founders</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"><hr></div>
+
+<!-- ABOUT PHIL -->
+<section id="about">
+  <div class="stag">Who's Behind This</div>
+  <h2>Meet Phil</h2>
+  <div class="about-grid">
+    <img class="about-photo" src="img/phil-cape-town.jpg" alt="Philipp Ströhemann">
+    <div class="about-body">
+      <h3>Builder. Investor. Long South Africa.</h3>
+      <p>Philipp Ströhemann first landed in Cape Town in 2014 for a business school exchange — and never really left. He co-founded his first company with a South African partner that same year.</p>
+      <p>Over 15 years, Phil has built and scaled multiple businesses across B2B SaaS, marketplaces, and tech-enabled services — from founding to exit. He's been through the full cycle: <span class="hl">bootstrapping, building sales teams, scaling revenue, and selling to private equity.</span></p>
+      <p>Now he's putting that experience — and his own capital — behind the next generation of South African founders. Not as a fund manager, but as someone who shows up, rolls up his sleeves, and works alongside you on GTM, sales, pricing, hiring, and execution.</p>
+      <p><span class="hl">The ecosystem doesn't need more advice. It needs people who have done it.</span></p>
+      <p style="margin-top: 8px;"><a href="https://pas-ventures.com" target="_blank" style="color: var(--accent); font-size: 13px; font-weight: 600;">Learn more about Phil and what he's active with &rarr;</a></p>
+      <div class="about-metrics">
+        <div class="about-metric"><div class="n">15+</div><div class="l">Years Building</div></div>
+        <div class="about-metric"><div class="n">1000+</div><div class="l">GTM Setups</div></div>
+        <div class="about-metric"><div class="n">2-3</div><div class="l">Deep Engagements/Year</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- WHAT WE BELIEVE -->
+<section>
+  <div class="stag">What We Believe</div>
+  <h2>Our Principles</h2>
+  <div class="sub">This is not another venture fund. This is a community of builders who invest their own money, share what they've learned, and show up when it matters.</div>
+  <div class="beliefs">
+    <div>
+      <div class="belief"><h3>Community, Not a Fund</h3><p>No external LPs. No fund structure. We invest our own capital alongside founders. Full alignment, full skin in the game.</p></div>
+      <div class="belief"><h3>Experience, Not Advice</h3><p>Every insight comes from having built, scaled, and exited. Not from reading about it. From doing it.</p></div>
+      <div class="belief"><h3>Radical Alignment</h3><p>Same shares. No preferred stock. No liquidation preferences. We only win when founders win.</p></div>
+    </div>
+    <div>
+      <div class="belief"><h3>Funded for SA Reality</h3><p>SA tech startups need to be funded for South African reality and for flexibility — not shoehorned into Silicon Valley playbooks.</p></div>
+      <div class="belief"><h3>Cash-Flow First</h3><p>SA rewards efficiency, not burn. Companies reach customers and revenue early — without fundraising dependency.</p></div>
+      <div class="belief"><h3>Founder Ownership</h3><p>Realistic valuations. Founders keep real ownership and achieve real economic outcomes. No zombie companies.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="stag">How It Works</div>
+  <h2>From Application to Access</h2>
+  <div class="sub">One application. One quarter to prove engagement. Then you're in.</div>
+  <div class="funnel">
+    <div class="funnel-step active">
+      <div class="funnel-num">1</div>
+      <div class="funnel-body"><h3>Apply</h3><p>Fill in the application properly. Tell us about your business, your stage, and what you're working on. Be thorough — it matters.</p></div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">2</div>
+      <div class="funnel-body"><h3>We Review</h3><p>Our team reviews every application personally. We're looking for founders building real businesses, not pitch decks.</p></div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">3</div>
+      <div class="funnel-body"><h3>Community Access</h3><p>Accepted founders join a community built around mentorship, peer groups, and experts with a track record. Access to all events, our network, and our mentors.</p></div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">4</div>
+      <div class="funnel-body"><h3>One Quarter to Show Engagement</h3><p>You get a full quarter. Show up, contribute, execute. Your engagement pre-qualifies you for continued access in the next quarter.</p></div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-num">5</div>
+      <div class="funnel-body"><h3>Ongoing Access & Deeper Engagement</h3><p>Founders who show up earn continued access. Deeper investment or advisory engagement comes from the relationship — not the application.</p></div>
+    </div>
+  </div>
+  <div style="margin-top: 36px;"><a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply Now</a></div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- WHAT FOUNDERS SAY -->
+<section id="founders">
+  <div class="stag">What Founders Say</div>
+  <h2>From the People We Work With</h2>
+  <div class="sub">Real feedback. Real founders. No fluff.</div>
+  <div class="testimonials">
+    <div class="test">
+      <blockquote>I walked away with a breakthrough in my thinking. Amazing how a single conversation can break through some clouds. I've started discussing it with the team and it's definitely the way we need to go into 2026.</blockquote>
+      <div class="author"><div class="avatar">GW</div><div><div class="name"><a href="https://www.linkedin.com/in/gavin-weale-9366189/" target="_blank">Gavin Weale</a></div><div class="role">Founder & CEO, Digify Africa</div></div></div>
+    </div>
+    <div class="test">
+      <blockquote>This is genuinely the most detailed and constructive input I've received so far. The process was hugely valuable — rebuilding the model and pressure-testing assumptions gave me much more clarity.</blockquote>
+      <div class="author"><div class="avatar">PK</div><div><div class="name"><a href="https://www.linkedin.com/in/phumi-k%C3%B6rber/" target="_blank">Phumi Korber</a></div><div class="role">Founder & CEO, Kloset Klub</div></div></div>
+    </div>
+    <div class="test">
+      <blockquote>The prospect of having ongoing access to your expertise and energy is an enormous motivation. This is exactly the clarity and encouragement I needed.</blockquote>
+      <div class="author"><div class="avatar">GW</div><div><div class="name"><a href="https://www.linkedin.com/in/gavin-weale-9366189/" target="_blank">Gavin Weale</a></div><div class="role">Founder & CEO, Digify Africa</div></div></div>
+    </div>
+    <div class="test">
+      <blockquote>It gave me a lot to report back and think about with the team. We've used what I learned to reframe our strategy and I'm still working through the frameworks.</blockquote>
+      <div class="author"><div class="avatar">PN</div><div><div class="name"><a href="https://www.linkedin.com/in/phindanjisane/" target="_blank">Phinda Njisane</a></div><div class="role">Co-founder, Four Minute Medicine</div></div></div>
+    </div>
+    <div class="test">
+      <blockquote>Tremendously helpful. The call crystallised key points I've been reflecting on — we are now moving full steam ahead to implement these.</blockquote>
+      <div class="author"><div class="avatar">RH</div><div><div class="name"><a href="https://www.linkedin.com/company/askproco/" target="_blank">Rene Hartmann</a></div><div class="role">Co-Founder, Proco</div></div></div>
+    </div>
+    <div class="test">
+      <blockquote>Thank you for the work you and the Unleash team do in supporting South African founders. That support really matters, and it doesn't go unnoticed.</blockquote>
+      <div class="author"><div class="avatar">PK</div><div><div class="name"><a href="https://www.linkedin.com/in/phumi-k%C3%B6rber/" target="_blank">Phumi Korber</a></div><div class="role">Founder & CEO, Kloset Klub</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- PLAYBOOKS & LEARNINGS -->
+<section id="playbooks">
+  <div class="stag">Playbooks & Learnings</div>
+  <h2>What We've Built & Shared</h2>
+  <div class="sub">Playbooks and learnings we've built and share along the way. We bring our founders to the AI tools that consolidate the knowledge of hundreds of exited founders.</div>
+
+  <div class="articles-grid">
+    <a class="art" href="https://philunleashed.substack.com/p/the-biggest-issue-for-south-african" target="_blank">
+      <img class="art-img" src="https://substack-video.s3.amazonaws.com/video_upload/post/187487652/1f4f86d6-99f8-4975-9991-f616946fa6ec/transcoded-00001.png" alt="">
+      <div class="art-body">
+        <div class="art-tag">Mentorship</div>
+        <h3>The Biggest Issue for SA Founders? Scarce Mentorship from Former Builders.</h3>
+        <p>Why the ecosystem keeps producing the same outcomes — and what we're building to change it.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/on-a-quest-to-do-my-part-for-sa" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/26cba333-98f5-4af9-a7bd-7fcf09cd2601_1280x720.jpeg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Origin Story</div>
+        <h3>On a Quest to Do My Part for South Africa</h3>
+        <p>Who is this German guy — and why is he so invested in this ecosystem? The full story.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/for-fundraising-founders-in-south" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/a59c801e-54cb-41d2-9960-967ce4685865_1600x900.jpeg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Fundraising</div>
+        <h3>For Fundraising Founders in SA: What's Available — and What It Will Cost You</h3>
+        <p>An honest look at the funding landscape, real terms, and what founders actually give up.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/for-fundraising-founders-your-deck" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/2af3d3a8-a45a-4408-b197-b529118f5cfc_1600x1066.jpeg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Fundraising</div>
+        <h3>For Fundraising Founders: Your Deck Is Useless</h3>
+        <p>"Do you have a pitch deck?" — why most decks fail and what to do instead.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/mastering-sales-scripts-a-b2b-founders" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/5cd7e916-3447-4d11-96c7-65a9908fcc3f_1600x1065.jpeg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Sales Playbook</div>
+        <h3>Mastering Sales Scripts: A B2B Founder's Guide to Selling with Clarity</h3>
+        <p>The scripts and frameworks that work when you're doing founder-led sales.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/the-7-hour-rule-why-you-cant-shortcut" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/239a7ef4-8bf4-4ff2-900e-970359cd88ea_1600x849.png" alt="">
+      <div class="art-body">
+        <div class="art-tag">GTM Playbook</div>
+        <h3>The 7-Hour Rule: Why You Can't Shortcut Trust</h3>
+        <p>Every sale needs seven hours. Here's how to structure it so trust compounds.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/unlock-growth-the-hidden-power-of" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/10da1fa5-7b3d-4144-a1ed-ed7226f2ee04_1686x1266.png" alt="">
+      <div class="art-body">
+        <div class="art-tag">GTM Playbook</div>
+        <h3>Unlock Growth: The Hidden Power of Your Customer Journey</h3>
+        <p>The customer journey is where revenue hides. Most founders skip this.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="art" href="https://philunleashed.substack.com/p/the-b2b-builders-clarity-series-part" target="_blank">
+      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/0f87c404-44c5-4ee8-a846-de9e2d579e90_1170x675.png" alt="">
+      <div class="art-body">
+        <div class="art-tag">B2B Clarity Series</div>
+        <h3>Fix These 3 Before You Talk to Investors or Build a Team</h3>
+        <p>Part 1: ICP, offer, and sales motion. The foundations most founders skip.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+  </div>
+
+  <div style="margin-top: 28px; text-align: center;">
+    <a href="https://philunleashed.substack.com" target="_blank" style="color: var(--accent); font-size: 13px; font-weight: 600;">See all articles on Substack &rarr;</a>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- FOR INVESTORS -->
+<section>
+  <div class="stag">For Investors</div>
+  <h2>Co-Invest in SA Founders</h2>
+  <div class="sub" style="max-width: 480px;">We invest our own money — but we're open to co-investing with aligned angels and operators who want to back SA founders with real traction. Clean cap tables. Ordinary shares. No fund dynamics.</div>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-o">Get in Touch</a>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>Ready to Get Truly Unleashed?</h2>
+  <p>Community. Capital. Mentorship. Built for South African founders, funded for South African reality.</p>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w" style="font-size: 15px; padding: 16px 40px;">Apply Now</a>
+  <div style="margin-top: 16px;"><a href="https://philunleashed.substack.com" target="_blank" style="color: var(--muted); font-size: 12px;">Or read the Substack first &rarr;</a></div>
+</div>
+
+<footer>
+  <div class="f-links">
+    <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+    <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank">LinkedIn</a>
+    <a href="https://pas-ventures.com" target="_blank">PAS Ventures</a>
+    <a href="https://tally.so/r/7Rx9z2" target="_blank">Apply</a>
+    <a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a>
+  </div>
+  <div class="copy">Unleash &mdash; PAS Ventures &bull; Cape Town & Berlin</div>
+</footer>
+
+</body>
+</html>
