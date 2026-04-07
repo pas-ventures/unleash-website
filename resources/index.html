@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Unleash Ventures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #FF6719; --dark: #111; --card: #181818; --border: rgba(255,255,255,0.06); --text: #c8c8c8; --muted: #777; --white: #f0f0f0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--dark); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(17,17,17,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
+  nav img { height: 26px; opacity: 0.85; }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--white); color: var(--dark) !important; padding: 7px 20px; border-radius: 5px; font-weight: 600; font-size: 13px; }
+  .nav-cta:hover { background: #ddd; }
+
+  .hero-sm { padding: 120px 28px 60px; max-width: 980px; margin: 0 auto; }
+  .hero-sm .tag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+  .hero-sm h1 { font-family: 'Spectral', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .hero-sm p { font-size: 15px; color: var(--muted); max-width: 520px; }
+
+  section { padding: 40px 28px 80px; max-width: 980px; margin: 0 auto; }
+  .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+  h2 { font-family: 'Spectral', serif; font-size: clamp(22px, 2.5vw, 30px); font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .sub { font-size: 14px; color: var(--muted); max-width: 500px; margin-bottom: 32px; }
+  .sep { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+  .sep hr { border: none; border-top: 1px solid var(--border); }
+
+  /* RESOURCE CARDS */
+  .resources { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+  .res { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; display: block; color: var(--text); }
+  .res:hover { border-color: rgba(255,255,255,0.12); }
+  .res-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .res-body { padding: 18px; }
+  .res-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; padding: 2px 8px; border-radius: 3px; display: inline-block; }
+  .res-tag.playbook { color: var(--accent); background: rgba(255,103,25,0.1); }
+  .res-tag.github { color: #58a6ff; background: rgba(88,166,255,0.1); }
+  .res-tag.article { color: #a78bfa; background: rgba(167,139,250,0.1); }
+  .res-tag.framework { color: #34d399; background: rgba(52,211,153,0.1); }
+  .res h3 { font-size: 14px; color: var(--white); font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+  .res p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .res .read { font-size: 11px; color: var(--accent); margin-top: 10px; display: inline-block; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; margin-top: 40px; }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
+  footer .copy { font-size: 11px; color: #383838; }
+
+  @media (max-width: 700px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .resources { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/"><img src="/img/logo.png" alt="Unleash"></a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/resources">Resources</a>
+      <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+      <a href="https://tally.so/r/7Rx9z2" target="_blank" class="nav-cta">Apply</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="hero-sm">
+  <div class="tag">Resources</div>
+  <h1>Playbooks, Frameworks & Open-Source Tools</h1>
+  <p>Built from real engagements with real founders. AI-powered tools that consolidate the knowledge of hundreds of exited entrepreneurs — available to Unleash community members.</p>
+</div>
+
+<!-- PLAYBOOKS -->
+<section>
+  <div class="stag">Playbooks</div>
+  <h2>From the Substack</h2>
+  <div class="sub">Honest writing for founders navigating the SA ecosystem. Every article comes from real engagements.</div>
+
+  <div class="resources">
+    <a class="res" href="https://philunleashed.substack.com/p/the-biggest-issue-for-south-african" target="_blank">
+      <img class="res-img" src="https://substack-video.s3.amazonaws.com/video_upload/post/187487652/1f4f86d6-99f8-4975-9991-f616946fa6ec/transcoded-00001.png" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">Mentorship</span>
+        <h3>The Biggest Issue for SA Founders? Scarce Mentorship from Former Builders.</h3>
+        <p>Why the ecosystem keeps producing the same outcomes — and what we're building to change it.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/on-a-quest-to-do-my-part-for-sa" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/26cba333-98f5-4af9-a7bd-7fcf09cd2601_1280x720.jpeg" alt="">
+      <div class="res-body">
+        <span class="res-tag article">Origin Story</span>
+        <h3>On a Quest to Do My Part for South Africa</h3>
+        <p>Who is this German guy — and why is he so invested in this ecosystem?</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/for-fundraising-founders-in-south" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/a59c801e-54cb-41d2-9960-967ce4685865_1600x900.jpeg" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">Fundraising</span>
+        <h3>For Fundraising Founders in SA: What's Available — and What It Will Cost You</h3>
+        <p>An honest look at the funding landscape, real terms, and what founders actually give up.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/for-fundraising-founders-your-deck" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/2af3d3a8-a45a-4408-b197-b529118f5cfc_1600x1066.jpeg" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">Fundraising</span>
+        <h3>For Fundraising Founders: Your Deck Is Useless</h3>
+        <p>Why most pitch decks fail — and what to do instead when you're pre-revenue.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/mastering-sales-scripts-a-b2b-founders" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/5cd7e916-3447-4d11-96c7-65a9908fcc3f_1600x1065.jpeg" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">Sales Playbook</span>
+        <h3>Mastering Sales Scripts: A B2B Founder's Guide to Selling with Clarity</h3>
+        <p>The scripts and frameworks that work when you're doing founder-led sales.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/the-7-hour-rule-why-you-cant-shortcut" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/239a7ef4-8bf4-4ff2-900e-970359cd88ea_1600x849.png" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">GTM Playbook</span>
+        <h3>The 7-Hour Rule: Why You Can't Shortcut Trust</h3>
+        <p>Every sale needs seven hours. Here's how to structure it so trust compounds.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/unlock-growth-the-hidden-power-of" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/10da1fa5-7b3d-4144-a1ed-ed7226f2ee04_1686x1266.png" alt="">
+      <div class="res-body">
+        <span class="res-tag playbook">GTM Playbook</span>
+        <h3>Unlock Growth: The Hidden Power of Your Customer Journey</h3>
+        <p>The customer journey is where revenue hides. Most founders skip this.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/navigating-big-decisions-as-a-founder" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/0f87c404-44c5-4ee8-a846-de9e2d579e90_1170x675.png" alt="">
+      <div class="res-body">
+        <span class="res-tag framework">Founder Framework</span>
+        <h3>Navigating Big Decisions As A Founder: A Framework</h3>
+        <p>When the stakes are high and the data is incomplete — how to decide and move.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://philunleashed.substack.com/p/why-any-goal-you-set-with-your-co" target="_blank">
+      <img class="res-img" src="https://substack-post-media.s3.amazonaws.com/public/images/0f87c404-44c5-4ee8-a846-de9e2d579e90_1170x675.png" alt="">
+      <div class="res-body">
+        <span class="res-tag framework">Co-Founder</span>
+        <h3>Why Any Goal You Set with Your Co-Founder Fails Without Personal Alignment</h3>
+        <p>The conversation most co-founding teams avoid — and why it matters more than strategy.</p>
+        <span class="read">Read &rarr;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- OPEN SOURCE TOOLS -->
+<section>
+  <div class="stag">Open Source</div>
+  <h2>GitHub — Tools for Founders</h2>
+  <div class="sub">Claude skills, automation scripts, and frameworks we use with our founders. Fork them, use them, make them yours.</div>
+
+  <div class="resources">
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — 7 Skills</span>
+        <h3>Venture GTM Skills</h3>
+        <p>Complete GTM toolkit for Claude: niche research, landing pages, outbound copy, drip campaigns, LinkedIn outreach, content engine, prospect list builder. Ready to fork and customize.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Public</span>
+        <h3>OKR Planning with AI</h3>
+        <p>Murakamy OKR framework adapted for founders. 5-phase guided process for quarterly planning with Claude. Life-area coaching approach.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Public</span>
+        <h3>Holding Finance Automation</h3>
+        <p>Multi-entity invoice lifecycle, vendor-entity mapping, recurring task automation. Built for founders managing holding structures.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>Business Plan Builder</h3>
+        <p>Claude skill that takes your business context and produces a structured, investor-ready business plan. Revenue model, competitive landscape, go-to-market, financials — all from a conversation.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>Investment Thesis Prep</h3>
+        <p>Prepare your investment thesis and fundraising narrative. Structures your story around traction, market, team, and ask — so investors hear what matters.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>The 11 Skills Framework</h3>
+        <p>11 reusable Claude skills that every early-stage founder needs: from customer research to pitch prep to hiring briefs. Fork the repo, customize for your business, run immediately.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>Navigating Big Decisions — Claude Skill</h3>
+        <p>The decision framework from the Substack article, turned into an interactive Claude skill. Walk through high-stakes founder decisions with structured prompts and trade-off analysis.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>Founder CRM & Pipeline Tracker</h3>
+        <p>Claude-powered CRM skill for founder-led sales. Track prospects, automate follow-ups, prep for calls, and keep your pipeline clean — without paying for Salesforce.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+
+    <a class="res" href="https://tally.so/r/7Rx9z2" target="_blank">
+      <div class="res-body" style="padding-top: 24px;">
+        <span class="res-tag github">GitHub — Coming Soon</span>
+        <h3>Co-Founder Alignment Workshop</h3>
+        <p>Structured prompts for the conversation most co-founding teams avoid. Personal alignment, role clarity, equity expectations, and working style — before it becomes a problem.</p>
+        <span class="read">Apply for Access &rarr;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- CTA -->
+<section style="text-align: center; padding: 80px 28px;">
+  <h2>Want Access to Everything?</h2>
+  <p style="color: var(--muted); max-width: 400px; margin: 0 auto 28px; font-size: 14px;">Join the Unleash community. Get the playbooks, the network, and the mentorship — all in one place.</p>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" style="display: inline-block; background: var(--white); color: var(--dark); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 600;">Apply Now</a>
+</section>
+
+<footer>
+  <div class="f-links">
+    <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+    <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank">LinkedIn</a>
+    <a href="https://pas-ventures.com" target="_blank">PAS Ventures</a>
+    <a href="https://tally.so/r/7Rx9z2" target="_blank">Apply</a>
+    <a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a>
+  </div>
+  <div class="copy">Unleash &mdash; PAS Ventures &bull; Cape Town & Berlin</div>
+</footer>
+
+</body>
+</html>
