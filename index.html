@@ -124,6 +124,19 @@
   footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
   footer .copy { font-size: 11px; color: #383838; }
 
+  /* FLYING QUOTES */
+  .hero-quotes { margin-top: 32px; max-width: 560px; height: 56px; overflow: hidden; position: relative; border-left: 2px solid var(--accent); padding-left: 16px; }
+  .hero-quotes .quote-track { display: flex; flex-direction: column; animation: quoteScroll 12s ease-in-out infinite; }
+  .hero-quotes .hq { padding: 8px 0; font-size: 15px; color: var(--accent); font-style: italic; height: 56px; display: flex; align-items: center; font-weight: 500; }
+  .hero-quotes .hq span { color: var(--muted); font-style: normal; font-size: 11px; margin-left: 12px; white-space: nowrap; font-weight: 400; }
+  @keyframes quoteScroll {
+    0%, 20% { transform: translateY(0); }
+    25%, 45% { transform: translateY(-56px); }
+    50%, 70% { transform: translateY(-112px); }
+    75%, 95% { transform: translateY(-168px); }
+    100% { transform: translateY(-224px); }
+  }
+
   @media (max-width: 700px) {
     .nav-links a:not(.nav-cta) { display: none; }
     .hero-stats { flex-direction: column; gap: 16px; }
@@ -143,8 +156,7 @@
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#how">How It Works</a>
-      <a href="#founders">Founders</a>
-      <a href="#playbooks">Playbooks</a>
+      <a href="#founders">Members</a>
       <a href="/resources">Resources</a>
       <a href="https://tally.so/r/7Rx9z2" target="_blank" class="nav-cta">Apply</a>
     </div>
@@ -160,6 +172,15 @@
     <p>Unleash is a community of former builders for South African founders. Access the right capital at the right time, without entering the fundraising rat race.</p>
     <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply as Founder</a>
     <div class="hero-sub">Free to join. No commitment. Apply in 5 minutes.</div>
+    <div class="hero-quotes">
+      <div class="quote-track">
+        <div class="hq">"A single conversation broke through clouds I'd been stuck in for months." <span>— Gavin W., Digify Africa</span></div>
+        <div class="hq">"The most detailed and constructive input I've received so far." <span>— Phumi K., Kloset Klub</span></div>
+        <div class="hq">"We've used what I learned to completely reframe our strategy." <span>— Phinda N., Four Minute Medicine</span></div>
+        <div class="hq">"We are now moving full steam ahead to implement these." <span>— Rene H., Proco</span></div>
+        <div class="hq">"A single conversation broke through clouds I'd been stuck in for months." <span>— Gavin W., Digify Africa</span></div>
+      </div>
+    </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="n">100s of M</div><div class="l">Enterprise Value Generated</div></div>
       <div class="hero-stat"><div class="n">1000+</div><div class="l">Founders Supported</div></div>
@@ -248,8 +269,8 @@
 
 <!-- WHAT FOUNDERS SAY -->
 <section id="founders">
-  <div class="stag">What Founders Say</div>
-  <h2>From the People We Work With</h2>
+  <div class="stag">What Unleash Members Say</div>
+  <h2>From Our Founders</h2>
   <div class="sub">Real feedback. Real founders. No fluff.</div>
   <div class="testimonials">
     <div class="test">
@@ -271,101 +292,6 @@
   </div>
 </section>
 
-<div class="sep"><hr></div>
-
-<!-- PLAYBOOKS & LEARNINGS -->
-<section id="playbooks">
-  <div class="stag">Playbooks & Learnings</div>
-  <h2>What We've Built & Shared</h2>
-  <div class="sub">Playbooks and learnings we've built and share along the way. We bring our founders to the AI tools that consolidate the knowledge of hundreds of exited founders.</div>
-
-  <div class="articles-grid">
-    <a class="art" href="https://philunleashed.substack.com/p/the-biggest-issue-for-south-african" target="_blank">
-      <img class="art-img" src="https://substack-video.s3.amazonaws.com/video_upload/post/187487652/1f4f86d6-99f8-4975-9991-f616946fa6ec/transcoded-00001.png" alt="">
-      <div class="art-body">
-        <div class="art-tag">Mentorship</div>
-        <h3>The Biggest Issue for SA Founders? Scarce Mentorship from Former Builders.</h3>
-        <p>Why the ecosystem keeps producing the same outcomes — and what we're building to change it.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/on-a-quest-to-do-my-part-for-sa" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/26cba333-98f5-4af9-a7bd-7fcf09cd2601_1280x720.jpeg" alt="">
-      <div class="art-body">
-        <div class="art-tag">Origin Story</div>
-        <h3>On a Quest to Do My Part for South Africa</h3>
-        <p>Who is this German guy — and why is he so invested in this ecosystem? The full story.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/for-fundraising-founders-in-south" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/a59c801e-54cb-41d2-9960-967ce4685865_1600x900.jpeg" alt="">
-      <div class="art-body">
-        <div class="art-tag">Fundraising</div>
-        <h3>For Fundraising Founders in SA: What's Available — and What It Will Cost You</h3>
-        <p>An honest look at the funding landscape, real terms, and what founders actually give up.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/for-fundraising-founders-your-deck" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/2af3d3a8-a45a-4408-b197-b529118f5cfc_1600x1066.jpeg" alt="">
-      <div class="art-body">
-        <div class="art-tag">Fundraising</div>
-        <h3>For Fundraising Founders: Your Deck Is Useless</h3>
-        <p>"Do you have a pitch deck?" — why most decks fail and what to do instead.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/mastering-sales-scripts-a-b2b-founders" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/5cd7e916-3447-4d11-96c7-65a9908fcc3f_1600x1065.jpeg" alt="">
-      <div class="art-body">
-        <div class="art-tag">Sales Playbook</div>
-        <h3>Mastering Sales Scripts: A B2B Founder's Guide to Selling with Clarity</h3>
-        <p>The scripts and frameworks that work when you're doing founder-led sales.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/the-7-hour-rule-why-you-cant-shortcut" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/239a7ef4-8bf4-4ff2-900e-970359cd88ea_1600x849.png" alt="">
-      <div class="art-body">
-        <div class="art-tag">GTM Playbook</div>
-        <h3>The 7-Hour Rule: Why You Can't Shortcut Trust</h3>
-        <p>Every sale needs seven hours. Here's how to structure it so trust compounds.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/unlock-growth-the-hidden-power-of" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/10da1fa5-7b3d-4144-a1ed-ed7226f2ee04_1686x1266.png" alt="">
-      <div class="art-body">
-        <div class="art-tag">GTM Playbook</div>
-        <h3>Unlock Growth: The Hidden Power of Your Customer Journey</h3>
-        <p>The customer journey is where revenue hides. Most founders skip this.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="art" href="https://philunleashed.substack.com/p/the-b2b-builders-clarity-series-part" target="_blank">
-      <img class="art-img" src="https://substack-post-media.s3.amazonaws.com/public/images/0f87c404-44c5-4ee8-a846-de9e2d579e90_1170x675.png" alt="">
-      <div class="art-body">
-        <div class="art-tag">B2B Clarity Series</div>
-        <h3>Fix These 3 Before You Talk to Investors or Build a Team</h3>
-        <p>Part 1: ICP, offer, and sales motion. The foundations most founders skip.</p>
-        <span class="read">Read &rarr;</span>
-      </div>
-    </a>
-  </div>
-
-  <div style="margin-top: 28px; text-align: center;">
-    <a href="/resources" style="color: var(--accent); font-size: 13px; font-weight: 600; margin-right: 24px;">All resources, tools & skills &rarr;</a>
-    <a href="https://philunleashed.substack.com" target="_blank" style="color: var(--muted); font-size: 13px; font-weight: 600;">Substack &rarr;</a>
-  </div>
-</section>
 
 <div class="sep"><hr></div>
 
