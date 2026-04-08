@@ -13,14 +13,12 @@
     --accent-light: rgba(255,103,25,0.12);
     --accent-border: rgba(255,103,25,0.25);
     --dark: #111;
-    --darker: #0a0a0a;
     --card: #181818;
     --border: rgba(255,255,255,0.06);
     --text: #c8c8c8;
     --muted: #777;
     --white: #f0f0f0;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Inter', -apple-system, sans-serif;
@@ -35,7 +33,7 @@
     display: none;
     width: 100vw;
     height: 100vh;
-    padding: 56px 72px;
+    padding: 70px 100px;
     position: relative;
     flex-direction: column;
     justify-content: center;
@@ -45,22 +43,14 @@
   .top-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(90deg, var(--accent), #ff9a5c);
   }
   .logo-bar {
     position: absolute;
-    top: 22px; left: 72px;
-    display: flex; align-items: center; gap: 10px;
+    top: 26px; left: 100px;
   }
-  .logo-bar img { height: 22px; opacity: 0.8; }
-  .logo-text {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 2.5px;
-    color: var(--accent);
-  }
+  .logo-bar img { height: 24px; opacity: 0.8; }
 
   .nav {
     position: fixed;
@@ -72,59 +62,67 @@
     background: rgba(255,103,25,0.1);
     border: 1px solid rgba(255,103,25,0.2);
     color: var(--accent);
-    padding: 8px 18px;
+    padding: 10px 22px;
     border-radius: 6px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     transition: all 0.2s;
   }
   .nav button:hover { background: rgba(255,103,25,0.2); }
   .slide-counter {
     position: fixed;
-    bottom: 32px; left: 36px;
-    font-size: 13px;
+    bottom: 34px; left: 36px;
+    font-size: 14px;
     color: var(--muted);
     z-index: 100;
   }
 
-  /* Typography */
+  /* Typography — all bumped ~20% */
   h1 {
     font-family: 'Spectral', serif;
     font-weight: 700;
-    font-size: 50px;
-    line-height: 1.12;
+    font-size: 60px;
+    line-height: 1.1;
     color: var(--white);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   h2 {
     font-family: 'Spectral', serif;
     font-weight: 700;
-    font-size: 38px;
-    line-height: 1.2;
+    font-size: 46px;
+    line-height: 1.15;
     color: var(--white);
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
   h3 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 24px;
     color: var(--white);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
-
   .accent { color: var(--accent); }
   .tag {
     display: inline-block;
     background: var(--accent-light);
     color: var(--accent);
-    padding: 5px 14px;
-    border-radius: 16px;
-    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 18px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+  }
+
+  /* Host avatars */
+  .host-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,103,25,0.3);
+    flex-shrink: 0;
   }
 
   /* ===== SLIDE 1: TITLE ===== */
@@ -138,32 +136,26 @@
     background-color: var(--dark);
   }
   .slide-title .community-tag {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--accent);
     letter-spacing: 3px;
     text-transform: uppercase;
     font-weight: 600;
-    margin-bottom: 32px;
+    margin-bottom: 36px;
   }
-  .slide-title h1 {
-    font-size: 62px;
-    line-height: 1.08;
-    margin-bottom: 24px;
-  }
+  .slide-title h1 { font-size: 72px; line-height: 1.06; margin-bottom: 28px; }
   .slide-title .subtitle-line {
-    font-size: 18px;
+    font-size: 21px;
     color: var(--muted);
     line-height: 1.6;
-    max-width: 520px;
   }
   .slide-title .meta {
-    margin-top: 28px;
-    font-size: 17px;
+    margin-top: 32px;
+    font-size: 19px;
     color: var(--muted);
     line-height: 1.8;
   }
   .slide-title .meta strong { color: var(--white); font-weight: 600; }
-  /* Orange glow dots */
   .glow-dot {
     position: absolute;
     width: 6px; height: 6px;
@@ -177,140 +169,122 @@
 
   .hosts-row {
     display: flex;
-    gap: 36px;
-    margin-top: 40px;
+    gap: 40px;
+    margin-top: 44px;
   }
-  .host {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .host-avatar {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255,103,25,0.3);
-  }
-  .host-avatar-placeholder {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), #ff9a5c);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 18px; color: white;
-    flex-shrink: 0;
-  }
-  .host-info { font-size: 14px; }
-  .host-info .name { font-weight: 600; color: var(--white); }
-  .host-info .role { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .host { display: flex; align-items: center; gap: 16px; }
+  .host-info .name { font-weight: 600; color: var(--white); font-size: 17px; }
+  .host-info .role { color: var(--muted); font-size: 14px; margin-top: 2px; }
 
   /* ===== SLIDE 2: HOUSEKEEPING ===== */
   .hk-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 28px;
+    gap: 24px;
+    margin-top: 32px;
   }
   .hk-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 14px;
+    padding: 28px;
     display: flex;
-    gap: 16px;
+    gap: 18px;
     align-items: flex-start;
   }
   .hk-icon {
-    font-size: 28px;
+    font-size: 32px;
     flex-shrink: 0;
-    width: 48px; height: 48px;
+    width: 54px; height: 54px;
     display: flex; align-items: center; justify-content: center;
     background: var(--accent-light);
-    border-radius: 10px;
+    border-radius: 12px;
   }
-  .hk-card h3 { font-size: 17px; margin-bottom: 6px; }
-  .hk-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .hk-card h3 { font-size: 20px; margin-bottom: 6px; }
+  .hk-card p { font-size: 17px; color: var(--muted); line-height: 1.5; }
 
   .slido-box {
     grid-column: 1 / -1;
     background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02));
     border: 1px solid var(--accent-border);
-    border-radius: 12px;
-    padding: 28px 32px;
+    border-radius: 14px;
+    padding: 32px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .slido-box h3 { color: var(--accent); font-size: 22px; }
-  .slido-box p { color: var(--text); font-size: 15px; margin-top: 4px; }
+  .slido-box h3 { color: var(--accent); font-size: 24px; }
+  .slido-box p { color: var(--text); font-size: 17px; margin-top: 6px; }
   .qr-img {
-    width: 130px; height: 130px;
+    width: 140px; height: 140px;
     background: white;
-    border-radius: 10px;
-    padding: 6px;
+    border-radius: 12px;
+    padding: 8px;
+    flex-shrink: 0;
   }
   .qr-img img { width: 100%; height: 100%; }
 
   /* ===== SLIDE 3: AGENDA ===== */
   .agenda-list {
-    margin-top: 20px;
+    margin-top: 24px;
     position: relative;
-    padding-left: 36px;
+    padding-left: 40px;
   }
   .agenda-list::before {
     content: '';
     position: absolute;
-    left: 12px; top: 6px; bottom: 6px;
+    left: 14px; top: 6px; bottom: 6px;
     width: 2px;
     background: rgba(255,103,25,0.15);
   }
   .a-item {
     position: relative;
-    padding: 12px 0 12px 28px;
+    padding: 14px 0 14px 32px;
     display: flex;
     align-items: baseline;
-    gap: 18px;
+    gap: 20px;
   }
   .a-item::before {
     content: '';
     position: absolute;
-    left: -30px; top: 20px;
-    width: 8px; height: 8px;
+    left: -32px; top: 22px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: var(--accent);
   }
   .a-time {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 20px;
     color: var(--accent);
-    min-width: 70px;
+    min-width: 80px;
   }
-  .a-desc { font-size: 17px; color: var(--white); }
-  .a-desc .who { color: var(--muted); font-size: 13px; margin-left: 8px; }
-  .a-desc .detail { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .a-desc { font-size: 20px; color: var(--white); }
+  .a-desc .who { color: var(--muted); font-size: 16px; margin-left: 8px; }
+  .a-desc .detail { display: block; color: var(--muted); font-size: 15px; margin-top: 4px; }
 
   .agenda-note {
-    margin-top: 28px;
-    padding: 16px 24px;
+    margin-top: 32px;
+    padding: 20px 28px;
     background: var(--accent-light);
-    border-radius: 10px;
+    border-radius: 12px;
     border-left: 3px solid var(--accent);
-    font-size: 15px;
+    font-size: 18px;
     color: var(--text);
   }
 
-  /* ===== SLIDE 4: CONVERSATION STARTERS ===== */
+  /* ===== SLIDE 4: POLLS ===== */
   .poll-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 28px;
+    gap: 24px;
+    margin-top: 32px;
   }
   .poll-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 32px;
     position: relative;
     overflow: hidden;
   }
@@ -318,65 +292,60 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2px;
+    height: 3px;
     background: var(--accent);
   }
   .poll-num {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 40px;
+    font-size: 44px;
     color: rgba(255,103,25,0.1);
     position: absolute;
-    top: 10px; right: 16px;
+    top: 12px; right: 18px;
   }
-  .poll-card h3 { font-size: 18px; margin-bottom: 8px; }
-  .poll-card p { font-size: 15px; color: var(--muted); line-height: 1.5; }
-  .poll-cta {
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .poll-card h3 { font-size: 22px; margin-bottom: 10px; }
+  .poll-card p { font-size: 18px; color: var(--muted); line-height: 1.5; }
+  .poll-cta { margin-top: 14px; font-size: 15px; color: var(--accent); font-weight: 600; }
   .poll-full { grid-column: 1 / -1; }
 
   /* ===== SLIDE 5: WHAT IS PAPERCLIP ===== */
   .big-quote {
     font-family: 'Spectral', serif;
-    font-size: 26px;
+    font-size: 30px;
     font-style: italic;
     color: var(--white);
     border-left: 3px solid var(--accent);
-    padding-left: 22px;
-    margin: 20px 0 28px;
-    line-height: 1.5;
+    padding-left: 24px;
+    margin: 24px 0 32px;
+    line-height: 1.45;
   }
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 36px;
   }
   .c-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 32px;
   }
-  .c-card h3 { color: var(--accent); font-size: 19px; margin-bottom: 14px; }
+  .c-card h3 { color: var(--accent); font-size: 22px; margin-bottom: 16px; }
   .c-card ul { list-style: none; padding: 0; }
   .c-card li {
-    padding: 8px 0;
-    font-size: 15px;
+    padding: 10px 0;
+    font-size: 18px;
     color: var(--text);
     line-height: 1.5;
     border-bottom: 1px solid var(--border);
-    padding-left: 16px;
+    padding-left: 18px;
     position: relative;
   }
   .c-card li::before {
     content: '';
     position: absolute;
-    left: 0; top: 15px;
-    width: 5px; height: 5px;
+    left: 0; top: 17px;
+    width: 6px; height: 6px;
     background: var(--accent);
     border-radius: 50%;
   }
@@ -387,88 +356,104 @@
   .problem-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 28px;
+    gap: 24px;
+    margin-top: 32px;
   }
   .p-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 14px;
+    padding: 28px;
     text-align: center;
   }
-  .p-card .icon { font-size: 32px; margin-bottom: 12px; }
+  .p-card .icon { font-size: 38px; margin-bottom: 14px; }
   .p-card .label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--accent);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
-  .p-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  .p-card p { font-size: 17px; color: var(--muted); line-height: 1.5; }
   .p-card p strong { color: var(--text); }
 
   .solution-bar {
-    margin-top: 28px;
+    margin-top: 32px;
     background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02));
     border: 1px solid var(--accent-border);
-    border-radius: 12px;
-    padding: 24px 32px;
+    border-radius: 14px;
+    padding: 28px 36px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
   }
-  .solution-bar .arrow { font-size: 30px; color: var(--accent); }
-  .solution-bar h3 { color: var(--accent); font-size: 19px; margin-bottom: 4px; }
-  .solution-bar p { font-size: 15px; color: var(--text); }
+  .solution-bar .arrow { font-size: 34px; color: var(--accent); }
+  .solution-bar h3 { color: var(--accent); font-size: 22px; margin-bottom: 4px; }
+  .solution-bar p { font-size: 18px; color: var(--text); }
 
   /* ===== SLIDE 7: DEMOS ===== */
   .demo-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-top: 28px;
+    gap: 36px;
+    margin-top: 32px;
   }
   .demo-card {
     background: var(--card);
     border: 1px solid var(--accent-border);
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 32px;
   }
   .demo-host {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 20px;
-    padding-bottom: 16px;
+    padding-bottom: 18px;
     border-bottom: 1px solid var(--border);
   }
-  .demo-host .host-avatar-placeholder { width: 48px; height: 48px; font-size: 16px; }
-  .demo-host .name { font-weight: 600; font-size: 17px; color: var(--white); }
-  .demo-host .company { color: var(--muted); font-size: 13px; }
+  .demo-host .name { font-weight: 600; font-size: 20px; color: var(--white); }
+  .demo-host .company { color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .demo-card .bio { font-size: 15px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+  .demo-card .use-label { font-size: 17px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+  .demo-card ul { list-style: none; padding: 0; }
+  .demo-card li {
+    padding: 7px 0;
+    font-size: 17px;
+    color: var(--text);
+    padding-left: 16px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .demo-card li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 15px;
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .demo-card li:last-child { border-bottom: none; }
+  .demo-card li strong { color: var(--white); }
 
   .slido-reminder {
     grid-column: 1 / -1;
-    margin-top: 4px;
     text-align: center;
-    padding: 20px;
+    padding: 22px;
     background: var(--accent-light);
     border: 1px solid var(--accent-border);
-    border-radius: 12px;
+    border-radius: 14px;
   }
-  .slido-reminder p { font-size: 16px; color: var(--text); }
+  .slido-reminder p { font-size: 19px; color: var(--text); }
   .slido-reminder strong { color: var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- ===== SLIDE 1: TITLE ===== -->
+<!-- SLIDE 1: TITLE -->
 <div class="slide slide-title active" id="slide-1">
   <div class="top-bar"></div>
-  <div class="logo-bar">
-    <img src="../../unleash-logo-transparent.png" alt="Unleash">
-  </div>
-
+  <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="glow-dot glow-dot-1"></div>
   <div class="glow-dot glow-dot-2"></div>
   <div class="glow-dot glow-dot-3"></div>
@@ -479,26 +464,26 @@
 
   <div class="meta">
     <strong>Thursday, 9 April 2026</strong> &middot; 13:00 &ndash; 14:00 SAST<br>
-    Online via Google Meet &middot; 56 founders registered
+    Online via Google Meet
   </div>
 
   <div class="hosts-row">
     <div class="host">
-      <img class="host-avatar" src="../../img/phil-cape-town.jpg" alt="Phil">
+      <img class="host-avatar" src="../../img/phil.jpeg" alt="Phil">
       <div class="host-info">
         <div class="name">Philipp Strohemann</div>
         <div class="role">Host &middot; Unleash Ventures</div>
       </div>
     </div>
     <div class="host">
-      <div class="host-avatar-placeholder">KD</div>
+      <img class="host-avatar" src="../../img/kai.jpeg" alt="Kai">
       <div class="host-info">
         <div class="name">Kai Dippe</div>
         <div class="role">Co-Host &middot; Quantum Flow AI</div>
       </div>
     </div>
     <div class="host">
-      <div class="host-avatar-placeholder">TD</div>
+      <img class="host-avatar" src="../../img/theunis.jpeg" alt="Theunis">
       <div class="host-info">
         <div class="name">Theunis De Klerk</div>
         <div class="role">Co-Host &middot; Serova.ai</div>
@@ -507,7 +492,7 @@
   </div>
 </div>
 
-<!-- ===== SLIDE 2: HOUSEKEEPING ===== -->
+<!-- SLIDE 2: HOUSEKEEPING -->
 <div class="slide" id="slide-2">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
@@ -520,36 +505,35 @@
       <div class="hk-icon">🔇</div>
       <div>
         <h3>Mute Your Mic</h3>
-        <p>Please keep your microphone muted unless you're speaking. Unmute when you want to jump in during Q&A.</p>
+        <p>Keep muted unless you're speaking. Unmute to jump in during Q&A.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">🎥</div>
       <div>
         <h3>We're Recording</h3>
-        <p>This session is being recorded for the Unleash community. The recording will be shared with all attendees.</p>
+        <p>This session is being recorded. We'll share it with all attendees afterwards.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">💬</div>
       <div>
         <h3>Use the Chat</h3>
-        <p>Drop reactions, comments, and quick questions in the Google Meet chat. We're watching it the whole time.</p>
+        <p>Reactions, comments, quick questions &mdash; drop them in the Google Meet chat.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">🙋</div>
       <div>
         <h3>No Stupid Questions</h3>
-        <p>"What even is an AI agent?" is perfectly valid here. Beginner-friendly, zero jargon.</p>
+        <p>"What even is an AI agent?" is perfectly valid. Zero jargon.</p>
       </div>
     </div>
 
     <div class="slido-box">
       <div>
-        <h3>Your Questions on Slido</h3>
+        <h3>Submit Questions on Slido</h3>
         <p>Pre-submitted questions get priority. Scan the QR or visit <strong>sli.do</strong></p>
-        <p style="margin-top: 6px; color: var(--muted); font-size: 13px;">app.sli.do/event/tagR2ceEXT7mfkzePgGSoi</p>
       </div>
       <div class="qr-img">
         <img src="../../img/slido-qr.png" alt="Slido QR Code">
@@ -558,7 +542,7 @@
   </div>
 </div>
 
-<!-- ===== SLIDE 3: AGENDA ===== -->
+<!-- SLIDE 3: AGENDA -->
 <div class="slide" id="slide-3">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
@@ -573,12 +557,12 @@
     </div>
     <div class="a-item">
       <span class="a-time">13:05</span>
-      <span class="a-desc">What is Paperclip? &mdash; The Idea & Why It Matters<span class="who">&mdash; Phil (10 min)</span></span>
+      <span class="a-desc">What is Paperclip & Why It Matters<span class="who">&mdash; Phil (10 min)</span></span>
     </div>
     <div class="a-item">
       <span class="a-time">13:15</span>
       <span class="a-desc">Demo 1: Marketing, Sales & Business Plan Agents<span class="who">&mdash; Kai Dippe</span>
-        <span class="detail">Transcript &rarr; Offer &rarr; Contract &middot; Landing Pages &middot; CMO Setup &middot; Cost Learnings</span>
+        <span class="detail">Transcript &rarr; Offer &rarr; Contract &middot; Landing Pages &middot; CMO Setup &middot; Costs & Learnings</span>
       </span>
     </div>
     <div class="a-item">
@@ -589,18 +573,18 @@
     </div>
     <div class="a-item">
       <span class="a-time">13:35</span>
-      <span class="a-desc">Open Q&A &mdash; Your Questions, Live<span class="who">&mdash; Everyone (remaining time)</span>
-        <span class="detail">From Slido + live. No stupid questions. Bring your business &mdash; we'll tell you what agent to build.</span>
+      <span class="a-desc">Open Q&A &mdash; Your Questions, Live<span class="who">&mdash; Everyone</span>
+        <span class="detail">From Slido + live. Bring your business &mdash; we'll tell you what agent to build.</span>
       </span>
     </div>
   </div>
 
   <div class="agenda-note">
-    Real tools. Real tasks. Screen share. Two live demos + wide-open Q&A. No slides-only presentations.
+    Two live demos + wide-open Q&A. Real tools, real tasks, real screen shares.
   </div>
 </div>
 
-<!-- ===== SLIDE 4: CONVERSATION STARTERS ===== -->
+<!-- SLIDE 4: CONVERSATION STARTERS -->
 <div class="slide" id="slide-4">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
@@ -612,36 +596,36 @@
     <div class="poll-card">
       <div class="poll-num">01</div>
       <h3>AI Tools</h3>
-      <p>Have you used Claude, ChatGPT, or similar AI tools for your business?</p>
-      <div class="poll-cta">Drop 1 for Yes, 2 for No</div>
+      <p>Used Claude or ChatGPT for your business?</p>
+      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">02</div>
       <h3>Claude Code</h3>
-      <p>Are you already working with Claude Code &mdash; the terminal-based coding agent?</p>
-      <div class="poll-cta">Drop 1 for Yes, 2 for No</div>
+      <p>Working with Claude Code already?</p>
+      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">03</div>
-      <h3>AI Agents & Skills</h3>
-      <p>Have you built or deployed any AI agents, automations, or skill-based workflows?</p>
-      <div class="poll-cta">Drop 1 for Yes, 2 for No</div>
+      <h3>AI Agents</h3>
+      <p>Built or deployed any AI agents or automations?</p>
+      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">04</div>
       <h3>Paperclip</h3>
-      <p>Has anyone here already installed or played with Paperclip?</p>
-      <div class="poll-cta">Drop 1 for Yes, 2 for No</div>
+      <p>Already installed or played with Paperclip?</p>
+      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card poll-full">
       <h3>The Big One</h3>
-      <p style="font-size: 18px; color: var(--white);">"What's the one task in your business you wish you could automate tomorrow?"</p>
+      <p style="font-size: 21px; color: var(--white);">"What's the one task in your business you wish you could automate tomorrow?"</p>
       <div class="poll-cta">Drop it in the chat &darr;</div>
     </div>
   </div>
 </div>
 
-<!-- ===== SLIDE 5: WHAT IS PAPERCLIP ===== -->
+<!-- SLIDE 5: WHAT IS PAPERCLIP -->
 <div class="slide" id="slide-5">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
@@ -649,66 +633,63 @@
   <div class="tag">The Concept</div>
   <h2>What is <span class="accent">Paperclip</span>?</h2>
 
-  <p style="font-size: 17px; color: var(--text); max-width: 700px; line-height: 1.6; margin-bottom: 20px;">
-    If you've been working with Claude Code or OpenClaw, you've seen how fast things grow &mdash; and how messy they get. Twenty terminal windows. Context lost between sessions. No coordination. No structure.
+  <p style="font-size: 20px; color: var(--text); max-width: 750px; line-height: 1.6; margin-bottom: 16px;">
+    If you've been working with Claude Code or OpenClaw, you've seen how fast things grow &mdash; and how messy they get. Paperclip wants to be the answer.
   </p>
 
   <div class="big-quote">
-    "If an AI agent is an <em>employee</em>,<br>
-    Paperclip is the <em>company</em>."
+    "If an AI agent is an <em>employee</em>,<br>Paperclip is the <em>company</em>."
   </div>
 
   <div class="two-col">
     <div class="c-card">
       <h3>The Idea</h3>
       <ul>
-        <li>An open-source platform that lets you run an <strong>agent-only company</strong></li>
-        <li>One founder, multiple AI agents &mdash; each with a <strong>defined role</strong></li>
-        <li>Agents have <strong>jobs, budgets, and accountability</strong></li>
-        <li>You manage them like a real team &mdash; org chart, goals, governance</li>
-        <li>Self-hosted. No external account. <strong>You own everything.</strong></li>
+        <li>Open-source platform to run an <strong>agent-only company</strong></li>
+        <li>Multiple AI agents, each with a <strong>defined role</strong></li>
+        <li>Agents have <strong>jobs, budgets, accountability</strong></li>
+        <li>Self-hosted. <strong>You own everything.</strong></li>
       </ul>
     </div>
     <div class="c-card">
-      <h3>What You Can Do With It</h3>
+      <h3>What You Can Do</h3>
       <ul>
-        <li><strong>Hire agents</strong> &mdash; CEO, Content Strategist, Sales, Community Manager</li>
-        <li><strong>Set budgets</strong> &mdash; monthly per-agent cost caps, auto-throttling</li>
-        <li><strong>Track work</strong> &mdash; every task traces back to company goals</li>
-        <li><strong>Monitor everything</strong> &mdash; dashboard, audit logs, tool-call tracing</li>
-        <li><strong>Stay in control</strong> &mdash; you're the board. Approve, pause, override.</li>
+        <li><strong>Hire agents</strong> &mdash; CEO, Sales, Content, Community</li>
+        <li><strong>Set budgets</strong> &mdash; monthly caps, auto-throttling</li>
+        <li><strong>Track work</strong> &mdash; every task tied to goals</li>
+        <li><strong>Stay in control</strong> &mdash; approve, pause, override</li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- ===== SLIDE 6: WHY PAPERCLIP ===== -->
+<!-- SLIDE 6: WHY PAPERCLIP -->
 <div class="slide" id="slide-6">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
-  <div class="tag">The Problem It Solves</div>
+  <div class="tag">The Problem</div>
   <h2>Why <span class="accent">Paperclip</span>?</h2>
 
-  <p style="font-size: 16px; color: var(--text); max-width: 680px; line-height: 1.6; margin-bottom: 8px;">
-    The tools are incredible. But whoever has been starting to work with them knows: they grow fast, and it gets messy. Paperclip wants to have an answer for that.
+  <p style="font-size: 19px; color: var(--text); max-width: 700px; line-height: 1.6;">
+    The tools are incredible &mdash; but they grow fast and get messy. Paperclip claims to have an answer.
   </p>
 
   <div class="problem-row">
     <div class="p-card">
       <div class="icon">🤖</div>
       <div class="label">Claude Code / Cursor</div>
-      <p>Powerful, but <strong>one agent at a time</strong>. You end up juggling 20 terminals. No coordination. Context gets lost between sessions.</p>
+      <p><strong>One agent at a time.</strong> 20 terminals. Context lost between sessions.</p>
     </div>
     <div class="p-card">
       <div class="icon">☁️</div>
       <div class="label">Cloud Agents</div>
-      <p>Great for single tasks, but <strong>no organizational layer</strong>. No budgets. No accountability. No way to run them as a team.</p>
+      <p><strong>No organizational layer.</strong> No budgets, no accountability, no team.</p>
     </div>
     <div class="p-card">
       <div class="icon">🔧</div>
       <div class="label">DIY Frameworks</div>
-      <p>Requires deep tech skill. Most founders <strong>hit a wall</strong> going from "cool demo" to "this runs my business."</p>
+      <p><strong>Too technical.</strong> Most founders hit a wall going from demo to reality.</p>
     </div>
   </div>
 
@@ -721,7 +702,7 @@
   </div>
 </div>
 
-<!-- ===== SLIDE 7: LIVE DEMOS ===== -->
+<!-- SLIDE 7: LIVE DEMOS -->
 <div class="slide" id="slide-7">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
@@ -732,46 +713,44 @@
   <div class="demo-col">
     <div class="demo-card">
       <div class="demo-host">
-        <div class="host-avatar-placeholder">KD</div>
+        <img class="host-avatar" src="../../img/kai.jpeg" alt="Kai">
         <div>
           <div class="name">Kai Dippe</div>
           <div class="company">Quantum Flow AI &middot; Berlin</div>
         </div>
       </div>
-      <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px;">Founder at Quantum Flow AI. Helps enterprises turn AI strategy into scalable systems. Has deployed AI agents across multiple businesses.</p>
-      <h3 style="font-size: 16px; color: var(--accent); margin-bottom: 10px;">What he'll show:</h3>
-      <ul style="list-style: none; padding: 0;">
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>Transcript &rarr; Offer &rarr; Contract</strong> pipeline</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>Landing Page &rarr; Server Deployment</strong></li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>CMO Marketing Setup</strong> inside Paperclip</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>Dev Agent + OpenClaw</strong> Client Board</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>Business Plan Builder</strong> for Startup CEOs</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>Costs & Learnings:</strong> Claude before vs. after Paperclip</li>
+      <div class="bio">Helps enterprises turn AI strategy into scalable systems. Has deployed agents across multiple businesses.</div>
+      <div class="use-label">What he'll show:</div>
+      <ul>
+        <li><strong>Transcript &rarr; Offer &rarr; Contract</strong> pipeline</li>
+        <li><strong>Landing Page &rarr; Server Deployment</strong></li>
+        <li><strong>CMO Marketing Setup</strong> in Paperclip</li>
+        <li><strong>Business Plan Builder</strong> for Startup CEOs</li>
+        <li><strong>Costs:</strong> Claude before vs. after Paperclip</li>
       </ul>
     </div>
 
     <div class="demo-card">
       <div class="demo-host">
-        <div class="host-avatar-placeholder">TD</div>
+        <img class="host-avatar" src="../../img/theunis.jpeg" alt="Theunis">
         <div>
           <div class="name">Theunis De Klerk</div>
           <div class="company">Serova.ai &middot; South Africa</div>
         </div>
       </div>
-      <p style="font-size: 14px; color: var(--muted); margin-bottom: 16px;">CEO & Co-Founder of Serova.ai. 17+ years in development & business strategy. Building AI-powered tools for WhatsApp communities and custom business agents.</p>
-      <h3 style="font-size: 16px; color: var(--accent); margin-bottom: 10px;">What he'll show:</h3>
-      <ul style="list-style: none; padding: 0;">
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> His <strong>Paperclip instance with OpenClaw</strong> sub-agents</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> Real-world: <strong>accounting processes</strong></li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> Real-world: <strong>support queries</strong></li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative; border-bottom: 1px solid var(--border);"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> <strong>WhatsApp community management</strong> with AI agents</li>
-        <li style="padding: 6px 0; font-size: 15px; color: var(--text); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0; color: var(--accent);">&bull;</span> What's realistic for <strong>non-technical founders</strong></li>
+      <div class="bio">CEO & Co-Founder of Serova.ai. 17+ years in dev & strategy. Building AI tools for WhatsApp communities and custom business agents.</div>
+      <div class="use-label">What he'll show:</div>
+      <ul>
+        <li><strong>Paperclip + OpenClaw</strong> sub-agents</li>
+        <li>Real-world: <strong>accounting processes</strong></li>
+        <li>Real-world: <strong>support query handling</strong></li>
+        <li><strong>WhatsApp community</strong> management</li>
+        <li>What's realistic for <strong>non-technical founders</strong></li>
       </ul>
     </div>
 
     <div class="slido-reminder">
-      <p><strong>Keep adding your questions & voting on Slido!</strong> We'll tackle the top-voted ones first during Q&A.</p>
-      <p style="margin-top: 6px; font-size: 13px; color: var(--muted);">app.sli.do/event/tagR2ceEXT7mfkzePgGSoi</p>
+      <p><strong>Keep adding your questions & voting on Slido!</strong><br>We'll tackle the top-voted ones first during Q&A.</p>
     </div>
   </div>
 </div>
