@@ -16,7 +16,7 @@
     --card: #181818;
     --border: rgba(255,255,255,0.06);
     --text: #c8c8c8;
-    --muted: #777;
+    --muted: #888;
     --white: #f0f0f0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,12 +28,11 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Slide system */
   .slide {
     display: none;
     width: 100vw;
     height: 100vh;
-    padding: 70px 100px;
+    padding: 80px 120px;
     position: relative;
     flex-direction: column;
     justify-content: center;
@@ -48,13 +47,13 @@
   }
   .logo-bar {
     position: absolute;
-    top: 26px; left: 100px;
+    top: 28px; left: 120px;
   }
-  .logo-bar img { height: 24px; opacity: 0.8; }
+  .logo-bar img { height: 26px; opacity: 0.8; }
 
   .nav {
     position: fixed;
-    bottom: 28px; right: 36px;
+    bottom: 28px; right: 40px;
     display: flex; gap: 10px;
     z-index: 100;
   }
@@ -62,43 +61,43 @@
     background: rgba(255,103,25,0.1);
     border: 1px solid rgba(255,103,25,0.2);
     color: var(--accent);
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 6px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     transition: all 0.2s;
   }
   .nav button:hover { background: rgba(255,103,25,0.2); }
   .slide-counter {
     position: fixed;
-    bottom: 34px; left: 36px;
-    font-size: 14px;
+    bottom: 34px; left: 40px;
+    font-size: 15px;
     color: var(--muted);
     z-index: 100;
   }
 
-  /* Typography — all bumped ~20% */
+  /* Typography — presentation-sized */
   h1 {
     font-family: 'Spectral', serif;
     font-weight: 700;
-    font-size: 60px;
-    line-height: 1.1;
+    font-size: 68px;
+    line-height: 1.08;
     color: var(--white);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
   h2 {
     font-family: 'Spectral', serif;
     font-weight: 700;
-    font-size: 46px;
-    line-height: 1.15;
+    font-size: 52px;
+    line-height: 1.12;
     color: var(--white);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   h3 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 26px;
     color: var(--white);
     margin-bottom: 14px;
   }
@@ -107,21 +106,28 @@
     display: inline-block;
     background: var(--accent-light);
     color: var(--accent);
-    padding: 6px 16px;
-    border-radius: 18px;
-    font-size: 14px;
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
-  /* Host avatars */
+  /* Avatars */
   .host-avatar {
-    width: 64px; height: 64px;
+    width: 72px; height: 72px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid rgba(255,103,25,0.3);
+    flex-shrink: 0;
+  }
+  .host-avatar-lg {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,103,25,0.3);
     flex-shrink: 0;
   }
 
@@ -136,25 +142,16 @@
     background-color: var(--dark);
   }
   .slide-title .community-tag {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--accent);
     letter-spacing: 3px;
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 36px;
   }
-  .slide-title h1 { font-size: 72px; line-height: 1.06; margin-bottom: 28px; }
-  .slide-title .subtitle-line {
-    font-size: 21px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .slide-title .meta {
-    margin-top: 32px;
-    font-size: 19px;
-    color: var(--muted);
-    line-height: 1.8;
-  }
+  .slide-title h1 { font-size: 78px; line-height: 1.05; margin-bottom: 28px; }
+  .slide-title .subtitle-line { font-size: 22px; color: var(--muted); line-height: 1.6; }
+  .slide-title .meta { margin-top: 32px; font-size: 20px; color: var(--muted); line-height: 1.8; }
   .slide-title .meta strong { color: var(--white); font-weight: 600; }
   .glow-dot {
     position: absolute;
@@ -169,12 +166,12 @@
 
   .hosts-row {
     display: flex;
-    gap: 40px;
-    margin-top: 44px;
+    gap: 44px;
+    margin-top: 48px;
   }
   .host { display: flex; align-items: center; gap: 16px; }
-  .host-info .name { font-weight: 600; color: var(--white); font-size: 17px; }
-  .host-info .role { color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .host-info .name { font-weight: 600; color: var(--white); font-size: 19px; }
+  .host-info .role { color: var(--muted); font-size: 15px; margin-top: 3px; }
 
   /* ===== SLIDE 2: HOUSEKEEPING ===== */
   .hk-grid {
@@ -186,37 +183,36 @@
   .hk-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
+    border-radius: 16px;
+    padding: 28px 32px;
     display: flex;
-    gap: 18px;
+    gap: 20px;
     align-items: flex-start;
   }
   .hk-icon {
-    font-size: 32px;
+    font-size: 34px;
     flex-shrink: 0;
-    width: 54px; height: 54px;
+    width: 56px; height: 56px;
     display: flex; align-items: center; justify-content: center;
     background: var(--accent-light);
     border-radius: 12px;
   }
-  .hk-card h3 { font-size: 20px; margin-bottom: 6px; }
-  .hk-card p { font-size: 17px; color: var(--muted); line-height: 1.5; }
-
+  .hk-card h3 { font-size: 22px; margin-bottom: 6px; }
+  .hk-card p { font-size: 18px; color: var(--muted); line-height: 1.5; }
   .slido-box {
     grid-column: 1 / -1;
     background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02));
     border: 1px solid var(--accent-border);
-    border-radius: 14px;
-    padding: 32px 36px;
+    border-radius: 16px;
+    padding: 32px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .slido-box h3 { color: var(--accent); font-size: 24px; }
-  .slido-box p { color: var(--text); font-size: 17px; margin-top: 6px; }
+  .slido-box h3 { color: var(--accent); font-size: 26px; }
+  .slido-box p { color: var(--text); font-size: 19px; margin-top: 6px; }
   .qr-img {
-    width: 140px; height: 140px;
+    width: 150px; height: 150px;
     background: white;
     border-radius: 12px;
     padding: 8px;
@@ -226,54 +222,89 @@
 
   /* ===== SLIDE 3: AGENDA ===== */
   .agenda-list {
-    margin-top: 24px;
+    margin-top: 28px;
     position: relative;
-    padding-left: 40px;
+    padding-left: 44px;
   }
   .agenda-list::before {
     content: '';
     position: absolute;
-    left: 14px; top: 6px; bottom: 6px;
+    left: 16px; top: 8px; bottom: 8px;
     width: 2px;
     background: rgba(255,103,25,0.15);
   }
   .a-item {
     position: relative;
-    padding: 14px 0 14px 32px;
+    padding: 16px 0 16px 36px;
     display: flex;
     align-items: baseline;
-    gap: 20px;
+    gap: 22px;
   }
   .a-item::before {
     content: '';
     position: absolute;
-    left: -32px; top: 22px;
-    width: 10px; height: 10px;
+    left: -34px; top: 24px;
+    width: 12px; height: 12px;
     border-radius: 50%;
     background: var(--accent);
   }
   .a-time {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 22px;
     color: var(--accent);
     min-width: 80px;
   }
-  .a-desc { font-size: 20px; color: var(--white); }
-  .a-desc .who { color: var(--muted); font-size: 16px; margin-left: 8px; }
-  .a-desc .detail { display: block; color: var(--muted); font-size: 15px; margin-top: 4px; }
-
+  .a-desc { font-size: 22px; color: var(--white); }
+  .a-desc .who { color: var(--muted); font-size: 17px; margin-left: 10px; }
+  .a-desc .detail { display: block; color: var(--muted); font-size: 16px; margin-top: 4px; }
   .agenda-note {
-    margin-top: 32px;
-    padding: 20px 28px;
+    margin-top: 36px;
+    padding: 22px 32px;
     background: var(--accent-light);
-    border-radius: 12px;
-    border-left: 3px solid var(--accent);
-    font-size: 18px;
+    border-radius: 14px;
+    border-left: 4px solid var(--accent);
+    font-size: 20px;
     color: var(--text);
   }
 
-  /* ===== SLIDE 4: POLLS ===== */
+  /* ===== SLIDE 4: MEET YOUR HOSTS ===== */
+  .hosts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 36px;
+  }
+  .host-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .host-card img {
+    margin-bottom: 20px;
+  }
+  .host-card .h-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .host-card .h-company {
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .host-card .h-topic {
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ===== SLIDE 5: POLLS ===== */
   .poll-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -283,8 +314,8 @@
   .poll-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 32px;
+    border-radius: 16px;
+    padding: 34px;
     position: relative;
     overflow: hidden;
   }
@@ -298,100 +329,100 @@
   .poll-num {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 44px;
+    font-size: 48px;
     color: rgba(255,103,25,0.1);
     position: absolute;
-    top: 12px; right: 18px;
+    top: 12px; right: 20px;
   }
-  .poll-card h3 { font-size: 22px; margin-bottom: 10px; }
-  .poll-card p { font-size: 18px; color: var(--muted); line-height: 1.5; }
-  .poll-cta { margin-top: 14px; font-size: 15px; color: var(--accent); font-weight: 600; }
+  .poll-card h3 { font-size: 24px; margin-bottom: 10px; }
+  .poll-card p { font-size: 20px; color: var(--muted); line-height: 1.4; }
+  .poll-cta { margin-top: 14px; font-size: 17px; color: var(--accent); font-weight: 600; }
   .poll-full { grid-column: 1 / -1; }
 
-  /* ===== SLIDE 5: WHAT IS PAPERCLIP ===== */
+  /* ===== SLIDE 6: WHAT IS PAPERCLIP ===== */
   .big-quote {
     font-family: 'Spectral', serif;
-    font-size: 30px;
+    font-size: 34px;
     font-style: italic;
     color: var(--white);
-    border-left: 3px solid var(--accent);
-    padding-left: 24px;
-    margin: 24px 0 32px;
-    line-height: 1.45;
+    border-left: 4px solid var(--accent);
+    padding-left: 28px;
+    margin: 28px 0 36px;
+    line-height: 1.4;
   }
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 36px;
+    gap: 40px;
   }
   .c-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 32px;
+    border-radius: 16px;
+    padding: 36px;
   }
-  .c-card h3 { color: var(--accent); font-size: 22px; margin-bottom: 16px; }
+  .c-card h3 { color: var(--accent); font-size: 24px; margin-bottom: 18px; }
   .c-card ul { list-style: none; padding: 0; }
   .c-card li {
-    padding: 10px 0;
-    font-size: 18px;
+    padding: 12px 0;
+    font-size: 20px;
     color: var(--text);
-    line-height: 1.5;
+    line-height: 1.4;
     border-bottom: 1px solid var(--border);
-    padding-left: 18px;
+    padding-left: 20px;
     position: relative;
   }
   .c-card li::before {
     content: '';
     position: absolute;
-    left: 0; top: 17px;
-    width: 6px; height: 6px;
+    left: 0; top: 19px;
+    width: 7px; height: 7px;
     background: var(--accent);
     border-radius: 50%;
   }
   .c-card li:last-child { border-bottom: none; }
   .c-card li strong { color: var(--white); }
 
-  /* ===== SLIDE 6: WHY PAPERCLIP ===== */
+  /* ===== SLIDE 7: WHY PAPERCLIP ===== */
   .problem-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 32px;
+    gap: 28px;
+    margin-top: 36px;
   }
   .p-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
+    border-radius: 16px;
+    padding: 32px;
     text-align: center;
   }
-  .p-card .icon { font-size: 38px; margin-bottom: 14px; }
+  .p-card .icon { font-size: 42px; margin-bottom: 16px; }
   .p-card .label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--accent);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
-  .p-card p { font-size: 17px; color: var(--muted); line-height: 1.5; }
+  .p-card p { font-size: 19px; color: var(--muted); line-height: 1.5; }
   .p-card p strong { color: var(--text); }
 
   .solution-bar {
-    margin-top: 32px;
+    margin-top: 36px;
     background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02));
     border: 1px solid var(--accent-border);
-    border-radius: 14px;
-    padding: 28px 36px;
+    border-radius: 16px;
+    padding: 30px 40px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 28px;
   }
-  .solution-bar .arrow { font-size: 34px; color: var(--accent); }
-  .solution-bar h3 { color: var(--accent); font-size: 22px; margin-bottom: 4px; }
-  .solution-bar p { font-size: 18px; color: var(--text); }
+  .solution-bar .arrow { font-size: 38px; color: var(--accent); }
+  .solution-bar h3 { color: var(--accent); font-size: 24px; margin-bottom: 4px; }
+  .solution-bar p { font-size: 20px; color: var(--text); }
 
-  /* ===== SLIDE 7: DEMOS ===== */
+  /* ===== SLIDE 8: DEMOS ===== */
   .demo-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -401,35 +432,34 @@
   .demo-card {
     background: var(--card);
     border: 1px solid var(--accent-border);
-    border-radius: 14px;
-    padding: 32px;
+    border-radius: 16px;
+    padding: 34px;
   }
   .demo-host {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     margin-bottom: 20px;
     padding-bottom: 18px;
     border-bottom: 1px solid var(--border);
   }
-  .demo-host .name { font-weight: 600; font-size: 20px; color: var(--white); }
-  .demo-host .company { color: var(--muted); font-size: 14px; margin-top: 2px; }
-  .demo-card .bio { font-size: 15px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
-  .demo-card .use-label { font-size: 17px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+  .demo-host .name { font-weight: 600; font-size: 22px; color: var(--white); }
+  .demo-host .company { color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .demo-card .use-label { font-size: 19px; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
   .demo-card ul { list-style: none; padding: 0; }
   .demo-card li {
-    padding: 7px 0;
-    font-size: 17px;
+    padding: 8px 0;
+    font-size: 19px;
     color: var(--text);
-    padding-left: 16px;
+    padding-left: 18px;
     position: relative;
     border-bottom: 1px solid var(--border);
   }
   .demo-card li::before {
     content: '';
     position: absolute;
-    left: 0; top: 15px;
-    width: 5px; height: 5px;
+    left: 0; top: 16px;
+    width: 6px; height: 6px;
     background: var(--accent);
     border-radius: 50%;
   }
@@ -439,12 +469,12 @@
   .slido-reminder {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 22px;
+    padding: 24px;
     background: var(--accent-light);
     border: 1px solid var(--accent-border);
-    border-radius: 14px;
+    border-radius: 16px;
   }
-  .slido-reminder p { font-size: 19px; color: var(--text); }
+  .slido-reminder p { font-size: 21px; color: var(--text); }
   .slido-reminder strong { color: var(--accent); }
 </style>
 </head>
@@ -505,31 +535,30 @@
       <div class="hk-icon">🔇</div>
       <div>
         <h3>Mute Your Mic</h3>
-        <p>Keep muted unless you're speaking. Unmute to jump in during Q&A.</p>
+        <p>Keep muted unless speaking. Unmute for Q&A.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">🎥</div>
       <div>
         <h3>We're Recording</h3>
-        <p>This session is being recorded. We'll share it with all attendees afterwards.</p>
+        <p>Recording will be shared with all attendees.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">💬</div>
       <div>
         <h3>Use the Chat</h3>
-        <p>Reactions, comments, quick questions &mdash; drop them in the Google Meet chat.</p>
+        <p>Reactions and questions in the Google Meet chat.</p>
       </div>
     </div>
     <div class="hk-card">
       <div class="hk-icon">🙋</div>
       <div>
         <h3>No Stupid Questions</h3>
-        <p>"What even is an AI agent?" is perfectly valid. Zero jargon.</p>
+        <p>"What is an AI agent?" is perfectly valid here.</p>
       </div>
     </div>
-
     <div class="slido-box">
       <div>
         <h3>Submit Questions on Slido</h3>
@@ -561,21 +590,15 @@
     </div>
     <div class="a-item">
       <span class="a-time">13:15</span>
-      <span class="a-desc">Demo 1: Marketing, Sales & Business Plan Agents<span class="who">&mdash; Kai Dippe</span>
-        <span class="detail">Transcript &rarr; Offer &rarr; Contract &middot; Landing Pages &middot; CMO Setup &middot; Costs & Learnings</span>
-      </span>
+      <span class="a-desc">Demo 1: Kai Dippe<span class="who">&mdash; Marketing, Sales & Business Plan Agents</span></span>
     </div>
     <div class="a-item">
       <span class="a-time">13:25</span>
-      <span class="a-desc">Demo 2: Paperclip + OpenClaw in Action<span class="who">&mdash; Theunis De Klerk</span>
-        <span class="detail">Accounting agents &middot; Support queries &middot; WhatsApp community management</span>
-      </span>
+      <span class="a-desc">Demo 2: Theunis De Klerk<span class="who">&mdash; Paperclip + OpenClaw in Action</span></span>
     </div>
     <div class="a-item">
       <span class="a-time">13:35</span>
-      <span class="a-desc">Open Q&A &mdash; Your Questions, Live<span class="who">&mdash; Everyone</span>
-        <span class="detail">From Slido + live. Bring your business &mdash; we'll tell you what agent to build.</span>
-      </span>
+      <span class="a-desc">Open Q&A &mdash; Your Questions, Live<span class="who">&mdash; Everyone</span></span>
     </div>
   </div>
 
@@ -584,8 +607,38 @@
   </div>
 </div>
 
-<!-- SLIDE 4: CONVERSATION STARTERS -->
+<!-- SLIDE 4: MEET YOUR HOSTS -->
 <div class="slide" id="slide-4">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
+
+  <div class="tag">Your Hosts Today</div>
+  <h2>Meet the Team</h2>
+
+  <div class="hosts-grid">
+    <div class="host-card">
+      <img class="host-avatar-lg" src="../../img/phil.jpeg" alt="Phil">
+      <div class="h-name">Philipp Strohemann</div>
+      <div class="h-company">Unleash Ventures</div>
+      <div class="h-topic">Exited founder & investor. Runs Unleash &mdash; hands-on founder community for SA entrepreneurs. Helps portfolio companies get onto Claude & Paperclip.</div>
+    </div>
+    <div class="host-card">
+      <img class="host-avatar-lg" src="../../img/kai.jpeg" alt="Kai">
+      <div class="h-name">Kai Dippe</div>
+      <div class="h-company">Quantum Flow AI &middot; Berlin</div>
+      <div class="h-topic">Helps enterprises turn AI strategy into scalable systems. Will demo his marketing, sales, and business plan agents inside Paperclip.</div>
+    </div>
+    <div class="host-card">
+      <img class="host-avatar-lg" src="../../img/theunis.jpeg" alt="Theunis">
+      <div class="h-name">Theunis De Klerk</div>
+      <div class="h-company">Serova.ai &middot; South Africa</div>
+      <div class="h-topic">CEO & Co-Founder. Building AI tools for WhatsApp communities. Will walk through his Paperclip instance with OpenClaw sub-agents.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: CONVERSATION STARTERS -->
+<div class="slide" id="slide-5">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
@@ -608,32 +661,32 @@
     <div class="poll-card">
       <div class="poll-num">03</div>
       <h3>AI Agents</h3>
-      <p>Built or deployed any AI agents or automations?</p>
+      <p>Built or deployed any AI agents?</p>
       <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">04</div>
       <h3>Paperclip</h3>
-      <p>Already installed or played with Paperclip?</p>
+      <p>Already tried Paperclip?</p>
       <div class="poll-cta">1 = Yes &middot; 2 = No</div>
     </div>
     <div class="poll-card poll-full">
       <h3>The Big One</h3>
-      <p style="font-size: 21px; color: var(--white);">"What's the one task in your business you wish you could automate tomorrow?"</p>
+      <p style="font-size: 24px; color: var(--white);">"What's the one task in your business you wish you could automate tomorrow?"</p>
       <div class="poll-cta">Drop it in the chat &darr;</div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 5: WHAT IS PAPERCLIP -->
-<div class="slide" id="slide-5">
+<!-- SLIDE 6: WHAT IS PAPERCLIP -->
+<div class="slide" id="slide-6">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
   <div class="tag">The Concept</div>
   <h2>What is <span class="accent">Paperclip</span>?</h2>
 
-  <p style="font-size: 20px; color: var(--text); max-width: 750px; line-height: 1.6; margin-bottom: 16px;">
+  <p style="font-size: 22px; color: var(--text); max-width: 800px; line-height: 1.5; margin-bottom: 16px;">
     If you've been working with Claude Code or OpenClaw, you've seen how fast things grow &mdash; and how messy they get. Paperclip wants to be the answer.
   </p>
 
@@ -663,15 +716,15 @@
   </div>
 </div>
 
-<!-- SLIDE 6: WHY PAPERCLIP -->
-<div class="slide" id="slide-6">
+<!-- SLIDE 7: WHY PAPERCLIP -->
+<div class="slide" id="slide-7">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
   <div class="tag">The Problem</div>
   <h2>Why <span class="accent">Paperclip</span>?</h2>
 
-  <p style="font-size: 19px; color: var(--text); max-width: 700px; line-height: 1.6;">
+  <p style="font-size: 21px; color: var(--text); max-width: 750px; line-height: 1.5;">
     The tools are incredible &mdash; but they grow fast and get messy. Paperclip claims to have an answer.
   </p>
 
@@ -684,12 +737,12 @@
     <div class="p-card">
       <div class="icon">☁️</div>
       <div class="label">Cloud Agents</div>
-      <p><strong>No organizational layer.</strong> No budgets, no accountability, no team.</p>
+      <p><strong>No organizational layer.</strong> No budgets, no accountability.</p>
     </div>
     <div class="p-card">
       <div class="icon">🔧</div>
       <div class="label">DIY Frameworks</div>
-      <p><strong>Too technical.</strong> Most founders hit a wall going from demo to reality.</p>
+      <p><strong>Too technical.</strong> Most founders hit a wall at "now what?"</p>
     </div>
   </div>
 
@@ -697,13 +750,13 @@
     <div class="arrow">&rarr;</div>
     <div>
       <h3>Paperclip Bridges the Gap</h3>
-      <p>One dashboard. Multiple agents. Defined roles, budgets, goals. <strong>From playing with AI to agents running your business.</strong></p>
+      <p>One dashboard. Multiple agents. Roles, budgets, goals. <strong>From playing with AI to agents running your business.</strong></p>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 7: LIVE DEMOS -->
-<div class="slide" id="slide-7">
+<!-- SLIDE 8: LIVE DEMOS -->
+<div class="slide" id="slide-8">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
@@ -719,7 +772,6 @@
           <div class="company">Quantum Flow AI &middot; Berlin</div>
         </div>
       </div>
-      <div class="bio">Helps enterprises turn AI strategy into scalable systems. Has deployed agents across multiple businesses.</div>
       <div class="use-label">What he'll show:</div>
       <ul>
         <li><strong>Transcript &rarr; Offer &rarr; Contract</strong> pipeline</li>
@@ -738,7 +790,6 @@
           <div class="company">Serova.ai &middot; South Africa</div>
         </div>
       </div>
-      <div class="bio">CEO & Co-Founder of Serova.ai. 17+ years in dev & strategy. Building AI tools for WhatsApp communities and custom business agents.</div>
       <div class="use-label">What he'll show:</div>
       <ul>
         <li><strong>Paperclip + OpenClaw</strong> sub-agents</li>
@@ -756,7 +807,7 @@
 </div>
 
 <!-- Navigation -->
-<div class="slide-counter"><span id="current">1</span> / <span id="total">7</span></div>
+<div class="slide-counter"><span id="current">1</span> / <span id="total">8</span></div>
 <div class="nav">
   <button onclick="prev()">&larr; Back</button>
   <button onclick="next()">Next &rarr;</button>
@@ -764,7 +815,7 @@
 
 <script>
   let current = 1;
-  const total = 7;
+  const total = 8;
   function show(n) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.getElementById('slide-' + n).classList.add('active');
