@@ -204,18 +204,28 @@
     background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02));
     border: 1px solid var(--accent-border);
     border-radius: 16px;
-    padding: 32px 40px;
+    padding: 36px 44px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 40px;
   }
-  .slido-box h3 { color: var(--accent); font-size: 26px; }
+  .slido-box h3 { color: var(--accent); font-size: 28px; }
   .slido-box p { color: var(--text); font-size: 19px; margin-top: 6px; }
+  .slido-link {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    word-break: break-all;
+    user-select: all;
+    cursor: text;
+  }
   .qr-img {
-    width: 150px; height: 150px;
+    width: 200px; height: 200px;
     background: white;
-    border-radius: 12px;
-    padding: 8px;
+    border-radius: 14px;
+    padding: 10px;
     flex-shrink: 0;
   }
   .qr-img img { width: 100%; height: 100%; }
@@ -563,6 +573,7 @@
       <div>
         <h3>Submit Questions on Slido</h3>
         <p>Pre-submitted questions get priority. Scan the QR or visit <strong>sli.do</strong></p>
+        <div class="slido-link">https://app.sli.do/event/tagR2ceEXT7mfkzePgGSoi</div>
       </div>
       <div class="qr-img">
         <img src="../../img/slido-qr.png" alt="Slido QR Code">
@@ -613,7 +624,7 @@
   <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
 
   <div class="tag">Your Hosts Today</div>
-  <h2>Meet the Team</h2>
+  <h2>Meet Your Hosts</h2>
 
   <div class="hosts-grid">
     <div class="host-card">
@@ -650,25 +661,25 @@
       <div class="poll-num">01</div>
       <h3>AI Tools</h3>
       <p>Used Claude or ChatGPT for your business?</p>
-      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
+      <div class="poll-cta">👍 or 👎 in the chat</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">02</div>
       <h3>Claude Code</h3>
       <p>Working with Claude Code already?</p>
-      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
+      <div class="poll-cta">👍 or 👎 in the chat</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">03</div>
       <h3>AI Agents</h3>
       <p>Built or deployed any AI agents?</p>
-      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
+      <div class="poll-cta">👍 or 👎 in the chat</div>
     </div>
     <div class="poll-card">
       <div class="poll-num">04</div>
       <h3>Paperclip</h3>
       <p>Already tried Paperclip?</p>
-      <div class="poll-cta">1 = Yes &middot; 2 = No</div>
+      <div class="poll-cta">👍 or 👎 in the chat</div>
     </div>
     <div class="poll-card poll-full">
       <h3>The Big One</h3>
