@@ -507,6 +507,10 @@
     Online via Google Meet
   </div>
 
+  <div style="margin-top: 28px; font-size: 22px; color: var(--muted);">
+    Presented by <a href="https://unleash-ventures.com" style="color: var(--accent); text-decoration: none; font-weight: 600;">unleash-ventures.com</a>
+  </div>
+
   <div class="hosts-row">
     <div class="host">
       <img class="host-avatar" src="../../img/phil.jpeg" alt="Phil">
@@ -817,8 +821,40 @@
   </div>
 </div>
 
+<!-- SLIDE 9: THANK YOU / CTA -->
+<div class="slide slide-title" id="slide-9">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="glow-dot glow-dot-1"></div>
+  <div class="glow-dot glow-dot-2"></div>
+  <div class="glow-dot glow-dot-3"></div>
+
+  <div class="community-tag">Thank You</div>
+  <h1>Enjoyed This Session?</h1>
+  <p class="subtitle-line" style="font-size: 24px; max-width: 700px; line-height: 1.6;">
+    More sessions like this are coming up.<br>Join us and stay in the loop.
+  </p>
+
+  <div style="display: flex; gap: 32px; margin-top: 48px;">
+    <div style="background: var(--card); border: 1px solid var(--accent-border); border-radius: 16px; padding: 36px 44px; flex: 1; max-width: 420px;">
+      <h3 style="color: var(--accent); font-size: 24px; margin-bottom: 12px;">Upcoming Sessions</h3>
+      <p style="font-size: 20px; color: var(--text); line-height: 1.5; margin-bottom: 18px;">Browse all learning events and register for what's next.</p>
+      <a href="https://unleash-ventures.com" style="color: var(--accent); font-size: 22px; font-weight: 600; text-decoration: none;">unleash-ventures.com &rarr;</a>
+    </div>
+    <div style="background: var(--card); border: 1px solid var(--accent-border); border-radius: 16px; padding: 36px 44px; flex: 1; max-width: 420px;">
+      <h3 style="color: var(--accent); font-size: 24px; margin-bottom: 12px;">Weekly on Substack</h3>
+      <p style="font-size: 20px; color: var(--text); line-height: 1.5; margin-bottom: 18px;">We share weekly about building with AI &mdash; tools, workflows, lessons learned.</p>
+      <a href="https://philunleashed.substack.com" style="color: var(--accent); font-size: 22px; font-weight: 600; text-decoration: none;">Subscribe on Substack &rarr;</a>
+    </div>
+  </div>
+
+  <div style="margin-top: 48px; font-size: 20px; color: var(--muted);">
+    Thanks for being part of the Unleash community.
+  </div>
+</div>
+
 <!-- Navigation -->
-<div class="slide-counter"><span id="current">1</span> / <span id="total">8</span></div>
+<div class="slide-counter"><span id="current">1</span> / <span id="total">9</span></div>
 <div class="nav">
   <button onclick="prev()">&larr; Back</button>
   <button onclick="next()">Next &rarr;</button>
@@ -826,7 +862,7 @@
 
 <script>
   let current = 1;
-  const total = 8;
+  const total = 9;
   function show(n) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.getElementById('slide-' + n).classList.add('active');
