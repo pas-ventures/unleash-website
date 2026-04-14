@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Claude Code for Your B2B GTM · MyEO Lunch & Learn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F1D3D;
+  --navy-2:#162748;
+  --coral:#E85D3C;
+  --coral-2:#FF7355;
+  --grad-purple:#7B5CFF;
+  --grad-pink:#E85D94;
+  --grey-100:#F4F5F7;
+  --grey-200:#E5E7EB;
+  --grey-500:#6B7280;
+  --grey-700:#374151;
+  --white:#FFFFFF;
+  --off-white:#FAFAFA;
+  --cosmic-1:#1a1247;
+  --cosmic-2:#0a0420;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#000;color:var(--navy);-webkit-font-smoothing:antialiased}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--white)}
+.slide.active{display:flex}
+.slide-inner{flex:1;display:flex;flex-direction:column;padding:64px 96px;position:relative}
+.footer{position:absolute;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey-500)}
+.footer .brand{display:flex;align-items:center;gap:8px}
+.footer .brand .dot{width:14px;height:14px;border-radius:50%;background:var(--coral)}
+.footer .counter{font-variant-numeric:tabular-nums}
+.copy{font-size:10px;color:#9CA3AF;text-transform:none;letter-spacing:0}
+
+/* ---- Hero / Cover (Luma cosmic) ---- */
+.slide.cover{background:radial-gradient(ellipse at 80% 20%,#3a1d6e 0%,#1a1247 35%,#0a0420 75%);color:#fff}
+.slide.cover .slide-inner{padding:72px 96px}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:auto}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);backdrop-filter:blur(8px);border-radius:999px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#fff;font-weight:500}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);box-shadow:0 0 12px var(--coral)}
+.cover-meta{font-size:13px;color:rgba(255,255,255,0.65);letter-spacing:0.04em}
+.cover-headline-block{margin-top:auto}
+.cover-eyebrow{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--coral);font-weight:600;margin-bottom:18px}
+.cover-h1{font-size:72px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;max-width:1100px}
+.cover-h1 .grad{background:linear-gradient(120deg,var(--grad-purple) 0%,var(--grad-pink) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-sub{margin-top:24px;font-size:18px;line-height:1.5;color:rgba(255,255,255,0.7);max-width:760px;font-weight:400}
+.cover-hosts{margin-top:48px;display:flex;align-items:flex-end;justify-content:space-between}
+.host-row{display:flex;gap:64px}
+.host-block .label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.host-block .name{font-size:18px;font-weight:600;color:#fff}
+.host-block .org{font-size:13px;color:rgba(255,255,255,0.6);margin-top:2px}
+.eo-logo{display:flex;align-items:center;gap:10px;color:#fff;font-size:11px;letter-spacing:0.06em}
+.eo-logo .ring{width:36px;height:36px;border-radius:50%;background:conic-gradient(from 220deg,#FF6B35,#E85D3C,#7B5CFF,#E85D94,#FF6B35);position:relative}
+.eo-logo .ring::after{content:'';position:absolute;inset:5px;border-radius:50%;background:#0a0420}
+.eo-logo .label{display:flex;flex-direction:column;line-height:1.15}
+.eo-logo .label b{font-weight:700;font-size:13px}
+
+/* ---- Section title slide ---- */
+.slide.section{background:#fff}
+.slide.section .slide-inner{justify-content:center;align-items:flex-start;padding:64px 120px}
+.section-eyebrow{font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--coral);font-weight:600;margin-bottom:24px}
+.section-h{font-size:88px;line-height:1.02;font-weight:800;color:var(--navy);letter-spacing:-0.025em;max-width:1300px}
+.section-h .accent{color:var(--coral)}
+.section-sub{margin-top:24px;font-size:20px;color:var(--grey-500);max-width:780px;font-weight:400}
+
+/* ---- Generic content slide ---- */
+.slide.content{background:#fff}
+.s-headline{font-size:54px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-0.02em;margin-bottom:8px;text-align:center}
+.s-headline .accent{color:var(--coral)}
+.s-sub{font-size:18px;color:var(--grey-500);text-align:center;font-weight:400;margin-bottom:48px}
+
+/* Card grids */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto;width:100%}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:980px;margin:0 auto;width:100%}
+.card{background:var(--grey-100);border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;gap:14px}
+.card .num-icon{width:48px;height:48px;border-radius:12px;background:var(--coral);color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(232,93,60,0.25)}
+.card .num-icon.alt{background:var(--navy)}
+.card .ct{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey-500);font-weight:600}
+.card .ch{font-size:20px;font-weight:700;color:var(--navy);line-height:1.25}
+.card .cb{font-size:14px;line-height:1.55;color:var(--grey-700)}
+.card.dark{background:var(--navy);color:#fff}
+.card.dark .ch{color:#fff}
+.card.dark .cb{color:rgba(255,255,255,0.7)}
+.card.dark .num-icon{background:var(--coral)}
+
+/* Quick poll pill */
+.poll-pill{display:inline-flex;align-items:center;gap:8px;background:var(--coral);color:#fff;padding:8px 18px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin:0 auto 24px;align-self:center}
+.center-col{display:flex;flex-direction:column;align-items:center;width:100%;flex:1;justify-content:center}
+
+/* Housekeeping split */
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;flex:1;align-items:center;width:100%}
+.split-h{font-size:96px;line-height:1.0;font-weight:800;color:var(--navy);letter-spacing:-0.03em}
+.split-h .accent{color:var(--coral)}
+.hk-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hk-card{border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.hk-card .ch{font-size:16px;font-weight:700}
+.hk-card .cb{font-size:13px;line-height:1.5}
+.hk-card.coral{background:var(--coral);color:#fff}
+.hk-card.coral .cb{color:rgba(255,255,255,0.85)}
+.hk-card.navy{background:var(--navy);color:#fff}
+.hk-card.navy .cb{color:rgba(255,255,255,0.7)}
+
+/* Numbered list (split layout for "Today's Agenda") */
+.num-list{display:flex;flex-direction:column;gap:18px;width:100%;max-width:760px;margin:0 auto}
+.num-row{display:flex;align-items:flex-start;gap:20px;padding:22px 24px;background:var(--grey-100);border-radius:14px}
+.num-row .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
+.num-row .body .nh{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.num-row .body .nb{font-size:14px;color:var(--grey-500);line-height:1.5}
+
+/* Diagram dot ring (placeholder) */
+.diagram{width:340px;height:340px;border-radius:50%;background:radial-gradient(circle at center,var(--coral) 0%,var(--coral) 22%,#fff 23%,#fff 28%,var(--navy) 29%,var(--navy) 56%,#fff 57%,#fff 60%,var(--grey-100) 61%);margin:24px auto;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;letter-spacing:0.08em;text-transform:uppercase}
+.diagram::after{content:'CLOSE';position:absolute}
+
+/* CTA slide */
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--navy);color:#fff;padding:18px 32px;border-radius:14px;font-weight:600;font-size:15px;margin-top:32px}
+.cta-btn .ic{width:18px;height:18px;background:var(--coral);border-radius:4px;display:inline-block}
+
+/* Q&A slide */
+.qr{width:160px;height:160px;background:var(--white);border:8px solid var(--navy);border-radius:8px;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);gap:2px;padding:8px}
+.qr div{background:var(--navy)}
+.qr div.empty{background:transparent}
+
+/* Closing slide */
+.closing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1100px;margin:48px auto 0;width:100%}
+
+/* Nav controls */
+.nav{position:fixed;left:0;right:0;bottom:14px;display:flex;align-items:center;justify-content:center;gap:14px;z-index:1000;pointer-events:none}
+.nav button,.nav .dots{pointer-events:auto}
+.nav button{width:32px;height:32px;border-radius:50%;border:1px solid var(--grey-200);background:#fff;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.nav button:hover{background:var(--grey-100)}
+.nav .dots{display:flex;gap:6px;align-items:center}
+.nav .dots .d{width:6px;height:6px;border-radius:50%;background:var(--grey-200);cursor:pointer}
+.nav .dots .d.active{background:var(--coral);width:18px;border-radius:6px}
+
+/* Cover footer override (no global footer on cover) */
+.slide.cover .footer{color:rgba(255,255,255,0.4)}
+.slide.cover .footer .copy{color:rgba(255,255,255,0.3)}
+.slide.cover .footer .brand .dot{background:var(--coral)}
+
+/* Section nav letterings small */
+@media (max-width:1100px){
+  .cover-h1{font-size:54px}
+  .section-h{font-size:64px}
+  .s-headline{font-size:42px}
+  .split-h{font-size:72px}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- 1 · COVER -->
+<section class="slide cover active">
+  <div class="slide-inner">
+    <div class="cover-top">
+      <div class="pill"><span class="dot"></span> MYEO EXPERIENCE SHARE</div>
+      <div class="cover-meta">Lunch &amp; Learn · 60 min · Virtual</div>
+    </div>
+    <div class="cover-headline-block">
+      <div class="cover-eyebrow">LUNCH &amp; LEARN</div>
+      <h1 class="cover-h1"><span class="grad">Claude Code</span> for Your<br>B2B Go-to-Market<br>Foundations</h1>
+      <p class="cover-sub">Turn your sales call recordings into a complete GTM engine — thesis, offer, landing pages, ads &amp; scripts — all powered by Claude Code &amp; Skills.</p>
+      <div class="cover-hosts">
+        <div class="host-row">
+          <div class="host-block">
+            <div class="label">HOSTED BY</div>
+            <div class="name">Philipp Ströhemann</div>
+            <div class="org">PAS Ventures · Project Unleash</div>
+          </div>
+          <div class="host-block">
+            <div class="label">CO-HOST</div>
+            <div class="name">Manuel Hartmann</div>
+            <div class="org">The Sales Playbook</div>
+          </div>
+          <div class="host-block">
+            <div class="label">CO-HOST</div>
+            <div class="name">Christoph Erler</div>
+            <div class="org">ComX</div>
+          </div>
+        </div>
+        <div class="eo-logo">
+          <div class="ring"></div>
+          <div class="label"><b>Entrepreneurs'</b><span>Organization</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · HOUSEKEEPING -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="split">
+      <div class="split-h">House<br><span class="accent">Keeping</span></div>
+      <div class="hk-grid">
+        <div class="hk-card coral"><div class="ch">Productive 60 Minutes</div><div class="cb">To keep audio quality great, please mute. Unmute when we go to Q&amp;A. Session will not be recorded so we can speak openly.</div></div>
+        <div class="hk-card navy"><div class="ch">Use Slido for Questions</div><div class="cb">Drop all your questions in Slido — link in chat. Upvotes decide order in Q&amp;A.</div></div>
+        <div class="hk-card coral"><div class="ch">No Recording — On Purpose</div><div class="cb">We want everyone to share real numbers and real problems. Nothing leaves this room.</div></div>
+        <div class="hk-card navy"><div class="ch">Skills + Slides Shared After</div><div class="cb">Everything goes into the B2B Sales Folder + GitHub. Link sent in the follow-up email.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">2 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 3 · TODAY'S AGENDA -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">Today's <span class="accent">Agenda</span></h2>
+      <p class="s-sub">3 hosts · 3 use cases · 1 open Q&amp;A</p>
+      <div class="num-list">
+        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Phil — Skills × Transcripts → GTM Assets</div><div class="nb">How to turn 6 weeks of Claude Code rollout into landing pages, sales scripts, ads &amp; case studies that convert.</div></div></div>
+        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Manu — The ROI Calculator That Closes Deals</div><div class="nb">Live demo of an enterprise ROI calculator built with Claude Code. The asset that ends sales cycles.</div></div></div>
+        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Chris — From Transcripts to Individual Coaching</div><div class="nb">CRM data + transcripts → 9-field gap matrix → individual SDR coaching every week. Open-source blueprint.</div></div></div>
+        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">15 min Audience Q&amp;A · live Slido</div><div class="nb">Then 30-min office hours with each host the following week.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">3 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 4 · LET'S ENGAGE / QUICK POLL -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <span class="poll-pill">⚡ QUICK POLL</span>
+      <h2 class="s-headline">Let's <span class="accent">Engage</span></h2>
+      <p class="s-sub">Drop your answers in the chat — we'll read them as we go.</p>
+      <div class="cards-3">
+        <div class="card"><div class="num-icon">01</div><div class="ct">SALES TEAM</div><div class="ch">How big is your sales team?</div><div class="cb">Founder-led, &lt;5 SDRs, 5–20, or &gt;20?</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ct">CALL RECORDINGS</div><div class="ch">Do you record &amp; review your calls?</div><div class="cb">If yes — what do you actually do with them?</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ct">AI BEFORE</div><div class="ch">Tried AI for sales assets already?</div><div class="cb">Worked? Inconsistent? Gave up? Be honest.</div></div>
+      </div>
+      <a class="cta-btn"><span class="ic"></span>Type your answers in the chat now</a>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">4 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 5 · WHY THIS MATTERS -->
+<section class="slide content" style="background:var(--navy);color:#fff">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline" style="color:#fff">Why This <span class="accent">Masterclass</span></h2>
+      <p class="s-sub" style="color:rgba(255,255,255,0.6)">The 4 things that block most sales orgs from scaling — and what AI actually fixes.</p>
+      <div class="cards-2" style="margin-top:24px">
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Asset Creation Is Slow &amp; Inconsistent</div><div class="cb">Founders document the customer journey badly — sales teams build everything from scratch every quarter.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">Marketing &amp; Sales Speak Different Languages</div><div class="cb">Marketing writes ads; sales hears objections. The two never reconcile. AI fixes this with shared transcripts.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">03</div><div class="ch">Coaching Is Vibes-Based, Not Data-Based</div><div class="cb">Dashboards say everyone has a "pitch problem." Reps don't know what to practice this week.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">04</div><div class="ch">It's Actually Easy — If You Know the Mechanics</div><div class="cb">Sales literature is 30 years old. Skills make it reproducible. We hand you the recipe today.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">5 / 15</div><div class="copy" style="color:rgba(255,255,255,0.3)">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 6 · PHIL SECTION OPENER -->
+<section class="slide section">
+  <div class="slide-inner">
+    <div class="section-eyebrow">PART 01 · PHIL · 10 MIN</div>
+    <h2 class="section-h">Skills × <span class="accent">Transcripts</span><br>= GTM Assets That<br>Actually Convert</h2>
+    <p class="section-sub">6 weeks. 5 portfolio companies. €12 Facebook demos. AI SDR scripts that outperform anything written by hand. Here's the recipe.</p>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">6 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 7 · PHIL · 3 RESULTS -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">3 Results from 6 <span class="accent">Weeks</span></h2>
+      <p class="s-sub">Real teams · real numbers · real outcomes.</p>
+      <div class="cards-3">
+        <div class="card"><div class="num-icon">01</div><div class="ct">PORTFOLIO CO. A</div><div class="ch">€12 Facebook Demo Funnel</div><div class="cb">Early-stage team had never run Facebook ads. Skill-driven workflow → first qualified demo at €12 CAC, week one.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ct">PORTFOLIO CO. B</div><div class="ch">AI SDR Script Outperforms Manual</div><div class="cb">Script generated from real call transcripts. New SDRs onboarded in days. Higher meeting rate than the founder's hand-written version.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ct">PORTFOLIO CO. C</div><div class="ch">ICP Refined From 256 Calls</div><div class="cb">Out: companies under 50 employees. In: tech scaleups with specialist roles. Rewrote ads, landing page &amp; cadences from one weekend.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">7 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 8 · THE 4 SKILL CATEGORIES -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">The 4 <span class="accent">Skill</span> Categories</h2>
+      <p class="s-sub">Open source on GitHub. Drop into Claude Code, replace placeholders, ship.</p>
+      <div class="cards-2">
+        <div class="card"><div class="num-icon">01</div><div class="ch">Niche Research</div><div class="cb">Deep market research from real call data. Pains, jargon, emotional hooks — the foundation for every other asset.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ch">Landing Page Builder</div><div class="cb">2-page conversion-optimised landing page + signup flow, niche-specific copy from research output.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ch">Outbound Copy Manager</div><div class="cb">3-email cold sequence + 5 opener variants for A/B testing. Hormozi/Belfort/Kennedy framework baked in.</div></div>
+        <div class="card"><div class="num-icon">04</div><div class="ch">Drip Campaign Builder</div><div class="cb">12-email, 25-day post-opt-in nurture sequence. Converts inbound leads into calls.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">8 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 9 · MANU SECTION -->
+<section class="slide section">
+  <div class="slide-inner">
+    <div class="section-eyebrow">PART 02 · MANU · 10 MIN</div>
+    <h2 class="section-h">The <span class="accent">ROI Calculator</span><br>That Actually<br>Closes Enterprise Deals</h2>
+    <p class="section-sub">For 20 years ROI calculators lived in Excel — and customers never saw them. Now they live on the web, built in days, and trigger the close.</p>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">9 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 10 · MANU · LIVE DEMO -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">From Excel-Hell to <span class="accent">Web Asset</span></h2>
+      <p class="s-sub">Live demo: enterprise ROI calculator built with Claude Code &amp; Codex.</p>
+      <div class="num-list">
+        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Input: 3–5 customer numbers</div><div class="nb">Team size, current process cost, time per task. The buyer types in their own reality.</div></div></div>
+        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Output: personalised impact projection</div><div class="nb">Year 1 savings, payback period, headcount equivalent. In their numbers, not a generic case study.</div></div></div>
+        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Triggered inside the closing call</div><div class="nb">Sales rep walks the buyer through it live. The page does the convincing. Friction drops.</div></div></div>
+        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">Why it converts</div><div class="nb">The buyer sees value in their own numbers, not ours. That's a different kind of yes.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">10 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 11 · CHRIS SECTION -->
+<section class="slide section">
+  <div class="slide-inner">
+    <div class="section-eyebrow">PART 03 · CHRIS · 10 MIN</div>
+    <h2 class="section-h">From <span class="accent">Transcripts</span><br>to Individual<br>SDR Coaching</h2>
+    <p class="section-sub">Dashboards say all reps have a "pitch problem." They don't. 256 calls, 9 diagnoses, 6-dimension scoring — and each rep gets one framework to practice this week.</p>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">11 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 12 · CHRIS · GAP MATRIX -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">The 6-Dimension <span class="accent">Scoring</span> Stack</h2>
+      <p class="s-sub">CRM data (Close.com API) + transcripts (Deepgram) → nightly scoring → coaching focus of the week.</p>
+      <div class="cards-3">
+        <div class="card"><div class="num-icon">01</div><div class="ch">Opener</div><div class="cb">First 30 seconds. Pattern interrupt or voicemail.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ch">Pitch</div><div class="cb">SPIN-style problem framing. Not feature dumping.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ch">Objection Handling</div><div class="cb">LARC framework. Acknowledge, reframe, redirect.</div></div>
+        <div class="card"><div class="num-icon">04</div><div class="ch">Closing</div><div class="cb">Concrete next step. Date in the calendar.</div></div>
+        <div class="card"><div class="num-icon">05</div><div class="ch">Conversation Depth</div><div class="cb">3 layers of "why?" before pitching.</div></div>
+        <div class="card"><div class="num-icon">06</div><div class="ch">Rapport</div><div class="cb">Mirror, pace, 3-second pause discipline.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">12 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 13 · SKILLS DISTRIBUTION -->
+<section class="slide content" style="background:var(--navy);color:#fff">
+  <div class="slide-inner">
+    <div class="center-col" style="text-align:center">
+      <span class="poll-pill" style="background:rgba(255,255,255,0.1);color:#fff">📦 OPEN SOURCE</span>
+      <h2 class="s-headline" style="color:#fff">Take it <span class="accent">Home</span> Tonight</h2>
+      <p class="s-sub" style="color:rgba(255,255,255,0.6)">Everything you saw is in the GitHub repo. Clone, install, ship.</p>
+      <div style="margin-top:24px;background:rgba(255,255,255,0.08);padding:24px 36px;border-radius:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:18px;letter-spacing:0;color:#fff">
+        github.com/pas-ventures/venture-gtm-skills
+      </div>
+      <div class="cards-3" style="margin-top:32px">
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Phil's GTM Skills</div><div class="cb">Niche Research · Landing · Outbound · Drip · Content Engine</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">Manu's ROI Calculator Stub</div><div class="cb">Starter scaffold + Claude Code prompts to fork &amp; customise.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">03</div><div class="ch">Chris's SDR Scoring Blueprint</div><div class="cb">Open-source repo. Close.com API + Deepgram + scoring stack.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">13 / 15</div><div class="copy" style="color:rgba(255,255,255,0.3)">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 14 · Q&A -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <span class="poll-pill">💬 LIVE Q&amp;A · 15 MIN</span>
+      <h2 class="s-headline">Ask <span class="accent">Anything</span></h2>
+      <p class="s-sub">Drop questions in Slido. Upvotes win. Each host takes the ones in their lane.</p>
+      <div style="display:flex;gap:64px;margin-top:32px;align-items:center;justify-content:center">
+        <div style="text-align:center">
+          <div style="width:160px;height:160px;background:repeating-conic-gradient(var(--navy) 0% 25%,#fff 0% 50%) 50% / 12px 12px;border:6px solid var(--navy);border-radius:8px"></div>
+          <div style="margin-top:12px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey-500);font-weight:600">Slido Code: #MYEO-CC</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div class="num-row"><div class="num">P</div><div class="body"><div class="nh">Phil — Skills, Asset Workflows, Setup</div><div class="nb">Anything Claude Code &amp; GTM workflow related.</div></div></div>
+          <div class="num-row"><div class="num">M</div><div class="body"><div class="nh">Manu — ROI Calculators &amp; Closing Tools</div><div class="nb">Enterprise sales mechanics, demo handover, pricing.</div></div></div>
+          <div class="num-row"><div class="num">C</div><div class="body"><div class="nh">Chris — Scoring, Coaching, ICP Validation</div><div class="nb">CRM integration, Close.com API, Deepgram, blueprint setup.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">14 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 15 · CLOSE -->
+<section class="slide cover">
+  <div class="slide-inner">
+    <div class="cover-top">
+      <div class="pill"><span class="dot"></span> THANK YOU</div>
+      <div class="cover-meta">All links arrive in your inbox today.</div>
+    </div>
+    <div class="cover-headline-block">
+      <div class="cover-eyebrow">SEE YOU AGAIN</div>
+      <h1 class="cover-h1">Skills, Slides &amp; the<br><span class="grad">B2B Sales Folder</span><br>are yours.</h1>
+      <p class="cover-sub">Each host opens a 30-min office hours slot next week. Reply to the follow-up email to grab one. We'll also kick off a working group in 4 weeks — open to anyone in this room who wants to share what they shipped.</p>
+      <div class="cover-hosts">
+        <div class="host-row">
+          <div class="host-block"><div class="label">FOLLOW-UP</div><div class="name">pas@pas-ventures.com</div><div class="org">Office hours · GitHub · B2B Sales Folder</div></div>
+          <div class="host-block"><div class="label">REPO</div><div class="name">github.com/pas-ventures</div><div class="org">venture-gtm-skills · open source</div></div>
+        </div>
+        <div class="eo-logo"><div class="ring"></div><div class="label"><b>Entrepreneurs'</b><span>Organization</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">15 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+</div>
+
+<div class="nav">
+  <button id="prev">‹</button>
+  <div class="dots" id="dots"></div>
+  <button id="next">›</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsEl=document.getElementById('dots');
+let idx=0;
+slides.forEach((s,i)=>{const d=document.createElement('div');d.className='d'+(i===0?' active':'');d.onclick=()=>go(i);dotsEl.appendChild(d)});
+function go(i){idx=(i+slides.length)%slides.length;slides.forEach((s,k)=>s.classList.toggle('active',k===idx));[...dotsEl.children].forEach((d,k)=>d.classList.toggle('active',k===idx))}
+document.getElementById('prev').onclick=()=>go(idx-1);
+document.getElementById('next').onclick=()=>go(idx+1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(idx+1);if(e.key==='ArrowLeft')go(idx-1)});
+</script>
+</body>
+</html>
