@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>How Claude Code Will Revolutionize Your Sales Org · MyEO Lunch &amp; Learn</title>
+<title>Claude for B2B Go-To-Market Foundations · MyEO Lunch &amp; Learn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -104,28 +104,26 @@ html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-
 .hk-card.navy{background:var(--navy);color:#fff}
 .hk-card.navy .cb{color:rgba(255,255,255,0.7)}
 
-/* Numbered list (split layout for "Today's Agenda") */
+/* Numbered list */
 .num-list{display:flex;flex-direction:column;gap:18px;width:100%;max-width:760px;margin:0 auto}
 .num-row{display:flex;align-items:flex-start;gap:20px;padding:22px 24px;background:var(--grey-100);border-radius:14px}
 .num-row .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
 .num-row .body .nh{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px}
 .num-row .body .nb{font-size:14px;color:var(--grey-500);line-height:1.5}
 
-/* Diagram dot ring (placeholder) */
-.diagram{width:340px;height:340px;border-radius:50%;background:radial-gradient(circle at center,var(--coral) 0%,var(--coral) 22%,#fff 23%,#fff 28%,var(--navy) 29%,var(--navy) 56%,#fff 57%,#fff 60%,var(--grey-100) 61%);margin:24px auto;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;letter-spacing:0.08em;text-transform:uppercase}
-.diagram::after{content:'CLOSE';position:absolute}
-
 /* CTA slide */
-.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--navy);color:#fff;padding:18px 32px;border-radius:14px;font-weight:600;font-size:15px;margin-top:32px}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--navy);color:#fff;padding:18px 32px;border-radius:14px;font-weight:600;font-size:15px;margin-top:32px;text-decoration:none}
 .cta-btn .ic{width:18px;height:18px;background:var(--coral);border-radius:4px;display:inline-block}
 
-/* Q&A slide */
-.qr{width:160px;height:160px;background:var(--white);border:8px solid var(--navy);border-radius:8px;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);gap:2px;padding:8px}
-.qr div{background:var(--navy)}
-.qr div.empty{background:transparent}
-
-/* Closing slide */
-.closing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1100px;margin:48px auto 0;width:100%}
+/* Flow diagram */
+.flow{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 auto;flex-wrap:wrap}
+.flow-box{background:var(--grey-100);border-radius:14px;padding:24px 28px;text-align:center;min-width:200px}
+.flow-box.highlight{background:var(--coral);color:#fff}
+.flow-box.highlight .fb-sub{color:rgba(255,255,255,0.85)}
+.flow-box .fb-h{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.flow-box.highlight .fb-h{color:#fff}
+.flow-box .fb-sub{font-size:13px;color:var(--grey-500);line-height:1.45}
+.flow-arrow{font-size:28px;color:var(--grey-500);font-weight:300}
 
 /* Nav controls */
 .nav{position:fixed;left:0;right:0;bottom:14px;display:flex;align-items:center;justify-content:center;gap:14px;z-index:1000;pointer-events:none}
@@ -136,12 +134,11 @@ html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-
 .nav .dots .d{width:6px;height:6px;border-radius:50%;background:var(--grey-200);cursor:pointer}
 .nav .dots .d.active{background:var(--coral);width:18px;border-radius:6px}
 
-/* Cover footer override (no global footer on cover) */
+/* Cover footer override */
 .slide.cover .footer{color:rgba(255,255,255,0.4)}
 .slide.cover .footer .copy{color:rgba(255,255,255,0.3)}
 .slide.cover .footer .brand .dot{background:var(--coral)}
 
-/* Section nav letterings small */
 @media (max-width:1100px){
   .cover-h1{font-size:54px}
   .section-h{font-size:64px}
@@ -163,14 +160,14 @@ html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-
     </div>
     <div class="cover-headline-block">
       <div class="cover-eyebrow">LUNCH &amp; LEARN</div>
-      <h1 class="cover-h1">How <span class="grad">Claude Code</span><br>Will Revolutionize<br>Your Sales Org</h1>
-      <p class="cover-sub">If you do it right. Skills × Real Market Data → High-Converting GTM Assets. Three bottlenecks. Three hosts. Three real examples from the last 6 weeks of portfolio rollout.</p>
+      <h1 class="cover-h1"><span class="grad">Claude</span> for B2B<br>Go-To-Market<br>Foundations</h1>
+      <p class="cover-sub">Skills &times; Real Market Data &rarr; High-Converting GTM Assets. Three bottlenecks. Three hosts. Three real examples from the last 6 weeks of portfolio rollout.</p>
       <div class="cover-hosts">
         <div class="host-row">
           <div class="host-block">
             <div class="label">HOSTED BY</div>
-            <div class="name">Philipp Ströhemann</div>
-            <div class="org">PAS Ventures · Project Unleash</div>
+            <div class="name">Philipp Str&ouml;hemann</div>
+            <div class="org">PAS Ventures &middot; Project Unleash</div>
           </div>
           <div class="host-block">
             <div class="label">CO-HOST</div>
@@ -196,212 +193,247 @@ html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-
 <section class="slide content">
   <div class="slide-inner">
     <div class="split">
-      <div class="split-h">House<br><span class="accent">Keeping</span></div>
+      <div class="split-h">Before<br>We <span class="accent">Start</span></div>
       <div class="hk-grid">
-        <div class="hk-card coral"><div class="ch">No Recording — On Purpose</div><div class="cb">We want real numbers and real problems on the table. Nothing leaves this room. Mute on join, unmute for Q&amp;A.</div></div>
-        <div class="hk-card navy"><div class="ch">Slido for Questions</div><div class="cb">Drop everything in Slido — link in chat. Upvotes decide the order. 20 min Q&amp;A at the end.</div></div>
-        <div class="hk-card coral"><div class="ch">Don't Take Notes</div><div class="cb">We turn the call transcript into a tutorial PDF. Drop it into Claude — it walks you step-by-step through implementation.</div></div>
-        <div class="hk-card navy"><div class="ch">Skills + Tutorial Shared After</div><div class="cb">GitHub repo, B2B Sales Folder, tutorial PDF and call transcript all in the follow-up email.</div></div>
+        <div class="hk-card coral"><div class="ch">What This Is</div><div class="cb">3 use cases we discovered independently and now bring together. For people already working with Claude Code, Cowork, or Codex. We assume your tool is running and has access to your data.</div></div>
+        <div class="hk-card navy"><div class="ch">What This Is NOT</div><div class="cb">No setup tutorial, no installation, no IT admin. Setup videos will be shared in the follow-up for anyone who needs them. Everything comes from our own setup &mdash; adapt to yours.</div></div>
+        <div class="hk-card coral"><div class="ch">This Will Be Dense</div><div class="cb">We&rsquo;re packing as much as possible into 60 minutes. Listen first, don&rsquo;t worry about notes. You&rsquo;ll get the anonymized transcript as a tutorial PDF to keep working with after the call.</div></div>
+        <div class="hk-card navy"><div class="ch">No Recording &mdash; PDF Instead</div><div class="cb">Real numbers, real problems &mdash; nothing leaves this room. Instead of a recording, you get a tutorial PDF + all skills on GitHub. Questions via <a href="https://app.sli.do/event/cxkQBrAosXP5aNW82BZFKe" style="color:#FF7355">Slido</a>.</div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">2 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">2 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
 <!-- 3 · TODAY'S AGENDA -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
-      <h2 class="s-headline">3 Bottlenecks · 3 <span class="accent">Hosts</span></h2>
-      <p class="s-sub">Every sales org has the same three. Each host solves one — and they build on each other.</p>
+      <h2 class="s-headline">3 Bottlenecks &middot; 3 <span class="accent">Hosts</span></h2>
+      <p class="s-sub">Every sales org has the same three. Each host solves one &mdash; and they build on each other.</p>
       <div class="num-list">
-        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Phil — Positioning &amp; Asset Foundations</div><div class="nb">90% of sales-asset quality is foundation work nobody does. From 10–256 call recordings to ICP, pains and voice of customer — without workshops.</div></div></div>
-        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Manu — Asset Creation &amp; Customer Journey</div><div class="nb">Live demo: ROI calculator built with Claude Code. The hardest enterprise closing asset, out of Excel-hell, into the buyer's hands.</div></div></div>
-        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Chris — Training, Performance &amp; Lead Mgmt</div><div class="nb">Once your SDRs run on AI, your whole lead management changes. Routing, qualification, handoff to marketing — what actually shifts.</div></div></div>
-        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">20 min Audience Q&amp;A · live Slido</div><div class="nb">Plus 30-min office hours with each host the following week.</div></div></div>
+        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Phil &mdash; Positioning &amp; Asset Foundations</div><div class="nb">90% of sales-asset quality is foundation work nobody does. From 10&ndash;256 call recordings to ICP, pains and voice of customer &mdash; without workshops.</div></div></div>
+        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Manu &mdash; Asset Creation &amp; Client Journey</div><div class="nb">Live demo: ROI calculator built with Claude. The hardest enterprise closing asset, from spreadsheet hell into the buyer&rsquo;s hands.</div></div></div>
+        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Chris &mdash; Training, Performance &amp; Lead Mgmt</div><div class="nb">Once your SDRs run on AI, your whole lead management changes. Routing, qualification, handoff to marketing &mdash; what actually shifts.</div></div></div>
+        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">20 min Audience Q&amp;A &middot; live Slido</div><div class="nb">Plus 30-min office hours with each host the following week.</div></div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">3 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">3 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 4 · LET'S ENGAGE / QUICK POLL -->
+<!-- 4 · QUICK POLL -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
-      <span class="poll-pill">⚡ QUICK POLL</span>
-      <h2 class="s-headline">Let's <span class="accent">Engage</span></h2>
-      <p class="s-sub">Drop your answers in the chat — we'll read them as we go.</p>
+      <span class="poll-pill">&#9889; QUICK POLL</span>
+      <h2 class="s-headline">Let&rsquo;s <span class="accent">Engage</span></h2>
+      <p class="s-sub">Drop your answers in the chat &mdash; we&rsquo;ll read them as we go.</p>
       <div class="cards-3">
-        <div class="card"><div class="num-icon">01</div><div class="ct">SALES TEAM</div><div class="ch">How big is your sales team?</div><div class="cb">Founder-led, &lt;5 SDRs, 5–20, or &gt;20?</div></div>
-        <div class="card"><div class="num-icon">02</div><div class="ct">CALL RECORDINGS</div><div class="ch">Do you record &amp; review your calls?</div><div class="cb">If yes — what do you actually do with them?</div></div>
+        <div class="card"><div class="num-icon">01</div><div class="ct">SALES TEAM</div><div class="ch">How big is your sales team?</div><div class="cb">Founder-led, &lt;5 SDRs, 5&ndash;20, or &gt;20?</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ct">CALL RECORDINGS</div><div class="ch">Do you record &amp; review your calls?</div><div class="cb">If yes &mdash; what do you actually do with them?</div></div>
         <div class="card"><div class="num-icon">03</div><div class="ct">AI BEFORE</div><div class="ch">Tried AI for sales assets already?</div><div class="cb">Worked? Inconsistent? Gave up? Be honest.</div></div>
       </div>
-      <a class="cta-btn"><span class="ic"></span>Type your answers in the chat now</a>
+      <a class="cta-btn" href="https://app.sli.do/event/cxkQBrAosXP5aNW82BZFKe" target="_blank"><span class="ic"></span>Type your answers in the chat now</a>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">4 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">4 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 5 · WHY THIS MATTERS -->
+<!-- 5 · PHIL SECTION OPENER -->
+<section class="slide section">
+  <div class="slide-inner">
+    <div class="section-eyebrow">BOTTLENECK 01 &middot; PHIL &middot; 10 MIN</div>
+    <h2 class="section-h">Positioning &amp;<br><span class="accent">Asset Foundations</span></h2>
+    <p class="section-sub">90% of sales-asset quality is foundation work nobody does. Founders write landing pages from gut feel because they have no process to turn calls into customer insight. Skills &times; transcripts changes that &mdash; in hours, not workshop weeks.</p>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">5 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 6 · PHIL: THE PROBLEM -->
+<section class="slide content">
+  <div class="slide-inner">
+    <div class="center-col">
+      <h2 class="s-headline">The <span class="accent">Problem</span></h2>
+      <p class="s-sub">Asset Foundations are the foundation of everything &mdash; but nobody does them properly.</p>
+      <div class="cards-3">
+        <div class="card"><div class="num-icon">01</div><div class="ct">THE OLD WAY</div><div class="ch">Listen to customer calls manually</div><div class="cb">Super daunting. You need to be a great listener, a great note-taker, and a great synthesizer. Most people aren&rsquo;t all three.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ct">THE BOTTLENECK</div><div class="ch">Founders skip it entirely</div><div class="cb">It&rsquo;s so much work that most founders write landing pages, ads and scripts from gut feel instead. The foundation is missing &mdash; everything downstream suffers.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ct">THE NEW WAY</div><div class="ch">Feed dozens or hundreds of calls at once</div><div class="cb">Way more data, way faster. The Asset Foundations you get are so good that everything you build on top of them just works.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">6 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
+</section>
+
+<!-- 7 · PHIL: THE ARCHITECTURE -->
 <section class="slide content" style="background:var(--navy);color:#fff">
   <div class="slide-inner">
     <div class="center-col">
-      <h2 class="s-headline" style="color:#fff">Skills × Real Market Data → <span class="accent">High-Converting Assets</span></h2>
-      <p class="s-sub" style="color:rgba(255,255,255,0.6)">The 3 bottlenecks every sales org has — and how each host solves one. They build on each other.</p>
-      <div class="cards-3" style="margin-top:24px;max-width:none">
-        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Positioning &amp; Asset Foundations</div><div class="cb">90% of asset quality is foundation work. Phil turns 10–256 calls into ICP, pains and voice of customer — without workshops.</div></div>
-        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">Asset Creation &amp; Customer Journey</div><div class="cb">High-converting assets across the whole journey. Manu shows the hardest one live: a web-based ROI calculator built with Claude Code.</div></div>
-        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">03</div><div class="ch">Training, Performance &amp; Lead Mgmt</div><div class="cb">Once your team runs on AI, lead management changes. Chris shows what shifts: routing, qualification, handoff to marketing.</div></div>
+      <h2 class="s-headline" style="color:#fff">The <span class="accent">Architecture</span></h2>
+      <p class="s-sub" style="color:rgba(255,255,255,0.6)">Customer Data first. Then Skills built with proven frameworks. One skill per task &mdash; small, checkable, no overlap.</p>
+      <div class="flow">
+        <div class="flow-box" style="background:rgba(255,255,255,0.08)"><div class="fb-h" style="color:#fff">Customer Data</div><div class="fb-sub" style="color:rgba(255,255,255,0.6)">10&ndash;256 real call recordings. The raw material.</div></div>
+        <div class="flow-arrow" style="color:rgba(255,255,255,0.3)">&rarr;</div>
+        <div class="flow-box" style="background:rgba(255,255,255,0.08)"><div class="fb-h" style="color:#fff">Skills</div><div class="fb-sub" style="color:rgba(255,255,255,0.6)">Built with Hormozi, Cialdini, Belfort, Brunson. One skill per task. You rebuild your own process.</div></div>
+        <div class="flow-arrow" style="color:rgba(255,255,255,0.3)">&rarr;</div>
+        <div class="flow-box highlight"><div class="fb-h">Asset Foundations</div><div class="fb-sub">ICP, Pains, Voice of Customer, Emotional Hooks, Jargon &mdash; all extracted, not assumed.</div></div>
       </div>
     </div>
   </div>
-  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">5 / 15</div><div class="copy" style="color:rgba(255,255,255,0.3)">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">7 / 17</div><div class="copy" style="color:rgba(255,255,255,0.3)">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 6 · PHIL SECTION OPENER -->
-<section class="slide section">
+<!-- 8 · PHIL: WHAT ASSET FOUNDATIONS UNLOCK -->
+<section class="slide content">
   <div class="slide-inner">
-    <div class="section-eyebrow">BOTTLENECK 01 · PHIL · 10 MIN</div>
-    <h2 class="section-h">Positioning &amp;<br><span class="accent">Asset Foundations</span></h2>
-    <p class="section-sub">90% of sales-asset quality is foundation work nobody does. Founders write landing pages from gut feel because they have no process to turn calls into customer insight. Skills × transcripts changes that — in hours, not workshop weeks.</p>
+    <div class="center-col">
+      <h2 class="s-headline">Once You Have <span class="accent">Foundations</span></h2>
+      <p class="s-sub">A clear ICP description, real pains, voice of customer &mdash; and suddenly everything gets easier.</p>
+      <div class="cards-3">
+        <div class="card"><div class="num-icon">01</div><div class="ch">Landing Pages &amp; Ads</div><div class="cb">Copy that speaks the customer&rsquo;s language because it literally comes from their words.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ch">Sales Scripts &amp; Outbound Copy</div><div class="cb">SDR scripts, cold emails, objection handling &mdash; all grounded in real conversations, not assumptions.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ch">Client Journey &amp; Offer</div><div class="cb">Customer journey mapping, offer design, drip campaigns &mdash; built on data, not gut feel.</div></div>
+      </div>
+    </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">6 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">8 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 7 · PHIL · 3 RESULTS -->
+<!-- 9 · PHIL: 3 RESULTS (moved to end) -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
       <h2 class="s-headline">3 Results from 6 <span class="accent">Weeks</span></h2>
-      <p class="s-sub">Real teams · real numbers · real outcomes.</p>
+      <p class="s-sub">Real teams &middot; real numbers &middot; real outcomes.</p>
       <div class="cards-3">
-        <div class="card"><div class="num-icon">01</div><div class="ct">PORTFOLIO CO. A</div><div class="ch">€12 Facebook Demo Funnel</div><div class="cb">Early-stage team had never run Facebook ads. Skill-driven workflow → first qualified demo at €12 CAC, week one.</div></div>
-        <div class="card"><div class="num-icon">02</div><div class="ct">PORTFOLIO CO. B</div><div class="ch">AI SDR Script Outperforms Manual</div><div class="cb">Script generated from real call transcripts. New SDRs onboarded in days. Higher meeting rate than the founder's hand-written version.</div></div>
-        <div class="card"><div class="num-icon">03</div><div class="ct">PORTFOLIO CO. C</div><div class="ch">ICP Refined From 256 Calls</div><div class="cb">Out: companies under 50 employees. In: tech scaleups with specialist roles. Rewrote ads, landing page &amp; cadences from one weekend.</div></div>
+        <div class="card"><div class="num-icon">01</div><div class="ct">PORTFOLIO CO. A</div><div class="ch">&euro;12 Facebook Demo Funnel</div><div class="cb">Early-stage team had never run Facebook ads. Skill-driven workflow &rarr; first qualified demo at &euro;12 CAC, week one.</div></div>
+        <div class="card"><div class="num-icon">02</div><div class="ct">PORTFOLIO CO. B</div><div class="ch">AI SDR Script Outperforms Manual</div><div class="cb">Script generated from real call transcripts. New SDRs onboarded in days. Higher meeting rate than the founder&rsquo;s hand-written version.</div></div>
+        <div class="card"><div class="num-icon">03</div><div class="ct">PORTFOLIO CO. C</div><div class="ch">ICP Refined From 256 Calls</div><div class="cb">Out: companies under 50 employees. In: tech scaleups with specialist roles. Rewrote ads, landing page &amp; cadences in one weekend.</div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">7 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">9 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 8 · THE 4 SKILL CATEGORIES -->
-<section class="slide content">
+<!-- 10 · PHIL: SKILLS DOWNLOAD & FORK -->
+<section class="slide content" style="background:var(--navy);color:#fff">
   <div class="slide-inner">
-    <div class="center-col">
-      <h2 class="s-headline">The 4 <span class="accent">Skill</span> Categories</h2>
-      <p class="s-sub">Open source on GitHub. Drop into Claude Code, replace placeholders, ship.</p>
-      <div class="cards-2">
-        <div class="card"><div class="num-icon">01</div><div class="ch">Niche Research</div><div class="cb">Deep market research from real call data. Pains, jargon, emotional hooks — the foundation for every other asset.</div></div>
-        <div class="card"><div class="num-icon">02</div><div class="ch">Landing Page Builder</div><div class="cb">2-page conversion-optimised landing page + signup flow, niche-specific copy from research output.</div></div>
-        <div class="card"><div class="num-icon">03</div><div class="ch">Outbound Copy Manager</div><div class="cb">3-email cold sequence + 5 opener variants for A/B testing. Hormozi/Belfort/Kennedy framework baked in.</div></div>
-        <div class="card"><div class="num-icon">04</div><div class="ch">Drip Campaign Builder</div><div class="cb">12-email, 25-day post-opt-in nurture sequence. Converts inbound leads into calls.</div></div>
+    <div class="center-col" style="text-align:center">
+      <span class="poll-pill" style="background:rgba(255,255,255,0.1);color:#fff">&#128230; YOUR TOOLKIT</span>
+      <h2 class="s-headline" style="color:#fff">4 GTM <span class="accent">Skills</span> &mdash; Ready to Use</h2>
+      <p class="s-sub" style="color:rgba(255,255,255,0.6)">You get these after the call with the tutorial PDF. Fork, replace your placeholders, ship.</p>
+      <div class="cards-2" style="margin-top:24px">
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Asset Foundation Builder</div><div class="cb">Extracts ICP, pains, voice of customer, emotional hooks and jargon from your call recordings. The foundation for every other asset.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">Landing Page Builder</div><div class="cb">Conversion-optimised landing page + signup flow. Niche-specific copy built directly from your Asset Foundations.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">03</div><div class="ch">Outbound Copy Builder</div><div class="cb">Cold email sequences + opener variants for A/B testing. Hormozi, Belfort &amp; Kennedy frameworks baked in.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">04</div><div class="ch">Facebook Ads Builder &amp; Training</div><div class="cb">Ad copy, audience targeting, creative briefs &mdash; plus a training flow that worked from day one in our portfolio companies.</div></div>
       </div>
+      <p style="margin-top:32px;font-size:15px;color:rgba(255,255,255,0.6)">Would love your feedback &mdash; what industry, what use case, what worked and what didn&rsquo;t.</p>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">8 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">10 / 17</div><div class="copy" style="color:rgba(255,255,255,0.3)">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 9 · MANU SECTION -->
+<!-- 11 · MANU SECTION OPENER -->
 <section class="slide section">
   <div class="slide-inner">
-    <div class="section-eyebrow">BOTTLENECK 02 · MANU · 10 MIN</div>
-    <h2 class="section-h">Asset Creation &amp;<br><span class="accent">Customer Journey</span></h2>
-    <p class="section-sub">Once the foundation is solid, you need high-converting assets across the journey: landing pages, decks, ROI calculators, case studies. Manu shows the hardest one live — built in days, not weeks, in the buyer's own numbers.</p>
+    <div class="section-eyebrow">BOTTLENECK 02 &middot; MANU &middot; 10 MIN</div>
+    <h2 class="section-h">Asset Creation &amp;<br><span class="accent">Client Journey</span></h2>
+    <p class="section-sub">Once the foundation is solid, you need high-converting assets across the journey: Lead Magnet &rarr; Internal Pitch &rarr; Customized Commercial Offer. Manu shows the hardest one live &mdash; an ROI calculator built in 2 hours instead of 2 CEO days.</p>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">9 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">11 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 10 · MANU · LIVE DEMO -->
+<!-- 12 · MANU: LIVE DEMO -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
-      <h2 class="s-headline">From Excel-Hell to <span class="accent">Web Asset</span></h2>
-      <p class="s-sub">Live demo: enterprise ROI calculator built with Claude Code &amp; Codex.</p>
+      <h2 class="s-headline">From Spreadsheet Hell to <span class="accent">Web Asset</span></h2>
+      <p class="s-sub">Live demo: enterprise ROI calculator built with Claude Cowork + Computer.</p>
       <div class="num-list">
-        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Input: 3–5 customer numbers</div><div class="nb">Team size, current process cost, time per task. The buyer types in their own reality.</div></div></div>
-        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Output: personalised impact projection</div><div class="nb">Year 1 savings, payback period, headcount equivalent. In their numbers, not a generic case study.</div></div></div>
-        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Triggered inside the closing call</div><div class="nb">Sales rep walks the buyer through it live. The page does the convincing. Friction drops.</div></div></div>
-        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">Why it converts</div><div class="nb">The buyer sees value in their own numbers, not ours. That's a different kind of yes.</div></div></div>
+        <div class="num-row"><div class="num">01</div><div class="body"><div class="nh">Iteration 1: Google Sheet per Market Offering</div><div class="nb">ROI Calculator as a spreadsheet &mdash; functional but not shareable. &ldquo;Spreadsheet Magic&rdquo; wasn&rsquo;t so magic.</div></div></div>
+        <div class="num-row"><div class="num">02</div><div class="body"><div class="nh">Iteration 2: Interactive Web Application</div><div class="nb">Same logic, now web-based. Buyer types in 3&ndash;5 of their own numbers and sees personalized impact &mdash; not a generic case study.</div></div></div>
+        <div class="num-row"><div class="num">03</div><div class="body"><div class="nh">Used during the evaluation of a collaboration</div><div class="nb">Sales rep walks the buyer through it live. Their numbers, their reality. Reduces friction + aligns expectations.</div></div></div>
+        <div class="num-row"><div class="num">04</div><div class="body"><div class="nh">Where it fits in the Client Journey</div><div class="nb">Lead Magnet &rarr; Internal Pitch &rarr; Case Studies &rarr; Customized Commercial Offer. The calculator is the bridge to the close.</div></div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">10 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">12 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 11 · CHRIS SECTION -->
+<!-- 13 · CHRIS SECTION OPENER -->
 <section class="slide section">
   <div class="slide-inner">
-    <div class="section-eyebrow">BOTTLENECK 03 · CHRIS · 10 MIN</div>
-    <h2 class="section-h">Training, Performance &amp;<br><span class="accent">Lead Management</span></h2>
-    <p class="section-sub">Dashboards diagnose every rep the same. 256 calls, 9 diagnoses, 6-dimension scoring — each rep gets one framework to practice this week. And once your team runs on AI, your whole lead management starts shifting.</p>
+    <div class="section-eyebrow">BOTTLENECK 03 &middot; CHRIS &middot; 10 MIN</div>
+    <h2 class="section-h">Transcripts as a <span class="accent">Goldmine</span></h2>
+    <p class="section-sub">Sales dashboards diagnose every rep the same. Real coaching means listening to calls &mdash; 8 hours per week per rep, not scalable. Chris solved this: nightly scoring from CRM + transcripts, and what shifts in lead management once your SDRs run on AI.</p>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">11 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">13 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 12 · CHRIS · GAP MATRIX -->
+<!-- 14 · CHRIS: 6-DIMENSION SCORING -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
       <h2 class="s-headline">The 6-Dimension <span class="accent">Scoring</span> Stack</h2>
-      <p class="s-sub">CRM data (Close.com API) + transcripts (Deepgram) → nightly scoring → coaching focus of the week.</p>
+      <p class="s-sub">CRM data (Close.com API) + transcripts (Deepgram) &rarr; nightly scoring &rarr; coaching focus of the week.</p>
       <div class="cards-3">
         <div class="card"><div class="num-icon">01</div><div class="ch">Opener</div><div class="cb">First 30 seconds. Pattern interrupt or voicemail.</div></div>
         <div class="card"><div class="num-icon">02</div><div class="ch">Pitch</div><div class="cb">SPIN-style problem framing. Not feature dumping.</div></div>
         <div class="card"><div class="num-icon">03</div><div class="ch">Objection Handling</div><div class="cb">LARC framework. Acknowledge, reframe, redirect.</div></div>
         <div class="card"><div class="num-icon">04</div><div class="ch">Closing</div><div class="cb">Concrete next step. Date in the calendar.</div></div>
-        <div class="card"><div class="num-icon">05</div><div class="ch">Conversation Depth</div><div class="cb">3 layers of "why?" before pitching.</div></div>
+        <div class="card"><div class="num-icon">05</div><div class="ch">Conversation Depth</div><div class="cb">3 layers of &ldquo;why?&rdquo; before pitching.</div></div>
         <div class="card"><div class="num-icon">06</div><div class="ch">Rapport</div><div class="cb">Mirror, pace, 3-second pause discipline.</div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">12 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">14 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 13 · SKILLS DISTRIBUTION -->
+<!-- 15 · WRAP-UP: WHAT YOU GET -->
 <section class="slide content" style="background:var(--navy);color:#fff">
   <div class="slide-inner">
     <div class="center-col" style="text-align:center">
-      <span class="poll-pill" style="background:rgba(255,255,255,0.1);color:#fff">📦 NO NOTES NEEDED</span>
+      <span class="poll-pill" style="background:rgba(255,255,255,0.1);color:#fff">&#128230; WHAT YOU GET</span>
       <h2 class="s-headline" style="color:#fff">Skills + <span class="accent">Tutorial PDF</span> + Transcript</h2>
-      <p class="s-sub" style="color:rgba(255,255,255,0.6)">We turn this call into a tutorial PDF. Drop it into Claude, get step-by-step implementation. Plus everything on GitHub — open source.</p>
-      <div style="margin-top:24px;background:rgba(255,255,255,0.08);padding:24px 36px;border-radius:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:18px;letter-spacing:0;color:#fff">
-        github.com/pas-ventures/venture-gtm-skills
-      </div>
+      <p class="s-sub" style="color:rgba(255,255,255,0.6)">This call will be dense. You get the anonymized transcript as a tutorial PDF to keep working with afterwards. Plus everything on GitHub &mdash; open source.</p>
       <div class="cards-3" style="margin-top:32px">
-        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Tutorial PDF (from this call)</div><div class="cb">Drop it into Claude after the call. Step-by-step implementation. No notes required.</div></div>
-        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">GitHub Repo · GTM Skills</div><div class="cb">Niche Research · Landing · Outbound · Drip + Manu's ROI calc stub + Chris's scoring blueprint.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">01</div><div class="ch">Tutorial PDF</div><div class="cb">Built from this call&rsquo;s transcript. Drop it into Claude &mdash; step-by-step implementation. It&rsquo;s not just about the call today, it&rsquo;s about what you do with it after.</div></div>
+        <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon alt" style="background:var(--grad-purple)">02</div><div class="ch">4 GTM Skills &middot; Ready to Fork</div><div class="cb">Asset Foundations &middot; Landing Page &middot; Outbound Copy &middot; Facebook Ads + Manu&rsquo;s ROI calc stub + Chris&rsquo;s scoring blueprint.</div></div>
         <div class="card dark" style="background:rgba(255,255,255,0.06)"><div class="num-icon">03</div><div class="ch">B2B Sales Folder</div><div class="cb">Slides, transcript, follow-up resources. All in your inbox today.</div></div>
       </div>
     </div>
   </div>
-  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">13 / 15</div><div class="copy" style="color:rgba(255,255,255,0.3)">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer" style="color:rgba(255,255,255,0.4)"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">15 / 17</div><div class="copy" style="color:rgba(255,255,255,0.3)">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 14 · Q&A -->
+<!-- 16 · Q&A -->
 <section class="slide content">
   <div class="slide-inner">
     <div class="center-col">
-      <span class="poll-pill">💬 LIVE Q&amp;A · 20 MIN</span>
+      <span class="poll-pill">&#128172; LIVE Q&amp;A &middot; 20 MIN</span>
       <h2 class="s-headline">Ask <span class="accent">Anything</span></h2>
       <p class="s-sub">Drop questions in Slido. Upvotes win. Each host takes the ones in their lane.</p>
       <div style="display:flex;gap:64px;margin-top:32px;align-items:center;justify-content:center">
         <div style="text-align:center">
-          <div style="width:160px;height:160px;background:repeating-conic-gradient(var(--navy) 0% 25%,#fff 0% 50%) 50% / 12px 12px;border:6px solid var(--navy);border-radius:8px"></div>
-          <div style="margin-top:12px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey-500);font-weight:600">Slido Code: #MYEO-CC</div>
+          <a href="https://app.sli.do/event/cxkQBrAosXP5aNW82BZFKe" target="_blank" style="display:inline-block;padding:24px 36px;background:var(--grey-100);border-radius:14px;text-decoration:none">
+            <div style="font-size:32px;font-weight:800;color:var(--coral);letter-spacing:0.04em">sli.do</div>
+            <div style="margin-top:8px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey-500);font-weight:600">Click or scan to join</div>
+          </a>
         </div>
         <div style="display:flex;flex-direction:column;gap:18px">
-          <div class="num-row"><div class="num">P</div><div class="body"><div class="nh">Phil — Skills, Asset Workflows, Setup</div><div class="nb">Anything Claude Code &amp; GTM workflow related.</div></div></div>
-          <div class="num-row"><div class="num">M</div><div class="body"><div class="nh">Manu — Asset Creation, ROI Calculators</div><div class="nb">Customer journey, enterprise closing tools, demo handover, pricing.</div></div></div>
-          <div class="num-row"><div class="num">C</div><div class="body"><div class="nh">Chris — Training, Scoring, Lead Mgmt Shifts</div><div class="nb">CRM integration, Close.com API, Deepgram, what changes in lead routing once SDRs run on AI.</div></div></div>
+          <div class="num-row"><div class="num">P</div><div class="body"><div class="nh">Phil &mdash; Skills, Asset Workflows, Setup</div><div class="nb">Anything Claude &amp; GTM workflow related.</div></div></div>
+          <div class="num-row"><div class="num">M</div><div class="body"><div class="nh">Manu &mdash; Asset Creation, ROI Calculators</div><div class="nb">Client journey, enterprise closing tools, demo handover, pricing.</div></div></div>
+          <div class="num-row"><div class="num">C</div><div class="body"><div class="nh">Chris &mdash; Training, Scoring, Lead Mgmt Shifts</div><div class="nb">CRM integration, Close.com API, Deepgram, what changes in lead routing once SDRs run on AI.</div></div></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">14 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">16 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
-<!-- 15 · CLOSE -->
+<!-- 17 · CLOSE -->
 <section class="slide cover">
   <div class="slide-inner">
     <div class="cover-top">
@@ -411,25 +443,25 @@ html,body{height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-
     <div class="cover-headline-block">
       <div class="cover-eyebrow">SEE YOU AGAIN</div>
       <h1 class="cover-h1">Skills, Slides &amp; the<br><span class="grad">B2B Sales Folder</span><br>are yours.</h1>
-      <p class="cover-sub">Each host opens a 30-min office hours slot next week. Reply to the follow-up email to grab one. We'll also kick off a working group in 4 weeks — open to anyone in this room who wants to share what they shipped.</p>
+      <p class="cover-sub">Each host opens a 30-min office hours slot next week. Reply to the follow-up email to grab one. We&rsquo;ll also kick off a working group in 4 weeks &mdash; open to anyone in this room who wants to share what they shipped.</p>
       <div class="cover-hosts">
         <div class="host-row">
-          <div class="host-block"><div class="label">FOLLOW-UP</div><div class="name">pas@pas-ventures.com</div><div class="org">Office hours · GitHub · B2B Sales Folder</div></div>
-          <div class="host-block"><div class="label">REPO</div><div class="name">github.com/pas-ventures</div><div class="org">venture-gtm-skills · open source</div></div>
+          <div class="host-block"><div class="label">FOLLOW-UP</div><div class="name">pas@pas-ventures.com</div><div class="org">Office hours &middot; GitHub &middot; B2B Sales Folder</div></div>
+          <div class="host-block"><div class="label">REPO</div><div class="name">github.com/pas-ventures</div><div class="org">venture-gtm-skills &middot; open source</div></div>
         </div>
         <div class="eo-logo"><div class="ring"></div><div class="label"><b>Entrepreneurs'</b><span>Organization</span></div></div>
       </div>
     </div>
   </div>
-  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">15 / 15</div><div class="copy">©2026 Proprietary &amp; Confidential</div></div>
+  <div class="footer"><div class="brand"><span class="dot"></span>PAS VENTURES</div><div class="counter">17 / 17</div><div class="copy">&copy;2026 Proprietary &amp; Confidential</div></div>
 </section>
 
 </div>
 
 <div class="nav">
-  <button id="prev">‹</button>
+  <button id="prev">&lsaquo;</button>
   <div class="dots" id="dots"></div>
-  <button id="next">›</button>
+  <button id="next">&rsaquo;</button>
 </div>
 
 <script>
