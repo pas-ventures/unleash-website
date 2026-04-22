@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Guidelines — Unleash</title>
+<meta name="description" content="A free community for South African early-stage founders. Quarterly cohorts, honest feedback, operator mentorship.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #FF6719; --dark: #111; --card: #181818; --border: rgba(255,255,255,0.06); --text: #c8c8c8; --muted: #777; --white: #f0f0f0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--dark); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(17,17,17,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
+  nav img { height: 26px; opacity: 0.85; }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--white); color: var(--dark) !important; padding: 7px 20px; border-radius: 5px; font-weight: 600; font-size: 13px; }
+  .nav-cta:hover { background: #ddd; }
+
+  .page-hero { padding: 140px 28px 50px; max-width: 720px; margin: 0 auto; }
+  .page-hero .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+  .page-hero h1 { font-family: 'Spectral', serif; font-size: clamp(32px, 4vw, 46px); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .page-hero p { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 580px; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 20px 28px 80px; }
+  .content section { padding: 44px 0; border-top: 1px solid var(--border); }
+  .content section:first-child { border-top: none; padding-top: 30px; }
+  .content .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 14px; }
+  .content h2 { font-family: 'Spectral', serif; font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; color: var(--white); margin-bottom: 22px; line-height: 1.25; }
+  .content p { font-size: 15px; color: var(--text); line-height: 1.8; margin-bottom: 16px; }
+  .content p:last-child { margin-bottom: 0; }
+  .content .lead { color: var(--white); font-weight: 500; font-size: 16px; }
+
+  .content ul, .content ol { list-style: none; padding: 0; margin: 14px 0 0 0; }
+  .content ul li { font-size: 15px; color: var(--text); line-height: 1.7; padding: 12px 0 12px 22px; position: relative; border-bottom: 1px solid var(--border); }
+  .content ul li:last-child { border-bottom: none; }
+  .content ul li::before { content: ''; position: absolute; left: 0; top: 22px; width: 10px; height: 1px; background: var(--accent); }
+  .content ul li strong { color: var(--white); font-weight: 600; }
+
+  .content ol { counter-reset: commit; }
+  .content ol li { font-size: 15px; color: var(--text); line-height: 1.7; counter-increment: commit; padding: 14px 0 14px 40px; position: relative; border-bottom: 1px solid var(--border); }
+  .content ol li:last-child { border-bottom: none; }
+  .content ol li::before { content: counter(commit); position: absolute; left: 0; top: 14px; color: var(--accent); font-weight: 700; font-family: 'Spectral', serif; font-size: 18px; width: 26px; text-align: left; }
+
+  .cta { max-width: 720px; margin: 0 auto; padding: 60px 28px 100px; text-align: center; border-top: 1px solid var(--border); }
+  .cta h3 { font-family: 'Spectral', serif; font-size: clamp(24px, 3vw, 32px); color: var(--white); margin-bottom: 12px; font-weight: 700; }
+  .cta p { font-size: 14px; color: var(--muted); max-width: 440px; margin: 0 auto 28px; line-height: 1.6; }
+  .btn-w { display: inline-block; background: var(--white); color: var(--dark); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+  .btn-w:hover { background: #ddd; transform: translateY(-1px); }
+  .cta .hint { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
+  footer .copy { font-size: 11px; color: #383838; }
+
+  @media (max-width: 700px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .page-hero { padding-top: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/"><img src="/img/logo.png" alt="Unleash"></a>
+    <div class="nav-links">
+      <a href="/#about">About</a>
+      <a href="/#how">How It Works</a>
+      <a href="/#founders">Members</a>
+      <a href="/resources">Resources</a>
+      <a href="https://tally.so/r/7Rx9z2" target="_blank" class="nav-cta">Apply</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="stag">Community Guidelines</div>
+  <h1>The Unleash Community</h1>
+  <p>A free community for South African early-stage founders. Quarterly cohorts, honest feedback, operator mentorship. This page sets out how it works and what we ask of you.</p>
+</div>
+
+<div class="content">
+
+  <section>
+    <div class="stag">01 — What it is</div>
+    <h2>What Unleash is</h2>
+    <p class="lead">A free community for South African early-stage founders.</p>
+    <p>We run in a WhatsApp group. 15 founders per cohort. Each cohort runs for one quarter.</p>
+    <p>You get access to the WhatsApp community, to Phil and our mentors, and to all of our playbooks and tools.</p>
+    <p>Three community calls per quarter — led by the founders in the room, working through real problems in real time. Whether you're pre-revenue looking for product-market fit, scaling your sales effort, or working toward a co-founder hire or your next fundraise.</p>
+  </section>
+
+  <section>
+    <div class="stag">02 — What it isn't</div>
+    <h2>What Unleash is not</h2>
+    <ul>
+      <li><strong>Not a VC.</strong> No funding promises, no preferential treatment.</li>
+      <li><strong>Not an accelerator.</strong> No curriculum, no demo day, no equity.</li>
+      <li><strong>Not a networking club.</strong> The point is the work, not the room.</li>
+      <li><strong>Not passive.</strong> Show up ready to contribute.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="stag">03 — The why</div>
+    <h2>Why we do this</h2>
+    <p>AI has changed what it takes to start a company. The cost of building, the cost of running lean, the capital you actually need — all of it has dropped.</p>
+    <p class="lead">That opens up a different way to build.</p>
+    <p>Isolate a real problem. Get in front of customers early. Get to revenue before you raise.</p>
+    <p>Build cash-resilient from day one.</p>
+    <p>Take mentorship only from people who've built and sold something — not consultants, not coaches.</p>
+    <p>South African funds look for revenue. So does every serious investor.</p>
+    <p class="lead">That is the standard. Build to it.</p>
+  </section>
+
+  <section>
+    <div class="stag">04 — How it works</div>
+    <h2>Quarterly cohorts</h2>
+    <ul>
+      <li>15 founders per cohort. Spots are limited.</li>
+      <li>Each cohort runs for one quarter.</li>
+      <li>Three community calls per quarter. Attend at least two.</li>
+      <li>Come with a real question every time. No passive attendance.</li>
+      <li>Applications for the next cohort always open the last month of the current quarter.</li>
+      <li>If you can't continue — time, other reasons, no problem — your spot goes to the next founder on the waitlist. We want to give value to as many South African founders as we can.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="stag">05 — The deal</div>
+    <h2>What we commit to you</h2>
+    <p>By the end of your quarter:</p>
+    <ol>
+      <li>Where you are with your business — an honest assessment reviewed by Phil and our co-mentors.</li>
+      <li>What your funding options actually are.</li>
+      <li>Your clearest next step — direct feedback from Phil and the mentors.</li>
+      <li>If there's an investment opportunity, a straight yes or no — and why.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="stag">06 — In return</div>
+    <h2>What we ask from you</h2>
+    <ul>
+      <li>Attend at least two of three calls per quarter.</li>
+      <li>Engage. Be honest in your own assessment.</li>
+      <li>Use the tools we share — playbooks, templates, skills.</li>
+      <li>Give us feedback — what's working, what isn't.</li>
+      <li>Help other founders. Be present. Contribute to the collective.</li>
+    </ul>
+  </section>
+
+</div>
+
+<div class="cta">
+  <h3>Apply for the next cohort</h3>
+  <p>Applications for the next quarter open the last month of the current quarter. Drop your details — we review every one.</p>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply Now</a>
+  <div class="hint">Free to join. Commitment required.</div>
+</div>
+
+<footer>
+  <div class="f-links">
+    <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+    <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank">LinkedIn</a>
+    <a href="https://pas-ventures.com" target="_blank">PAS Ventures</a>
+    <a href="https://tally.so/r/7Rx9z2" target="_blank">Apply</a>
+    <a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a>
+  </div>
+  <div class="copy">Unleash &mdash; PAS Ventures &bull; Cape Town &amp; Berlin</div>
+</footer>
+
+</body>
+</html>
