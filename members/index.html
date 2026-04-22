@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Members — Unleash</title>
+<meta name="description" content="Unleash community members area. Playbooks, spreadsheets, GPTs, and GitHub access.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: #FF6719; --dark: #111; --card: #181818; --border: rgba(255,255,255,0.06); --text: #c8c8c8; --muted: #777; --white: #f0f0f0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--dark); line-height: 1.7; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  a { color: var(--accent); text-decoration: none; }
+  [hidden] { display: none !important; }
+
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(17,17,17,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
+  nav img { height: 26px; opacity: 0.85; }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--white); color: var(--dark) !important; padding: 7px 20px; border-radius: 5px; font-weight: 600; font-size: 13px; }
+  .nav-cta:hover { background: #ddd; }
+  .logout-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .logout-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--white); }
+
+  /* GATE VIEW */
+  .gate-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 28px 60px; }
+  .gate { max-width: 420px; width: 100%; text-align: center; }
+  .gate img { height: 36px; opacity: 0.9; margin-bottom: 36px; }
+  .gate .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 14px; }
+  .gate h1 { font-family: 'Spectral', serif; font-size: clamp(28px, 3.6vw, 36px); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+  .gate p.lede { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+  .gate form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .gate input { width: 100%; background: var(--card); border: 1px solid var(--border); color: var(--white); padding: 13px 16px; border-radius: 6px; font-size: 14px; font-family: inherit; transition: border-color 0.2s; }
+  .gate input:focus { outline: none; border-color: var(--accent); }
+  .gate button { background: var(--white); color: var(--dark); padding: 13px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .gate button:hover { background: #ddd; transform: translateY(-1px); }
+  .gate .err { font-size: 12px; color: #ff6b6b; margin-top: 8px; min-height: 16px; }
+  .gate .apply { padding-top: 24px; border-top: 1px solid var(--border); }
+  .gate .apply p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .gate .apply .btn-o { display: inline-block; border: 1px solid rgba(255,255,255,0.12); color: var(--white); padding: 11px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .gate .apply .btn-o:hover { border-color: rgba(255,255,255,0.25); }
+
+  /* MEMBERS VIEW */
+  .m-hero { padding: 140px 28px 50px; max-width: 820px; margin: 0 auto; }
+  .m-hero .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+  .m-hero h1 { font-family: 'Spectral', serif; font-size: clamp(32px, 4vw, 46px); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 18px; }
+  .m-hero p { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 620px; }
+
+  .m-grid { max-width: 820px; margin: 20px auto 0; padding: 20px 28px 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .m-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 26px; transition: border-color 0.2s; display: flex; flex-direction: column; gap: 12px; }
+  .m-card:hover { border-color: rgba(255,255,255,0.12); }
+  .m-card .num { font-family: 'Spectral', serif; font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+  .m-card h3 { font-family: 'Spectral', serif; font-size: 20px; color: var(--white); font-weight: 700; line-height: 1.25; }
+  .m-card p { font-size: 13px; color: var(--muted); line-height: 1.6; flex-grow: 1; }
+  .m-card .cta { margin-top: 4px; }
+  .m-card .cta a { font-size: 13px; color: var(--accent); font-weight: 600; }
+  .m-card .cta a:hover { color: var(--white); }
+  .m-card .tbd { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; display: inline-block; }
+
+  .m-notice { max-width: 820px; margin: 0 auto; padding: 0 28px 40px; }
+  .m-notice .box { background: rgba(255,103,25,0.06); border: 1px solid rgba(255,103,25,0.2); border-radius: 8px; padding: 20px 24px; font-size: 13px; color: var(--text); line-height: 1.6; }
+  .m-notice .box strong { color: var(--white); }
+
+  .m-footer-cta { max-width: 820px; margin: 0 auto; padding: 40px 28px 80px; text-align: center; border-top: 1px solid var(--border); }
+  .m-footer-cta h3 { font-family: 'Spectral', serif; font-size: 24px; color: var(--white); margin-bottom: 12px; font-weight: 700; }
+  .m-footer-cta p { font-size: 13px; color: var(--muted); max-width: 420px; margin: 0 auto 24px; line-height: 1.6; }
+  .m-footer-cta .btn-o { display: inline-block; border: 1px solid rgba(255,255,255,0.12); color: var(--white); padding: 11px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+  .m-footer-cta .btn-o:hover { border-color: rgba(255,255,255,0.25); }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
+  footer .copy { font-size: 11px; color: #383838; }
+
+  @media (max-width: 700px) {
+    .nav-links a:not(.nav-cta):not(.logout-btn) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div id="gateView" class="gate-wrap">
+  <div class="gate">
+    <img src="/img/logo.png" alt="Unleash">
+    <div class="stag">Members Area</div>
+    <h1>Welcome back.</h1>
+    <p class="lede">Enter the community password to access playbooks, spreadsheets, GPTs, and GitHub.</p>
+    <form id="gateForm" autocomplete="off">
+      <input type="password" id="gatePw" placeholder="Community password" autofocus required>
+      <button type="submit">Enter</button>
+      <div class="err" id="gateErr"></div>
+    </form>
+    <div class="apply">
+      <p>Don't have the password? Members receive it in the WhatsApp group.</p>
+      <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-o">Apply to join</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MEMBERS CONTENT ============ -->
+<div id="membersView" hidden>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/"><img src="/img/logo.png" alt="Unleash"></a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/guidelines/">Guidelines</a>
+      <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+      <button type="button" class="logout-btn" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<div class="m-hero">
+  <div class="stag">Members Area</div>
+  <h1>Playbooks, tools, and access.</h1>
+  <p>Everything the cohort gets access to lives here. Spreadsheets, playbooks, our GPT tools, and the GitHub where we publish skills. Check back — we're adding more as the quarter runs.</p>
+</div>
+
+<div class="m-grid">
+
+  <div class="m-card">
+    <div class="num">01</div>
+    <h3>Playbooks</h3>
+    <p>Sales training, founder playbooks, GTM frameworks. Pulled from a decade of building real companies. Drop in, take what you need.</p>
+    <div class="cta"><span class="tbd">Link coming soon</span></div>
+  </div>
+
+  <div class="m-card">
+    <div class="num">02</div>
+    <h3>Spreadsheets</h3>
+    <p>Financial models, cohort trackers, pricing templates. Working documents you can copy and adapt to your business.</p>
+    <div class="cta"><span class="tbd">Link coming soon</span></div>
+  </div>
+
+  <div class="m-card">
+    <div class="num">03</div>
+    <h3>GPTs</h3>
+    <p>Three custom GPTs we use internally: Luna I (intake), Luna II (content), Luna III (journey). We're migrating these to Unleash-branded tools over Q2.</p>
+    <div class="cta"><span class="tbd">Link coming soon</span></div>
+  </div>
+
+  <div class="m-card">
+    <div class="num">04</div>
+    <h3>GitHub — Skills</h3>
+    <p>The pas-ventures/venture-gtm-skills repo. Claude Code skills for outreach, content review, session processing, niche research. Free to fork.</p>
+    <div class="cta"><a href="https://github.com/pas-ventures/venture-gtm-skills" target="_blank">Visit repo →</a></div>
+  </div>
+
+  <div class="m-card">
+    <div class="num">05</div>
+    <h3>Substack</h3>
+    <p>Weekly writing on building in SA — sales craft, founder lessons, ecosystem takes. Subscribe to keep the thinking flowing between calls.</p>
+    <div class="cta"><a href="https://philunleashed.substack.com" target="_blank">Read & subscribe →</a></div>
+  </div>
+
+</div>
+
+<div class="m-notice">
+  <div class="box">
+    <strong>Heads up —</strong> most links above are placeholders while Phil finalises the Drive folders and GPT migration. The Notion community guidelines are live at <a href="/guidelines/">unleash-ventures.com/guidelines</a>. Questions? Email <a href="mailto:nicolene@pas-ventures.com">nicolene@pas-ventures.com</a>.
+  </div>
+</div>
+
+<div class="m-footer-cta">
+  <h3>Know a founder this is right for?</h3>
+  <p>Send them our application link — we want to reach as many South African founders as we can.</p>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-o">Share the apply link</a>
+</div>
+
+<footer>
+  <div class="f-links">
+    <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
+    <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank">LinkedIn</a>
+    <a href="https://pas-ventures.com" target="_blank">PAS Ventures</a>
+    <a href="/guidelines/">Guidelines</a>
+    <a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a>
+  </div>
+  <div class="copy">Unleash &mdash; PAS Ventures &bull; Cape Town &amp; Berlin</div>
+</footer>
+
+</div>
+<!-- ============ /MEMBERS CONTENT ============ -->
+
+<script>
+(function(){
+  'use strict';
+  // SHA-256 hex of the community password.
+  // To rotate the password: compute new hash with `echo -n "NEW-PASSWORD" | shasum -a 256` and replace below.
+  const EXPECTED = '50ade15ca2984ec440f5fc3588b1b38729275dafe4597157d93735b4500e0fe1';
+  const STORAGE_KEY = 'unleash_members_v1';
+
+  const gateView = document.getElementById('gateView');
+  const membersView = document.getElementById('membersView');
+  const form = document.getElementById('gateForm');
+  const pwInput = document.getElementById('gatePw');
+  const err = document.getElementById('gateErr');
+
+  function showMembers() {
+    gateView.hidden = true;
+    membersView.hidden = false;
+  }
+  function showGate() {
+    membersView.hidden = true;
+    gateView.hidden = false;
+    try { sessionStorage.removeItem(STORAGE_KEY); } catch(e){}
+    setTimeout(()=>{ try { pwInput.focus(); } catch(e){} }, 50);
+  }
+
+  // If already authed this session, reveal immediately.
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === '1') {
+      showMembers();
+    }
+  } catch(e) { /* sessionStorage blocked — fall through to gate */ }
+
+  async function sha256Hex(str) {
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    err.textContent = '';
+    const pw = pwInput.value.trim();
+    if (!pw) return;
+    try {
+      const hex = await sha256Hex(pw);
+      if (hex === EXPECTED) {
+        try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch(e){}
+        showMembers();
+      } else {
+        err.textContent = 'Incorrect password. Try again.';
+        pwInput.value = '';
+        pwInput.focus();
+      }
+    } catch(e) {
+      err.textContent = 'Could not verify. Check your browser supports crypto.subtle (HTTPS required).';
+    }
+  });
+
+  // Sign out handler (bound after members view exists in DOM — it does, just hidden)
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', showGate);
+  }
+})();
+</script>
+
+</body>
+</html>
