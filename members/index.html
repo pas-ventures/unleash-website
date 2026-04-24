@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Members — Unleash</title>
-<meta name="description" content="Unleash community members area. Playbooks, spreadsheets, GPTs, and GitHub access.">
+<meta name="description" content="Unleash community members area. Playbooks, AI tools, GitHub skills, and the Q&A knowledge base.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
   .m-hero h1 { font-family: 'Spectral', serif; font-size: clamp(32px, 4vw, 46px); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 18px; }
   .m-hero p { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 620px; }
 
-  .m-grid { max-width: 820px; margin: 20px auto 0; padding: 20px 28px 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .m-grid { max-width: 820px; margin: 20px auto 0; padding: 20px 28px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
   .m-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 26px; transition: border-color 0.2s; display: flex; flex-direction: column; gap: 12px; }
   .m-card:hover { border-color: rgba(255,255,255,0.12); }
   .m-card .num { font-family: 'Spectral', serif; font-size: 13px; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
@@ -60,7 +60,11 @@
   .m-card .cta { margin-top: 4px; }
   .m-card .cta a { font-size: 13px; color: var(--accent); font-weight: 600; }
   .m-card .cta a:hover { color: var(--white); }
-  .m-card .tbd { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; padding: 4px 10px; border: 1px solid var(--border); border-radius: 4px; display: inline-block; }
+  .m-card .inline-links { margin-top: 4px; }
+  .m-card .inline-links a { display: block; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent); font-weight: 600; }
+  .m-card .inline-links a:hover { color: var(--white); }
+  .m-card .inline-links .sub { color: var(--muted); font-weight: 500; font-size: 12px; margin-top: 2px; display: block; }
+  .m-card.wide { grid-column: 1 / -1; }
 
   .m-notice { max-width: 820px; margin: 0 auto; padding: 0 28px 40px; }
   .m-notice .box { background: rgba(255,103,25,0.06); border: 1px solid rgba(255,103,25,0.2); border-radius: 8px; padding: 20px 24px; font-size: 13px; color: var(--text); line-height: 1.6; }
@@ -90,7 +94,7 @@
     <img src="/img/logo.png" alt="Unleash">
     <div class="stag">Members Area</div>
     <h1>Welcome back.</h1>
-    <p class="lede">Enter the community password to access playbooks, spreadsheets, GPTs, and GitHub.</p>
+    <p class="lede">Enter the community password to access playbooks, AI tools, GitHub, and the Q&amp;A knowledge base.</p>
     <form id="gateForm" autocomplete="off">
       <input type="password" id="gatePw" placeholder="Community password" autofocus required>
       <button type="submit">Enter</button>
@@ -120,56 +124,55 @@
 
 <div class="m-hero">
   <div class="stag">Members Area</div>
-  <h1>Playbooks, tools, and access.</h1>
-  <p>Everything the cohort gets access to lives here. Spreadsheets, playbooks, our GPT tools, and the GitHub where we publish skills. Check back — we're adding more as the quarter runs.</p>
+  <h1>Playbooks, tools, and the Q&amp;A library.</h1>
+  <p>Everything the cohort gets access to lives here. Playbooks, our AI tools, the GitHub skills repo, and every past session with its recording and takeaways PDF. Check back — we're adding more as the quarter runs.</p>
 </div>
 
 <div class="m-grid">
 
   <div class="m-card">
     <div class="num">01</div>
-    <h3>Playbooks</h3>
-    <p>Sales training, founder playbooks, GTM frameworks. Pulled from a decade of building real companies. Drop in, take what you need.</p>
+    <h3>Unleash Playbooks</h3>
+    <p>Sales training, founder playbooks, GTM frameworks, financial models, video training, pricing templates. A decade of building real companies — drop in, take what you need.</p>
     <div class="cta"><a href="https://drive.google.com/drive/folders/11jC-vCdDYeFhByufa7TWFT8GEOUijgaw" target="_blank">Open the Drive folder →</a></div>
   </div>
 
   <div class="m-card">
     <div class="num">02</div>
-    <h3>Spreadsheets</h3>
-    <p>Financial models, video training collection, cohort trackers, pricing templates. Working documents you can copy and adapt to your business.</p>
-    <div class="cta"><a href="https://drive.google.com/drive/folders/1v655WWroo3vff4JT5ArbDrmb2FkL_XCD" target="_blank">Open the Unleash folder →</a></div>
-  </div>
-
-  <div class="m-card">
-    <div class="num">03</div>
-    <h3>GPT Tools</h3>
-    <p>Three custom GPTs built for the cohort. Use them between community calls.</p>
-    <div style="margin-top: 4px;">
-      <a href="https://chatgpt.com/g/g-682cd352edd48191847a61f226905478-luna-i-phil-s-go-to-market-assistant" target="_blank" style="display: block; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent); font-weight: 600;">→ Start-Up Assessment</a>
-      <a href="https://chatgpt.com/g/g-6887ba2c23c4819196187e703a501dfb-summer-up-25-founder-assistant" target="_blank" style="display: block; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent); font-weight: 600;">→ Customer Interview Guide (Validation)</a>
-      <a href="https://chatgpt.com/g/g-6904b9e813448191a3dbf72a21af6be6-luna-iii-customer-journey-bot" target="_blank" style="display: block; padding: 10px 0; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent); font-weight: 600;">→ Customer Journey Mapper</a>
+    <h3>Unleash AI Tools</h3>
+    <p>Custom GPTs built for the cohort. Use them between community calls for assessment, customer interviews, and journey mapping.</p>
+    <div class="inline-links">
+      <a href="https://chatgpt.com/g/g-682cd352edd48191847a61f226905478-luna-i-phil-s-go-to-market-assistant" target="_blank">→ Start-Up Assessment<span class="sub">Luna I — score your idea against Phil's framework</span></a>
+      <a href="https://chatgpt.com/g/g-6887ba2c23c4819196187e703a501dfb-summer-up-25-founder-assistant" target="_blank">→ Customer Interview Guide<span class="sub">Validation questions grounded in The Mom Test</span></a>
+      <a href="https://chatgpt.com/g/g-6904b9e813448191a3dbf72a21af6be6-luna-iii-customer-journey-bot" target="_blank">→ Customer Journey Mapper<span class="sub">Luna III — map the whole buying journey</span></a>
     </div>
   </div>
 
   <div class="m-card">
-    <div class="num">04</div>
+    <div class="num">03</div>
     <h3>GitHub — Skills Repo</h3>
-    <p>The pas-ventures/unleash-venture-skills repo. Claude Code skills for outreach, content, sales scripts, customer interviews, and more. Private — we grant access per member so we can keep track.</p>
+    <p>The <code>pas-ventures/unleash-venture-skills</code> repo. Claude Code skills for outreach, content, sales scripts, customer interviews. Also includes <code>qa-transcripts/</code> — anonymised transcripts of every Q&amp;A you can query with AI. Private — we grant access per member.</p>
     <div class="cta"><a href="mailto:nicolene@pas-ventures.com?subject=Unleash%20GitHub%20access%20request&amp;body=Hi%20Nicolene%2C%0A%0APlease%20add%20me%20to%20pas-ventures%2Funleash-venture-skills.%0A%0AGitHub%20username%3A%20%5Byour%20username%5D%0A%0AThanks." target="_blank">Request access →</a></div>
   </div>
 
-  <div class="m-card">
-    <div class="num">05</div>
-    <h3>Substack</h3>
-    <p>Weekly writing on building in SA — sales craft, founder lessons, ecosystem takes. Subscribe to keep the thinking flowing between calls.</p>
-    <div class="cta"><a href="https://philunleashed.substack.com" target="_blank">Read & subscribe →</a></div>
+  <div class="m-card wide">
+    <div class="num">04</div>
+    <h3>Q&amp;A Knowledge Base</h3>
+    <p>Every past Unleash session — the recording (members only, don't share externally) plus the takeaways PDF. Open a session to grab both.</p>
+    <div class="inline-links">
+      <a href="https://drive.google.com/drive/folders/16gG1aahMH9TbxQsDD-rx-f-bCa8Pm5O_" target="_blank">→ Q&amp;A #5 — Early-Stage Validation<span class="sub">23 April 2026 · recording + takeaways PDF</span></a>
+      <a href="https://drive.google.com/drive/folders/1pSqwcYt2aekW4sCQ5ebPDNKnQkOvWc3b" target="_blank">→ Session 4 — Paperclip<span class="sub">Guest session · recording + PDF</span></a>
+      <a href="https://drive.google.com/drive/folders/1ZiWYQuiY0US1qG53v8WVpi6ZMO8uczZg" target="_blank">→ Session 3 — Founder Q&amp;A<span class="sub">Recording + takeaways PDF</span></a>
+      <a href="https://drive.google.com/drive/folders/18_TX9u-IrA7bRLl_Q-5mURAF0H9N8vD0" target="_blank">→ Session 2 — Claude Code for Your Startup<span class="sub">Recording + takeaways PDF</span></a>
+    </div>
+    <div class="cta" style="margin-top: 12px;"><a href="https://drive.google.com/drive/folders/1M4jINRtfJCSt3VziuR2mGrlooK_nKpH_" target="_blank">Open the full knowledge base folder →</a></div>
   </div>
 
 </div>
 
 <div class="m-notice">
   <div class="box">
-    <strong>Heads up —</strong> most links above are placeholders while Phil finalises the Drive folders and GPT migration. The Notion community guidelines are live at <a href="/guidelines/">unleash-ventures.com/guidelines</a>. Questions? Email <a href="mailto:nicolene@pas-ventures.com">nicolene@pas-ventures.com</a>.
+    <strong>Heads up —</strong> Session 2, 3, and 4 Drive folders are live but we're still migrating the old recordings and PDFs in. Q&amp;A #5 is fully populated. Questions? Email <a href="mailto:nicolene@pas-ventures.com">nicolene@pas-ventures.com</a>.
   </div>
 </div>
 
@@ -251,7 +254,6 @@
     }
   });
 
-  // Sign out handler (bound after members view exists in DOM — it does, just hidden)
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', showGate);
