@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>There is a little rhino in Africa with only one ear — and it's named after my wife.</title>
+<meta name="description" content="A story from Dabchick Wilderness Reserve, South Africa. The AMES Foundation, a one-eared rhino calf, and what it means to be a guardian." />
+<meta property="og:title" content="There is a little rhino in Africa with only one ear — and it's named after my wife." />
+<meta property="og:description" content="A guardian story from Dabchick Wilderness Reserve, South Africa. AMES Foundation × Phil." />
+<meta property="og:image" content="https://unleash-ventures.com/dabchick/assets/img/PXL_20230225_163604284.jpg" />
+<meta property="og:type" content="article" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* AMES brand: ink #1f191a, gold #bd8100, warm cream #f0e6cf */
+  :root {
+    --ink:    #1f191a;
+    --ink-2:  #2a2422;
+    --gold:   #bd8100;
+    --gold-l: #d9a23d;
+    --cream:  #f0e6cf;
+    --cream-2:#e7dcc1;
+    --olive:  #2c2a23;
+  }
+  @page { size: 1920px 1080px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); font-family: 'Inter', -apple-system, sans-serif; color: var(--ink); }
+
+  /* ---------- responsive deck wrapper ---------- */
+  .deck {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0 auto;
+    background: var(--ink);
+    padding: 0;
+  }
+  .slide-frame {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    position: relative;
+    background: var(--cream);
+  }
+  .slide-frame .slide {
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: top left;
+    transform: scale(var(--scale, 1));
+  }
+
+  .slide {
+    width: 1920px; height: 1080px;
+    position: relative; overflow: hidden;
+    page-break-after: always;
+    background: var(--cream);
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  /* ---------- top + bottom site bars ---------- */
+  .site-bar {
+    width: 100%;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .site-bar a {
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(240,230,207,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.15s;
+  }
+  .site-bar a:hover { border-bottom-color: var(--gold-l); }
+  .site-bar .left { opacity: 0.85; }
+  .site-bar .right { display: flex; gap: 24px; }
+  .site-bar .pill {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid var(--gold);
+    border-radius: 30px;
+    color: var(--gold-l);
+    border-bottom: 1px solid var(--gold);
+  }
+  .site-bar .pill:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); border-bottom-color: var(--gold); }
+
+  .footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 60px 32px 70px 32px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+  }
+  .footer .h {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+  .footer .b {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.78;
+    max-width: 640px;
+    margin: 0 auto 22px;
+  }
+  .footer .links {
+    display: flex; gap: 22px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .footer a { color: var(--gold-l); text-decoration: none; border-bottom: 1px solid rgba(217,162,61,0.4); padding-bottom: 1px; }
+  .footer a:hover { color: var(--cream); }
+
+  @media (max-width: 700px) {
+    .site-bar { font-size: 11px; padding: 14px 18px; }
+    .site-bar .right { gap: 14px; }
+    .footer { padding: 40px 20px 50px 20px; }
+    .footer .h { font-size: 22px; }
+  }
+
+  /* ---------- AMES logo (real SVG) ---------- */
+  .ames-logo {
+    position: absolute;
+    height: 56px;
+    object-fit: contain;
+  }
+  .ames-logo.tl  { top: 48px;  left: 60px; }
+  .ames-logo.bl  { bottom: 40px; left: 60px; }
+  .ames-logo.br  { bottom: 40px; right: 60px; }
+  .ames-logo.invert { filter: invert(1) brightness(2.2) sepia(0.1); }
+
+  .page-num {
+    position: absolute;
+    bottom: 40px; right: 60px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+  .page-num.on-dark { color: var(--cream); opacity: 0.6; }
+
+  .meta-right {
+    position: absolute;
+    bottom: 40px; right: 60px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
+  /* ============== SLIDE 1 :: COVER ============== */
+  .s-cover { background: var(--cream); display: grid; grid-template-rows: 760px 320px; }
+  .s-cover .image {
+    position: relative;
+    background-size: cover;
+    background-position: center 55%;
+  }
+  .s-cover .image::after {
+    content: '';
+    position: absolute; inset: auto 0 0 0; height: 200px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(31,25,26,0.45) 100%);
+  }
+  .s-cover .strip {
+    position: relative;
+    background: var(--cream);
+    padding: 50px 90px 40px 90px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 60px;
+  }
+  .s-cover .title-block { display: flex; flex-direction: column; gap: 14px; }
+  .s-cover .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .s-cover h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 58px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    max-width: 1200px;
+  }
+  .s-cover h1 em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .s-cover .kicker {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: var(--ink);
+    opacity: 0.6;
+    margin-top: 8px;
+  }
+  .s-cover .ames-logo.in-strip {
+    position: relative; top: auto; left: auto; right: auto; bottom: auto;
+    height: 76px; align-self: end; margin-bottom: 8px;
+  }
+  .s-cover .date {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    letter-spacing: 3px;
+    color: var(--ink);
+    opacity: 0.7;
+    align-self: end;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  /* ============== SLIDE 2 :: SETTING (split, image L, text R) ============== */
+  .s-split {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1100px 1fr;
+  }
+  .s-split.reverse { grid-template-columns: 1fr 1100px; }
+  .s-split .photo {
+    background-size: cover;
+    background-position: center;
+  }
+  .s-split .panel {
+    padding: 130px 90px 110px 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+  }
+  .s-split .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .s-split h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 96px;
+    line-height: 0.95;
+    letter-spacing: 2px;
+    color: var(--ink);
+  }
+  .s-split .body {
+    font-family: 'Inter', sans-serif;
+    font-size: 21px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--ink);
+    max-width: 540px;
+  }
+  .s-split .body em {
+    font-style: normal;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .s-split .rule {
+    width: 60px; height: 2px; background: var(--gold);
+    margin: 8px 0 4px 0;
+  }
+
+  /* ============== SLIDE 3 :: FULL-BLEED PHOTO + LOWER CAPTION STRIP ============== */
+  .s-bleed { position: relative; background: var(--ink); }
+  .s-bleed .photo {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .s-bleed .caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 40px 90px 100px 90px;
+    background: linear-gradient(to top, rgba(31,25,26,0.92) 0%, rgba(31,25,26,0.7) 60%, rgba(31,25,26,0) 100%);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .s-bleed .cap-title { display: flex; flex-direction: column; gap: 10px; }
+  .s-bleed .cap-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--gold-l);
+    text-transform: uppercase;
+  }
+  .s-bleed h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 76px;
+    line-height: 0.95;
+    letter-spacing: 2px;
+    color: var(--cream);
+  }
+  .s-bleed .cap-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.92;
+    max-width: 600px;
+  }
+
+  /* ============== SLIDE 4 :: TWO STACKED PHOTOS RIGHT, TEXT LEFT (THE CALL) ============== */
+  .s-stack { background: var(--ink); display: grid; grid-template-columns: 720px 1fr; gap: 0; }
+  .s-stack .panel {
+    padding: 130px 80px 110px 80px;
+    display: flex; flex-direction: column;
+    gap: 24px; justify-content: center;
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .s-stack .panel .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 5px; color: var(--gold-l);
+    text-transform: uppercase;
+  }
+  .s-stack .panel h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 92px; line-height: 0.95; letter-spacing: 2px;
+    color: var(--cream);
+  }
+  .s-stack .panel .rule { width: 60px; height: 2px; background: var(--gold); margin: 8px 0 4px 0; }
+  .s-stack .panel .body {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; line-height: 1.55; color: var(--cream); opacity: 0.92;
+    max-width: 480px;
+  }
+  .s-stack .grid {
+    display: grid; grid-template-rows: 1fr 1fr; gap: 12px;
+    padding: 60px 60px 60px 0;
+  }
+  .s-stack .grid .ph {
+    background-size: cover; background-position: center;
+    border-radius: 2px;
+  }
+
+  /* ============== SLIDE 5 :: BIG PHOTO + SIDE PANEL (HANDS) ============== */
+  .s-side {
+    background: var(--ink);
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+  }
+  .s-side .photo {
+    background-size: cover;
+    background-position: center;
+  }
+  .s-side .panel {
+    padding: 130px 80px 110px 80px;
+    display: flex; flex-direction: column;
+    gap: 26px; justify-content: center;
+    color: var(--cream);
+    background: var(--ink);
+  }
+  .s-side .panel .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 5px; color: var(--gold-l);
+    text-transform: uppercase;
+  }
+  .s-side .panel h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 88px; line-height: 0.95; letter-spacing: 2px;
+    color: var(--cream);
+  }
+  .s-side .panel .rule { width: 60px; height: 2px; background: var(--gold); margin: 8px 0 4px 0; }
+  .s-side .panel .body {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; line-height: 1.55; opacity: 0.92;
+    max-width: 460px;
+  }
+  .s-side .panel .sub-photo {
+    margin-top: 24px;
+    width: 100%; height: 220px;
+    background-size: cover; background-position: center;
+    border-radius: 2px;
+  }
+
+  /* ============== SLIDE 6 :: THEN & NOW (cream bg, two cards) ============== */
+  .s-then {
+    background: var(--cream);
+    padding: 100px 80px 100px 80px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 50px;
+  }
+  .s-then .header { text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .s-then .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 5px; color: var(--gold);
+    text-transform: uppercase;
+  }
+  .s-then h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 96px; line-height: 0.95;
+    letter-spacing: 3px;
+    color: var(--ink);
+  }
+  .s-then .sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px; color: var(--ink); opacity: 0.7;
+    max-width: 720px;
+    text-align: center;
+    line-height: 1.55;
+  }
+  .s-then .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .s-then .col {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .s-then .col .photo {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .s-then .col .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(31,25,26,0.78) 0%, rgba(31,25,26,0) 50%);
+    z-index: 2;
+  }
+  .s-then .col .label {
+    position: absolute;
+    bottom: 30px; left: 36px;
+    font-family: 'Anton', sans-serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    color: var(--cream);
+    z-index: 3;
+  }
+  .s-then .col .yr {
+    position: absolute;
+    top: 28px; left: 36px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 5px;
+    color: var(--gold-l);
+    z-index: 3;
+    text-transform: uppercase;
+  }
+
+  /* ============== SLIDE 7 :: QUOTE ============== */
+  .s-quote {
+    background: var(--cream);
+    padding: 0 200px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    gap: 30px;
+  }
+  .s-quote .mark {
+    font-family: 'Anton', sans-serif;
+    font-size: 200px;
+    color: var(--gold);
+    line-height: 0.7;
+    margin-bottom: -20px;
+  }
+  .s-quote blockquote {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 60px;
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 1300px;
+    letter-spacing: -0.5px;
+  }
+  .s-quote blockquote em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .s-quote .attrib {
+    margin-top: 30px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--ink);
+    opacity: 0.65;
+    text-transform: uppercase;
+  }
+
+  /* ============== SLIDE 8 :: CLOSE ============== */
+  .s-close { background: var(--ink); position: relative; }
+  .s-close .photo {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center 60%;
+    opacity: 0.55;
+  }
+  .s-close .center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 24px;
+    text-align: center;
+    color: var(--cream);
+  }
+  .s-close .tagline {
+    font-family: 'Anton', sans-serif;
+    font-size: 110px;
+    letter-spacing: 4px;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .s-close .de {
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 26px;
+    color: var(--gold-l);
+    letter-spacing: 1px;
+  }
+  .s-close .ames-logo.invert { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); height: 64px; }
+</style></head>
+<body>
+
+<header class="site-bar">
+  <span class="left">A guardian story · <a href="https://www.ames-foundation.com/" target="_blank" rel="noopener">AMES Foundation</a></span>
+  <span class="right">
+    <a href="https://unleash-ventures.com">Unleash Ventures</a>
+  </span>
+</header>
+
+<main class="deck" id="deck">
+
+<!-- ============================================ SLIDE 1 :: COVER -->
+<section class="slide s-cover">
+  <div class="image" style="background-image:url('./assets/img/PXL_20230225_163604284.jpg')"></div>
+  <div class="strip">
+    <div class="title-block">
+      <div class="eyebrow">A Story From Dabchick · South Africa</div>
+      <h1>There is a little rhino in Africa<br/>with <em>only one ear</em>,<br/>and it's named after my wife.</h1>
+      <div class="kicker">RESCUE KIRA</div>
+    </div>
+    <img class="ames-logo in-strip" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+    <div class="date">BERLIN<br/>7 MAY 2026</div>
+  </div>
+</section>
+
+<!-- ============================================ SLIDE 2 :: WHERE IT BEGAN -->
+<section class="slide s-split">
+  <div class="photo" style="background-image:url('./assets/img/PXL_20230227_163204684.jpg')"></div>
+  <div class="panel">
+    <div class="eyebrow">Dabchick Wilderness Reserve · South Africa</div>
+    <h2>WHERE<br/>IT BEGAN</h2>
+    <div class="rule"></div>
+    <p class="body">A rhino calf, born just before we arrived. Heavy rain during the birth — and an infected ear. During morning treatment, the calf <em>spooked</em> and disappeared into the bush. Tiny. Sick. Untagged.</p>
+  </div>
+  <img class="ames-logo bl" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num">02</div>
+</section>
+
+<!-- ============================================ SLIDE 3 :: THE SEARCH (full-bleed) -->
+<section class="slide s-bleed">
+  <div class="photo" style="background-image:url('./assets/img/WA_1005_33.jpeg')"></div>
+  <div class="caption">
+    <div class="cap-title">
+      <div class="cap-eyebrow">Three Days Of Drone Searches</div>
+      <h2>THE SEARCH</h2>
+    </div>
+    <div class="cap-body">
+      Basil and his team — up day and night. Hyenas in the bush. A reserve too big to walk. On day three, the calf was found and reunited with her mother. The relief lasted minutes — the ear was still bad. The vet was called.
+    </div>
+  </div>
+  <img class="ames-logo bl invert" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num on-dark" style="color: var(--cream); opacity: 0.7;">03</div>
+</section>
+
+<!-- ============================================ SLIDE 4 :: THE CALL -->
+<section class="slide s-stack">
+  <div class="panel">
+    <div class="eyebrow">The Vet Is En Route</div>
+    <h2>THE<br/>CALL</h2>
+    <div class="rule"></div>
+    <p class="body">A helicopter inbound — Robinson R44, fuel cans on the strip. Every hand on standby. Phil and Kira pulled into the operation instead of left waiting on the radio.</p>
+  </div>
+  <div class="grid">
+    <div class="ph" style="background-image:url('./assets/img/PXL_20230301_061613866.jpg')"></div>
+    <div class="ph" style="background-image:url('./assets/img/PXL_20230301_062833611.jpg')"></div>
+  </div>
+  <img class="ames-logo bl invert" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num on-dark" style="color: var(--cream); opacity: 0.7;">04</div>
+</section>
+
+<!-- ============================================ SLIDE 5 :: HANDS ON THE GROUND -->
+<section class="slide s-side">
+  <div class="photo" style="background-image:url('./assets/img/WA_hands.jpeg')"></div>
+  <div class="panel">
+    <div class="eyebrow">Two Metres From The Mother</div>
+    <h2>HANDS ON<br/>THE GROUND</h2>
+    <div class="rule"></div>
+    <p class="body">Multiple tons darted. Every shoulder needed. The infection had already stopped — the ear came off, and the calf would live.</p>
+  </div>
+  <img class="ames-logo bl invert" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num on-dark" style="color: var(--cream); opacity: 0.7;">05</div>
+</section>
+
+<!-- ============================================ SLIDE 6 :: THEN & NOW -->
+<section class="slide s-then">
+  <div class="header">
+    <div class="eyebrow">Three Years On</div>
+    <h2>KIRA — THEN &amp; NOW</h2>
+    <p class="sub">From a calf hidden in the bush, to a healthy rhino in the green hills of Dabchick. The infection stopped. The ear off. The herd whole.</p>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <div class="photo" style="background-image:url('./assets/img/PXL_20230301_072129285.jpg')"></div>
+      <div class="scrim"></div>
+      <div class="yr">2023</div>
+      <div class="label">THEN</div>
+    </div>
+    <div class="col">
+      <div class="photo" style="background-image:url('./assets/img/WA_now.jpeg'); background-position: center 78%;"></div>
+      <div class="scrim"></div>
+      <div class="yr">2026</div>
+      <div class="label">NOW</div>
+    </div>
+  </div>
+  <img class="ames-logo br" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num" style="bottom: 40px; left: 60px; right: auto;">06</div>
+</section>
+
+<!-- ============================================ SLIDE 7 :: QUOTE -->
+<section class="slide s-quote">
+  <div class="mark">"</div>
+  <blockquote>The money goes somewhere with <em>a memory attached.</em></blockquote>
+  <div class="attrib">— On Being A Guardian</div>
+  <img class="ames-logo br" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+  <div class="page-num" style="bottom: 40px; left: 60px; right: auto;">07</div>
+</section>
+
+<!-- ============================================ SLIDE 8 :: CLOSE -->
+<section class="slide s-close">
+  <div class="photo" style="background-image:url('./assets/img/PXL_20230225_163604284.jpg')"></div>
+  <div class="center">
+    <div class="de"><em>Die Natur ist perfekt.</em></div>
+    <div class="tagline">NATURE IS PERFECT</div>
+  </div>
+  <img class="ames-logo invert" src="./assets/ames-logo.svg" alt="AMES Foundation" />
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="h">A GUARDIAN STORY</div>
+  <p class="b">
+    Phil and his wife Kira are guardians of <a href="https://www.ames-foundation.com/" target="_blank" rel="noopener">AMES Foundation</a>, working to keep South Africa a safer place for endangered species. The team at Dabchick Wilderness Reserve named the calf in this story after Kira.
+  </p>
+  <div class="links">
+    <a href="https://www.ames-foundation.com/" target="_blank" rel="noopener">AMES Foundation</a>
+    <a href="https://unleash-ventures.com">Unleash Ventures</a>
+    <a href="./Rescue-Kira-PS.pdf" target="_blank">Download as PDF</a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var deck = document.getElementById('deck');
+    var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+    slides.forEach(function (slide) {
+      var frame = document.createElement('div');
+      frame.className = 'slide-frame';
+      slide.parentNode.insertBefore(frame, slide);
+      frame.appendChild(slide);
+    });
+    function fit() {
+      var w = deck.clientWidth;
+      var scale = w / 1920;
+      slides.forEach(function (slide) {
+        slide.style.setProperty('--scale', scale);
+      });
+    }
+    window.addEventListener('resize', fit);
+    fit();
+  })();
+</script>
+
+</body></html>
