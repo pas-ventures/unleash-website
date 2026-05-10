@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulating Your Validation Pipeline | Phil @ Darkies in Tech</title>
+<meta name="description" content="From Assumptions to Evidence — without the false confidence. Validation, the Mom Test, and the ladder from talk to test. Guest session for Darkies in Tech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #FF6719;
+    --accent-light: rgba(255,103,25,0.12);
+    --accent-border: rgba(255,103,25,0.25);
+    --dark: #111;
+    --card: #181818;
+    --border: rgba(255,255,255,0.06);
+    --text: #c8c8c8;
+    --muted: #888;
+    --white: #f0f0f0;
+    --red: #e5484d;
+    --green: #30a46c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .slide { display: none; width: 100vw; height: 100vh; padding: 70px 110px; position: relative; flex-direction: column; justify-content: center; overflow: hidden; }
+  .slide.active { display: flex; }
+
+  .top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #ff9a5c); }
+  .logo-bar { position: absolute; top: 26px; left: 110px; }
+  .logo-bar img { height: 26px; opacity: 0.8; }
+  .guest-tag { position: absolute; top: 30px; right: 110px; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .guest-tag .dit { color: var(--accent); }
+
+  .nav { position: fixed; bottom: 26px; right: 36px; display: flex; gap: 10px; z-index: 100; }
+  .nav button { background: rgba(255,103,25,0.1); border: 1px solid rgba(255,103,25,0.2); color: var(--accent); padding: 9px 22px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 15px; transition: all 0.2s; }
+  .nav button:hover { background: rgba(255,103,25,0.2); }
+  .slide-counter { position: fixed; bottom: 32px; left: 36px; font-size: 14px; color: var(--muted); z-index: 100; }
+
+  h1 { font-family: 'Spectral', serif; font-weight: 700; font-size: 64px; line-height: 1.08; color: var(--white); margin-bottom: 24px; }
+  h2 { font-family: 'Spectral', serif; font-weight: 700; font-size: 48px; line-height: 1.12; color: var(--white); margin-bottom: 20px; }
+  h3 { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 24px; color: var(--white); margin-bottom: 12px; }
+  .accent { color: var(--accent); }
+  .tag { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
+
+  .host-avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,103,25,0.3); flex-shrink: 0; }
+
+  /* ===== SLIDE 1: TITLE ===== */
+  .slide-title { background: radial-gradient(circle at 85% 15%, rgba(255,103,25,0.12) 0%, transparent 30%), radial-gradient(circle at 15% 80%, rgba(255,103,25,0.06) 0%, transparent 30%), linear-gradient(rgba(17,17,17,0.95), rgba(17,17,17,0.95)), repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px); background-color: var(--dark); }
+  .slide-title .session-tag { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 28px; }
+  .slide-title h1 { font-size: 76px; line-height: 1.05; margin-bottom: 22px; }
+  .slide-title .subtitle-line { font-size: 22px; color: var(--muted); line-height: 1.6; max-width: 900px; }
+  .slide-title .meta { margin-top: 30px; font-size: 19px; color: var(--muted); line-height: 1.8; }
+  .slide-title .meta strong { color: var(--white); font-weight: 600; }
+  .glow-dot { position: absolute; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px 4px rgba(255,103,25,0.4); }
+  .glow-dot-1 { top: 18%; left: 28%; }
+  .glow-dot-2 { top: 12%; right: 22%; }
+  .glow-dot-3 { bottom: 35%; right: 8%; }
+  .host-row { display: flex; gap: 18px; margin-top: 44px; align-items: center; }
+  .host-info .name { font-weight: 600; color: var(--white); font-size: 19px; }
+  .host-info .role { color: var(--muted); font-size: 15px; margin-top: 3px; }
+
+  /* ===== SLIDE 2: HOST ===== */
+  .host-split { display: grid; grid-template-columns: 260px 1fr; gap: 44px; margin-top: 28px; align-items: start; }
+  .host-portrait img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); }
+  .host-bio h3 { font-size: 22px; color: var(--white); margin-bottom: 10px; }
+  .host-bio p { font-size: 17px; color: var(--text); line-height: 1.65; margin-bottom: 12px; }
+  .host-bio p.muted { color: var(--muted); font-size: 15px; }
+  .values-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+  .v-chip { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .v-chip .label { font-size: 12px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; font-family: 'Montserrat', sans-serif; }
+  .v-chip .txt { font-size: 14px; color: var(--text); line-height: 1.45; }
+
+  /* ===== SLIDE 3: AGENDA ===== */
+  .agenda-list { margin-top: 24px; position: relative; padding-left: 42px; }
+  .agenda-list::before { content: ''; position: absolute; left: 16px; top: 8px; bottom: 8px; width: 2px; background: rgba(255,103,25,0.15); }
+  .a-item { position: relative; padding: 14px 0 14px 34px; display: flex; align-items: baseline; gap: 20px; }
+  .a-item::before { content: ''; position: absolute; left: -34px; top: 22px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .a-time { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 20px; color: var(--accent); min-width: 92px; }
+  .a-desc { font-size: 20px; color: var(--white); }
+  .a-desc .detail { display: block; color: var(--muted); font-size: 15px; margin-top: 3px; }
+
+  /* ===== SLIDE 4: SHOW OF HANDS ===== */
+  .hands-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .hand-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; }
+  .hand-card .num { font-family: 'Spectral', serif; font-size: 38px; color: var(--accent); font-weight: 700; line-height: 1; margin-bottom: 14px; }
+  .hand-card h3 { font-size: 19px; color: var(--white); margin-bottom: 12px; line-height: 1.3; }
+  .hand-card .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hand-card .opt { background: rgba(255,103,25,0.08); border: 1px solid var(--accent-border); color: var(--accent); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; font-family: 'Montserrat', sans-serif; }
+  .hand-card p.note { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+  .chat-prompt { margin-top: 24px; background: linear-gradient(135deg, rgba(255,103,25,0.08), rgba(255,103,25,0.02)); border: 1px solid var(--accent-border); border-radius: 14px; padding: 18px 28px; display: flex; align-items: center; gap: 18px; }
+  .chat-prompt .ico { font-size: 28px; }
+  .chat-prompt p { font-size: 17px; color: var(--text); line-height: 1.5; }
+  .chat-prompt strong { color: var(--white); }
+
+  /* ===== SLIDE 5: TOPIC INTRO ===== */
+  .topic-slide { align-items: flex-start; justify-content: center; }
+  .topic-slide h1 { font-size: 92px; line-height: 1.04; margin-bottom: 20px; }
+  .topic-slide .sub { font-size: 26px; color: var(--muted); max-width: 820px; line-height: 1.5; }
+
+  /* ===== SLIDE 6: COMMON ANSWERS ===== */
+  .common-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
+  .common-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 40px 32px; text-align: center; }
+  .common-card .icon { font-size: 52px; margin-bottom: 18px; }
+  .common-card h3 { font-size: 26px; color: var(--white); margin-bottom: 6px; }
+  .common-card p { font-size: 16px; color: var(--muted); }
+  .common-caption { margin-top: 36px; font-size: 22px; color: var(--text); text-align: center; font-style: italic; }
+  .common-caption .accent { font-weight: 600; }
+
+  /* ===== SLIDE 7: FALSE POSITIVES ===== */
+  .fp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 24px; align-items: start; }
+  .fp-left .tag { background: rgba(229,72,77,0.12); color: var(--red); }
+  .fp-left h2 { font-size: 40px; }
+  .fp-left p.lede { font-size: 19px; color: var(--text); line-height: 1.55; margin-top: 12px; margin-bottom: 22px; }
+  .fp-eq { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 28px; margin-top: 18px; }
+  .fp-eq h3 { color: var(--accent); font-size: 17px; margin-bottom: 8px; }
+  .fp-eq p { font-size: 19px; color: var(--white); font-family: 'Montserrat', sans-serif; font-weight: 600; line-height: 1.45; }
+  .fp-right ul { list-style: none; padding: 0; margin-top: 8px; }
+  .fp-right li { padding: 14px 0 14px 22px; position: relative; border-bottom: 1px solid var(--border); font-size: 17px; color: var(--text); line-height: 1.55; }
+  .fp-right li:last-child { border-bottom: none; }
+  .fp-right li::before { content: ''; position: absolute; left: 0; top: 22px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  .fp-right li strong { color: var(--white); }
+
+  /* ===== SLIDE 8: THE GAME ===== */
+  .game-slide { justify-content: center; align-items: center; text-align: center; }
+  .game-slide .name-of-the-game { font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 28px; }
+  .game-slide h1 { font-size: 72px; line-height: 1.1; max-width: 1000px; margin: 0 auto; }
+  .game-slide .and { display: inline-block; color: var(--accent); font-style: italic; margin: 12px 0; font-family: 'Spectral', serif; font-weight: 400; }
+
+  /* ===== SLIDE 9: PIPELINE TRAP ===== */
+  .trap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 22px; align-items: start; }
+  .trap-left h2 { font-size: 44px; line-height: 1.1; }
+  .trap-left p.lede { font-size: 19px; color: var(--text); line-height: 1.6; margin-top: 14px; }
+  .trap-card { background: linear-gradient(135deg, rgba(255,103,25,0.1), rgba(255,103,25,0.02)); border: 1px solid var(--accent-border); border-radius: 16px; padding: 30px 32px; }
+  .trap-card .label { font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--accent); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .trap-card h3 { font-family: 'Spectral', serif; font-weight: 700; font-size: 28px; color: var(--white); margin-bottom: 14px; line-height: 1.25; }
+  .trap-card p { font-size: 16px; color: var(--text); line-height: 1.6; margin-bottom: 12px; }
+  .trap-card p.kicker { color: var(--accent); font-weight: 600; font-size: 17px; margin-top: 4px; margin-bottom: 0; font-family: 'Montserrat', sans-serif; }
+
+  /* ===== SLIDE 10: MOM TEST ===== */
+  .mt-book-row { display: grid; grid-template-columns: 260px 1fr; gap: 40px; align-items: start; margin-top: 20px; }
+  .mt-book { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; text-align: center; }
+  .mt-book .emoji { font-size: 64px; margin-bottom: 12px; }
+  .mt-book .title { font-family: 'Spectral', serif; font-size: 20px; color: var(--white); font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+  .mt-book .author { font-size: 13px; color: var(--muted); }
+  .mt-book .caption { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent); font-style: italic; }
+  .mt-principles { display: flex; flex-direction: column; gap: 14px; }
+  .mt-p { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; }
+  .mt-p h3 { font-size: 18px; color: var(--accent); margin-bottom: 4px; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+  .mt-p p { font-size: 15px; color: var(--text); line-height: 1.5; }
+
+  /* ===== SLIDES 11 + 12: QUESTIONS ===== */
+  .q-slide h2 { font-size: 42px; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 22px; }
+  .q-col { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; }
+  .q-col.bad { border-left: 4px solid var(--red); }
+  .q-col.good { border-left: 4px solid var(--green); }
+  .q-col h3 { font-size: 16px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+  .q-col.bad h3 { color: var(--red); }
+  .q-col.good h3 { color: var(--green); }
+  .q-col ul { list-style: none; padding: 0; }
+  .q-col li { padding: 10px 0; font-size: 14px; line-height: 1.4; color: var(--text); border-bottom: 1px solid var(--border); }
+  .q-col li:last-child { border-bottom: none; }
+  .q-col.bad li { color: var(--text); font-style: italic; }
+  .q-col.good li { color: var(--white); font-weight: 500; }
+
+  /* ===== SLIDE 13: VALIDATION LADDER ===== */
+  .ladder-intro { font-size: 18px; color: var(--text); line-height: 1.55; margin-top: 6px; margin-bottom: 22px; max-width: 950px; font-style: italic; }
+  .ladder-intro strong { color: var(--accent); font-style: normal; }
+  .ladder { display: flex; flex-direction: column; gap: 12px; }
+  .rung { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 24px; display: grid; grid-template-columns: 50px 1.2fr 1fr 1.4fr; gap: 22px; align-items: start; }
+  .rung.peak { background: linear-gradient(135deg, rgba(255,103,25,0.1), rgba(255,103,25,0.02)); border-color: var(--accent-border); }
+  .rung .n { font-family: 'Spectral', serif; font-size: 34px; color: var(--accent); font-weight: 700; line-height: 1; }
+  .rung .what h4 { font-size: 17px; color: var(--white); font-weight: 700; margin-bottom: 4px; font-family: 'Montserrat', sans-serif; }
+  .rung .what p { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+  .rung .col h5 { font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 5px; }
+  .rung .col p { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .rung .col p strong { color: var(--white); font-weight: 600; }
+  .rung .col.example p { color: var(--text); font-style: italic; }
+  .rung .col.example p strong { color: var(--accent); font-style: normal; }
+  .ladder-rule { margin-top: 14px; padding: 12px 20px; background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 8px; font-size: 14px; color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 600; }
+  .ladder-rule strong { color: var(--accent); }
+  .ladder-meta { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .ladder-meta .lm-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+  .ladder-meta .lm-card h5 { font-family: 'Montserrat', sans-serif; font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; margin-bottom: 6px; }
+  .ladder-meta .lm-card.good h5 { color: var(--green); }
+  .ladder-meta .lm-card.bad h5 { color: var(--red); }
+  .ladder-meta .lm-card p { font-size: 12px; color: var(--text); line-height: 1.45; }
+  .ladder-meta .lm-card p + p { margin-top: 4px; }
+
+  /* ===== SLIDE 14: EXPERIMENT DESIGN ===== */
+  .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+  .rule-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; }
+  .rule-card .num { font-family: 'Spectral', serif; font-size: 32px; color: var(--accent); font-weight: 700; line-height: 1; margin-bottom: 10px; }
+  .rule-card h3 { font-size: 19px; color: var(--white); margin-bottom: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+  .rule-card p { font-size: 15px; color: var(--text); line-height: 1.55; }
+  .rule-card p strong { color: var(--accent); font-weight: 600; }
+  .rule-card .ex { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); font-style: italic; line-height: 1.5; }
+  .rule-card .ex strong { color: var(--white); font-style: normal; font-weight: 600; }
+
+  /* ===== SLIDE 15: PITFALLS ===== */
+  .pitfalls-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+  .pitfall { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 10px; padding: 16px 24px; display: grid; grid-template-columns: 200px 1fr; gap: 22px; align-items: center; }
+  .pitfall .label { font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--white); font-weight: 700; }
+  .pitfall .desc { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .pitfall .desc strong { color: var(--accent); }
+  .pitfall .ex { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 4px; line-height: 1.45; }
+  .pitfall .ex strong { color: var(--white); font-style: normal; }
+
+  /* ===== BUILD ANIMATIONS (slide 4) ===== */
+  .build-card { opacity: 0; transition: opacity 0.4s ease; }
+  .build-card.appear { opacity: 1; }
+
+  /* ===== DRAKE ROW (slides 11 + 12) ===== */
+  .drake-row { display: grid; grid-template-columns: 1fr 2.4fr; gap: 22px; margin-top: 18px; align-items: start; }
+  .drake-img { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; padding: 8px; }
+  .drake-img img { width: 100%; display: block; border-radius: 8px; }
+  .drake-row .q-grid { margin-top: 0; }
+
+  /* ===== SLIDE 16: HOMEWORK ===== */
+  .hw-callout { background: linear-gradient(135deg, rgba(255,103,25,0.1), rgba(255,103,25,0.02)); border: 1px solid var(--accent-border); border-radius: 18px; padding: 36px 42px; margin-top: 28px; }
+  .hw-callout h3 { color: var(--accent); font-size: 26px; margin-bottom: 10px; font-family: 'Spectral', serif; font-weight: 700; }
+  .hw-callout p { font-size: 18px; color: var(--text); line-height: 1.6; margin-bottom: 16px; }
+  .hw-steps { display: flex; gap: 22px; margin-top: 22px; }
+  .hw-step { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .hw-step .n { font-family: 'Spectral', serif; font-size: 24px; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
+  .hw-step h4 { font-size: 17px; color: var(--white); font-weight: 600; margin-bottom: 4px; font-family: 'Montserrat', sans-serif; }
+  .hw-step p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+  /* ===== SLIDE 17: CTA UNLEASH ===== */
+  .cta-slide { background: radial-gradient(circle at 80% 20%, rgba(255,103,25,0.15) 0%, transparent 35%), linear-gradient(rgba(17,17,17,0.95), rgba(17,17,17,0.95)); }
+  .cta-slide .cta-tag { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 24px; }
+  .cta-slide h1 { font-size: 64px; line-height: 1.08; max-width: 1000px; }
+  .cta-pitch { font-size: 22px; color: var(--text); line-height: 1.6; max-width: 900px; margin-top: 22px; }
+  .cta-pitch strong { color: var(--white); font-weight: 600; }
+  .cta-pitch .em { color: var(--accent); }
+  .cta-links { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 1100px; }
+  .cta-link { background: var(--card); border: 1px solid var(--accent-border); border-radius: 12px; padding: 18px 22px; }
+  .cta-link .label { font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
+  .cta-link .url { font-size: 17px; color: var(--white); font-weight: 600; word-break: break-all; }
+
+  /* ===== SLIDE 18: Q&A ===== */
+  .qa-slide { text-align: center; justify-content: center; align-items: center; }
+  .qa-slide h1 { font-size: 100px; margin-bottom: 22px; }
+  .qa-slide .sub { font-size: 22px; color: var(--muted); max-width: 720px; margin-bottom: 0; line-height: 1.6; }
+
+  /* ===== SLIDE 19: THANK YOU ===== */
+  .ty-slide { text-align: center; justify-content: center; align-items: center; }
+  .ty-slide h1 { font-size: 84px; margin-bottom: 20px; }
+  .ty-slide .ty-sub { font-size: 22px; color: var(--text); max-width: 760px; line-height: 1.6; margin-bottom: 36px; }
+  .ty-contacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 900px; margin: 0 auto; }
+  .ty-contact { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; text-align: left; }
+  .ty-contact .label { font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
+  .ty-contact .val { font-size: 16px; color: var(--white); font-weight: 600; word-break: break-all; }
+  .ty-foot { margin-top: 50px; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .ty-foot .dit { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide slide-title active" id="slide-1">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+  <div class="glow-dot glow-dot-1"></div>
+  <div class="glow-dot glow-dot-2"></div>
+  <div class="glow-dot glow-dot-3"></div>
+
+  <div class="session-tag">Sales Masterclass · Validation</div>
+  <h1>Formulating Your<br><span class="accent">Validation Pipeline</span></h1>
+  <p class="subtitle-line">From Assumptions to Evidence &mdash; without the false confidence.</p>
+
+  <div class="meta">
+    <strong>14 May 2026</strong> &middot; Hosted by <strong>Darkies in Tech</strong><br>
+    Brought by <strong>Phil &middot; Unleash Ventures</strong>
+  </div>
+
+  <div class="host-row">
+    <img class="host-avatar" src="phil.jpeg" alt="Phil">
+    <div class="host-info">
+      <div class="name">Philipp Alexander Ströhemann</div>
+      <div class="role">Project Unleash</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: HOUSEKEEPING / SLIDO -->
+<div class="slide" id="slide-housekeeping">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Before We Start</div>
+  <h2>Housekeeping</h2>
+
+  <div class="hk-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px;">
+    <div class="hk-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; display: flex; gap: 16px; align-items: flex-start;">
+      <div class="hk-icon" style="font-size: 28px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--accent-light); border-radius: 12px;">🔇</div>
+      <div>
+        <h3 style="font-size: 19px; margin-bottom: 4px;">Mute your mic</h3>
+        <p style="font-size: 15px; color: var(--muted); line-height: 1.5;">Stay muted unless invited to speak.</p>
+      </div>
+    </div>
+    <div class="hk-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; display: flex; gap: 16px; align-items: flex-start;">
+      <div class="hk-icon" style="font-size: 28px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--accent-light); border-radius: 12px;">💬</div>
+      <div>
+        <h3 style="font-size: 19px; margin-bottom: 4px;">Chat = engagement only</h3>
+        <p style="font-size: 15px; color: var(--muted); line-height: 1.5;">Reactions &amp; the audience-validating answers I'll ask for. <strong>No questions in chat.</strong></p>
+      </div>
+    </div>
+    <div class="hk-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; display: flex; gap: 16px; align-items: flex-start;">
+      <div class="hk-icon" style="font-size: 28px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--accent-light); border-radius: 12px;">🙋</div>
+      <div>
+        <h3 style="font-size: 19px; margin-bottom: 4px;">Questions → Slido</h3>
+        <p style="font-size: 15px; color: var(--muted); line-height: 1.5;">Drop them in any time. We tackle as many as possible in the open Q&amp;A.</p>
+      </div>
+    </div>
+    <div class="hk-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; display: flex; gap: 16px; align-items: flex-start;">
+      <div class="hk-icon" style="font-size: 28px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--accent-light); border-radius: 12px;">👍</div>
+      <div>
+        <h3 style="font-size: 19px; margin-bottom: 4px;">Vote on what matters</h3>
+        <p style="font-size: 15px; color: var(--muted); line-height: 1.5;">Upvote the questions you want answered first. Pre-submitted gets priority.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 22px; background: linear-gradient(135deg, rgba(255,103,25,0.1), rgba(255,103,25,0.02)); border: 1px solid var(--accent-border); border-radius: 16px; padding: 22px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+    <div>
+      <h3 style="color: var(--accent); font-size: 22px; margin-bottom: 4px;">Slido — submit &amp; vote on questions</h3>
+      <p style="color: var(--text); font-size: 16px; line-height: 1.5;">Link will be shared in chat. Pre-submitted questions get priority.</p>
+    </div>
+    <div style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 22px; color: var(--white); padding: 12px 22px; background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: 10px;">slido.com</div>
+  </div>
+</div>
+
+<!-- SLIDE 4: AGENDA -->
+<div class="slide" id="slide-3">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Today's Plan</div>
+  <h2>Agenda</h2>
+
+  <div class="agenda-list">
+    <div class="a-item">
+      <span class="a-time">3 min</span>
+      <span class="a-desc">What are you currently validating?<span class="detail">Quick audience check &mdash; in the chat, not show of hands</span></span>
+    </div>
+    <div class="a-item">
+      <span class="a-time">10 min</span>
+      <span class="a-desc">Why startups die &mdash; false positives + the Mom Test<span class="detail">The real killer, and the foundations</span></span>
+    </div>
+    <div class="a-item">
+      <span class="a-time">15 min</span>
+      <span class="a-desc">From talk to test &mdash; the Validation Ladder<span class="detail">How to design experiments that actually generate signal</span></span>
+    </div>
+    <div class="a-item">
+      <span class="a-time">5 min</span>
+      <span class="a-desc">What to try this week + Unleash<span class="detail">Concrete next moves. Where to go next.</span></span>
+    </div>
+    <div class="a-item">
+      <span class="a-time">25 min</span>
+      <span class="a-desc">Open Q&amp;A<span class="detail">Your turn &mdash; bring the hard ones</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: HOST (quick intro / warm up) -->
+<div class="slide" id="slide-host">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Your Session Host</div>
+  <h2>Phil &middot; Unleash</h2>
+
+  <div class="host-split">
+    <div class="host-portrait">
+      <img src="phil.jpeg" alt="Philipp Ströhemann">
+    </div>
+    <div class="host-bio">
+      <h3>Philipp Alexander Ströhemann</h3>
+      <p>Northern German. <strong>Studied in South Africa back in 2014</strong> &mdash; came to Cape Town for an MBA exchange. That's how I got here.</p>
+      <p>Co-founded <strong>ComX</strong> with South African partners. Exited to a German PE firm in <strong>2022.</strong></p>
+      <p>Investing since 2021 &mdash; formalised in 2025 via <strong>MVP Founders</strong> (Germany) &amp; <strong>Project Unleash</strong> (South Africa). Both <em>building camels, not unicorns.</em></p>
+
+      <div class="values-row" style="grid-template-columns: 1fr 1fr;">
+        <div class="v-chip">
+          <div class="label">Investing</div>
+          <div class="txt">2&ndash;3 ventures per year. Very close work.</div>
+        </div>
+        <div class="v-chip">
+          <div class="label">Camels, not unicorns</div>
+          <div class="txt">Resilient. Cash-flow first. Built for African reality.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: ENGAGEMENT (progressive reveal) -->
+<div class="slide" id="slide-4" data-builds="3">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">In the Chat</div>
+  <h2>What are you currently validating?</h2>
+
+  <div class="hands-grid" style="margin-top: 40px;">
+    <div class="hand-card build-card" data-build="1">
+      <div class="num">1</div>
+      <h3>Who are you working with?</h3>
+      <div class="opts">
+        <span class="opt">Companies (B2B)</span>
+        <span class="opt">Consumers (B2C)</span>
+      </div>
+    </div>
+    <div class="hand-card build-card" data-build="2">
+      <div class="num">2</div>
+      <h3>What phase are you currently in?</h3>
+      <div class="opts">
+        <span class="opt">No design partners</span>
+        <span class="opt">5 paying design partners</span>
+        <span class="opt">10 users</span>
+        <span class="opt">10+ paying users</span>
+      </div>
+    </div>
+    <div class="hand-card build-card" data-build="3">
+      <div class="num">3</div>
+      <h3>What industry · who's the user · what are they trying to solve?</h3>
+      <div class="opts">
+        <span class="opt">Industry</span>
+        <span class="opt">User</span>
+        <span class="opt">Problem</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: TOPIC INTRO -->
+<div class="slide topic-slide" id="slide-5">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Today's Topic</div>
+  <h1>Why do startups<br><span class="accent">die?</span></h1>
+  <p class="sub">Most founders get this wrong. The obvious answers aren't the real killer.</p>
+</div>
+
+<!-- SLIDE 6: COMMON ANSWERS -->
+<div class="slide" id="slide-6">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">The Usual Suspects</div>
+  <h2>Common Answers</h2>
+
+  <div class="common-row">
+    <div class="common-card">
+      <div class="icon">📦</div>
+      <h3>Bad Product</h3>
+      <p>The feature set wasn't right.</p>
+    </div>
+    <div class="common-card">
+      <div class="icon">👥</div>
+      <h3>Poor Team</h3>
+      <p>Wrong people, wrong roles.</p>
+    </div>
+    <div class="common-card">
+      <div class="icon">💸</div>
+      <h3>No Funding</h3>
+      <p>Ran out of money.</p>
+    </div>
+  </div>
+
+  <div class="common-caption">
+    These are <span class="accent">symptoms</span>, not causes. The real killer shows up much earlier.
+  </div>
+</div>
+
+<!-- SLIDE 7: FALSE POSITIVES -->
+<div class="slide" id="slide-7">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="fp-grid">
+    <div class="fp-left">
+      <div class="tag">The Real Killer</div>
+      <h2>False positives kill your company.</h2>
+      <p class="lede">Every success is the sum of decisions taken on the information you source or receive. Bad info → wrong turn → wasted months → dead runway.</p>
+      <div class="fp-eq">
+        <h3>The equation</h3>
+        <p>Quality of Decisions<br>= Quality of Information</p>
+      </div>
+    </div>
+    <div class="fp-right">
+      <h3 style="color: var(--accent); font-size: 17px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; font-family: 'Montserrat', sans-serif;">What False Positives Look Like</h3>
+      <ul>
+        <li><strong>"That's a great idea, you should build it."</strong> &mdash; friend being polite.</li>
+        <li><strong>"Yes, I'd use that."</strong> &mdash; hypothetical, not a commitment.</li>
+        <li><strong>"I'd pay for it."</strong> &mdash; until the credit card comes out.</li>
+        <li><strong>Survey responses without skin in the game.</strong></li>
+        <li><strong>Your own excitement about your idea.</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: THE GAME -->
+<div class="slide game-slide" id="slide-8">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="name-of-the-game">The Name of the Game</div>
+  <h1>
+    Get the <span class="accent">right information</span> ASAP<br>
+    <span class="and">and</span><br>
+    avoid <span class="accent">false positives</span>.
+  </h1>
+</div>
+
+<!-- SLIDE 9: PIPELINE TRAP (NEW) -->
+<div class="slide" id="slide-9">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Reframe</div>
+  <h2>The "Validation Pipeline" Trap.</h2>
+
+  <div style="margin-top: 36px; max-width: 1100px;">
+    <p style="font-family: 'Spectral', serif; font-size: 38px; line-height: 1.25; color: var(--white); margin-bottom: 28px;">
+      Most pipelines validate what you <span class="accent">want</span> to be true.
+    </p>
+    <p style="font-size: 22px; color: var(--text); line-height: 1.55; margin-bottom: 24px;">
+      Pipelines feel safe. <strong style="color: var(--white);">Volume of "yes" replaces depth of evidence.</strong>
+    </p>
+    <p style="font-size: 22px; color: var(--text); line-height: 1.55;">
+      The Mom Test is the discipline &mdash; the <span class="accent" style="font-weight: 600;">un-pipeline.</span> Go deep on quality, not wide on quantity.
+    </p>
+  </div>
+</div>
+
+<!-- SLIDE 10: MOM TEST 4 PRINCIPLES -->
+<div class="slide" id="slide-10">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">The Book That Saves Founders</div>
+  <h2>The Mom Test &mdash; 4 principles</h2>
+
+  <div class="mt-book-row">
+    <div class="mt-book">
+      <div class="emoji">📖</div>
+      <div class="title">The Mom Test</div>
+      <div class="author">Rob Fitzpatrick</div>
+      <div class="caption">Required reading.<br>Read it this week.</div>
+    </div>
+    <div class="mt-principles">
+      <div class="mt-p">
+        <h3>1. Founder = Truth-Seeking Machine</h3>
+        <p>Avoid praise. Avoid validation. Find the answers that make you feel uncomfortable &mdash; those are the real ones.</p>
+      </div>
+      <div class="mt-p">
+        <h3>2. Customer-Obsessed &gt; Solution-Obsessed</h3>
+        <p>Nobody cares about your idea. Everyone cares about their problem. Talk about <em>their</em> lived experience, not your product.</p>
+      </div>
+      <div class="mt-p">
+        <h3>3. Each Call = a Learning Event</h3>
+        <p>Open-ended questions. No pitch. You're here to discover, not to convince.</p>
+      </div>
+      <div class="mt-p">
+        <h3>4. The Only Positive Feedback is 💸</h3>
+        <p>LOIs. Signed contracts. Sign-ups. Pre-orders. Words are not signal &mdash; money and commitment are.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: POOR QUESTIONS -->
+<div class="slide q-slide" id="slide-11">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag" style="background: rgba(229,72,77,0.12); color: var(--red);">Stop Asking These</div>
+  <h2>❌ Poor Questions</h2>
+  <p style="font-size: 17px; color: var(--muted); margin-bottom: 6px;">Hypothetical. Polite-answer magnets. Noise, not signal.</p>
+
+  <div class="drake-row">
+    <div class="drake-img">
+      <img src="drake-no.png" alt="Drake meme — disapproving of poor questions">
+    </div>
+    <div class="q-grid">
+      <div class="q-col bad">
+        <h3>The questions</h3>
+        <ul>
+          <li>"Would you use this?"</li>
+          <li>"Do you think this is a good idea?"</li>
+          <li>"Would you pay for this?"</li>
+          <li>"How much would you pay for this?"</li>
+          <li>"What features would you like?"</li>
+          <li>"If we built X, would that solve it?"</li>
+        </ul>
+      </div>
+      <div class="q-col bad">
+        <h3>Why they fail</h3>
+        <ul>
+          <li>It's a guess, not a fact.</li>
+          <li>People are polite &mdash; they'll say yes.</li>
+          <li>Hypothetical and socially pressured.</li>
+          <li>People don't know until they pay.</li>
+          <li>You're outsourcing product design.</li>
+          <li>Leading the witness.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: STRONG QUESTIONS -->
+<div class="slide q-slide" id="slide-12">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag" style="background: rgba(48,164,108,0.12); color: var(--green);">Ask These Instead</div>
+  <h2>✅ Strong Questions</h2>
+  <p style="font-size: 17px; color: var(--muted); margin-bottom: 6px;">Anchored in real behaviour. They surface pain, budget, and who actually decides.</p>
+
+  <div class="drake-row">
+    <div class="drake-img">
+      <img src="drake-yes.png" alt="Drake meme — approving of strong questions">
+    </div>
+    <div class="q-grid">
+      <div class="q-col good">
+        <h3>The questions</h3>
+        <ul>
+          <li>"Tell me about the last time you did [X]?"</li>
+          <li>"How are you currently solving this?"</li>
+          <li>"What tools are you using today?"</li>
+          <li>"What's the hardest part about [X]?"</li>
+          <li>"Why did you stop using [other solution]?"</li>
+          <li>"Who else is involved in this process?"</li>
+        </ul>
+      </div>
+      <div class="q-col good">
+        <h3>What they reveal</h3>
+        <ul>
+          <li>Anchored in reality &mdash; real workflow.</li>
+          <li>Surfaces alternatives + pain level.</li>
+          <li>Exposes budget, process, habits.</li>
+          <li>Pain and priorities, clearly.</li>
+          <li>Frustrations &amp; switching triggers.</li>
+          <li>Maps buying roles + internal org.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: VALIDATION LADDER (NEW) -->
+<div class="slide" id="slide-13">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">From Talk → Test</div>
+  <h2>The Validation Ladder</h2>
+  <p class="ladder-intro"><strong>Skin in the game = right info.</strong> Not all answers are valued equally.</p>
+
+  <div class="ladder">
+    <div class="rung">
+      <div class="n">1</div>
+      <div class="what">
+        <h4>Problem Interview</h4>
+        <p>Open conversation. No pitch. Just listen.</p>
+      </div>
+      <div class="col">
+        <p>30 minutes of their time. Aim for the <strong>real workflow, real pain, real alternatives.</strong></p>
+      </div>
+      <div class="col example">
+        <h5>Recent founding investment &mdash; example</h5>
+        <p>"Walk me through your last 3 mornings &mdash; <strong>what happened?</strong>"</p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="n">2</div>
+      <div class="what">
+        <h4>Solution Sketch</h4>
+        <p>Mock · wireframe · one-pager. Then <em>open-ended</em> follow-ups &mdash; never yes/no.</p>
+      </div>
+      <div class="col">
+        <p>Their attention + opinion. Aim for <strong>substitution behaviour</strong> &mdash; what they'd actually swap out.</p>
+      </div>
+      <div class="col example">
+        <h5>Recent founding investment &mdash; example</h5>
+        <p>Show 3-screen mock. Then: <strong>"Walk me through how you'd use this in your morning."</strong></p>
+      </div>
+    </div>
+    <div class="rung peak">
+      <div class="n">3</div>
+      <div class="what">
+        <h4>💸 Demand Test</h4>
+        <p>Pitch · landing page · qualify hard · LOI / deposit.</p>
+      </div>
+      <div class="col">
+        <p>Their <strong>money or reputation.</strong> Aim for whether they actually <strong>buy.</strong></p>
+      </div>
+      <div class="col example">
+        <h5>Recent founding investment &mdash; example</h5>
+        <p>Pitch → landing page → leave a number → qualify hard → <strong>LOI / deposit.</strong></p>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="n">4</div>
+      <div class="what">
+        <h4>MVP / Workflow Commit</h4>
+        <p>Post-deal use &mdash; they commit time AND money.</p>
+      </div>
+      <div class="col">
+        <p>Behaviour change. Aim for <strong>retention, repeat use, referrals.</strong></p>
+      </div>
+      <div class="col example">
+        <h5>Recent founding investment &mdash; example</h5>
+        <p>Once signed: usage week-on-week, <strong>retention, peer referrals.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ladder-meta" style="grid-template-columns: 1fr 1fr 1fr;">
+    <div class="lm-card">
+      <h5>📚 Sources</h5>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Steve Blank &mdash; Customer Development</li>
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Eric Ries &mdash; Lean Startup</li>
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Rob Fitzpatrick &mdash; Mom Test</li>
+        <li style="font-size: 13px; color: var(--text);">&middot; YC pre-launch playbook</li>
+      </ul>
+    </div>
+    <div class="lm-card good">
+      <h5>✓ What's good</h5>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Forces escalating commitment</li>
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Each rung has a clear next move</li>
+        <li style="font-size: 13px; color: var(--text);">&middot; Can't fake skin in the game</li>
+      </ul>
+    </div>
+    <div class="lm-card bad">
+      <h5>! What to challenge</h5>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Linear assumptions don't apply everywhere</li>
+        <li style="font-size: 13px; color: var(--text); margin-bottom: 4px;">&middot; Stage &amp; segment can change the climb order</li>
+        <li style="font-size: 13px; color: var(--text);">&middot; Each rung has its own false positives &mdash; deposits ≠ retention</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14: EXPERIMENT DESIGN (NEW) -->
+<div class="slide" id="slide-14">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Designing Experiments</div>
+  <h2>What is a good test?</h2>
+  <p style="font-size: 18px; color: var(--muted); margin-top: 4px;">Four rules. If a test misses any of them, it's theatre &mdash; not evidence.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="num">1</div>
+      <h3>Skin in the game</h3>
+      <p>The other side has to <strong>spend something</strong> &mdash; money, time, reputation, calendar block. No skin = no signal.</p>
+      <p class="ex"><strong>Example.</strong> One €500 deposit beats 100 "I'd love this" replies on a Typeform.</p>
+    </div>
+    <div class="rule-card">
+      <div class="num">2</div>
+      <h3>Falsifiable</h3>
+      <p>Define <strong>what counts as a "no"</strong> before you run it. If every outcome confirms your hypothesis, it's not a test.</p>
+      <p class="ex"><strong>Example.</strong> "If fewer than 3 of 10 SMBs sign the deposit &mdash; we kill the wedge." Said out loud. Before launch.</p>
+    </div>
+    <div class="rule-card">
+      <div class="num">3</div>
+      <h3>Pre-defined success metric</h3>
+      <p>Decide the <strong>number that proves it works</strong> in advance. "It went well" is not a metric.</p>
+      <p class="ex"><strong>Example.</strong> "8 of 10 sign within 14 days = green light. 7 or fewer = re-design." Number written down. No moving the goalposts.</p>
+    </div>
+    <div class="rule-card">
+      <div class="num">4</div>
+      <h3>Committed timeline</h3>
+      <p>Set the <strong>cut-off</strong>. "We'll see" turns into 6 months of polite emails. Two weeks. Two months. Decide.</p>
+      <p class="ex"><strong>Example.</strong> "We launch the demand test on Monday the 12th. We decide by Monday the 26th. Either way."</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 22px; padding: 14px 22px; background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 8px; font-size: 16px; color: var(--text); line-height: 1.55;">
+    <strong style="color: var(--accent);">Try this now:</strong> take your most recent test &mdash; benchmark it against these four. If it misses any, you ran <em>theatre</em>, not a test.
+  </div>
+</div>
+
+<!-- SLIDE 15: PITFALLS (NEW) -->
+<div class="slide" id="slide-15">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag" style="background: rgba(229,72,77,0.12); color: var(--red);">When Pipelines Go Wrong</div>
+  <h2>Pitfalls</h2>
+
+  <div class="pitfalls-list">
+    <div class="pitfall">
+      <div class="label">📋 Surveys without skin</div>
+      <div>
+        <div class="desc">100 hypothetical responses are worth less than <strong>one signed LOI.</strong></div>
+        <div class="ex"><strong>Seen this week:</strong> founder showed me a 200-response Typeform with 80% "yes." None of them have ever paid for anything similar.</div>
+      </div>
+    </div>
+    <div class="pitfall">
+      <div class="label">🤝 Friend bias</div>
+      <div>
+        <div class="desc">Your network will tell you it's brilliant. They love you. They're <strong>not the customer.</strong></div>
+        <div class="ex"><strong>Watch out:</strong> if your first 10 conversations were all with people who'd answer your WhatsApp on a Sunday &mdash; you have noise, not data.</div>
+      </div>
+    </div>
+    <div class="pitfall">
+      <div class="label">🛠️ Builder bias</div>
+      <div>
+        <div class="desc">You spent a year on this. You will <strong>find evidence</strong> it works. That's not validation, that's confirmation.</div>
+        <div class="ex"><strong>Tell:</strong> you're presenting your roadmap on the call. You're not validating &mdash; you're pitching.</div>
+      </div>
+    </div>
+    <div class="pitfall">
+      <div class="label">💰 Premature pricing</div>
+      <div>
+        <div class="desc">Asking "what would you pay?" before they want it gives you <strong>fiction priced as data.</strong></div>
+        <div class="ex"><strong>Test:</strong> until somebody signs a deposit, every price quote is a guess &mdash; theirs and yours.</div>
+      </div>
+    </div>
+    <div class="pitfall">
+      <div class="label">📈 Scaling the wrong thing</div>
+      <div>
+        <div class="desc">10 great conversations &gt; 50 mediocre ones. Don't industrialise <strong>before you've found the truth.</strong></div>
+        <div class="ex"><strong>Symptom:</strong> hiring a BDR before product-market fit. Building a CRM dashboard before you have 10 buyers to track.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 16: HOMEWORK -->
+<div class="slide" id="slide-16">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+
+  <div class="tag">Things to Take With You</div>
+  <h2>What to try this week</h2>
+
+  <div class="hw-callout">
+    <h3>Benchmark yourself. Then pick up the phone.</h3>
+    <p>The single best benchmark for whether you're really validating: <strong>how many 1:1 customer conversations did you have this month?</strong> Less than 10? You're not doing it enough. The bar is <strong>five real conversations every single week.</strong> Every week.</p>
+    <div class="hw-steps">
+      <div class="hw-step">
+        <div class="n">1</div>
+        <h4>Count this month</h4>
+        <p>How many 1-on-1 customer conversations did you actually have in the last 30 days? Be honest. <strong>&lt;10 = not enough.</strong></p>
+      </div>
+      <div class="hw-step">
+        <div class="n">2</div>
+        <h4>5 a week. Every week.</h4>
+        <p>Use the <strong>Strong Questions</strong> from slide 12. No pitch. Just listen. The Mom Test is short &mdash; download it, or run it through Claude in 10 minutes.</p>
+      </div>
+      <div class="hw-step">
+        <div class="n">3</div>
+        <h4>Climb one rung in 30 days</h4>
+        <p>Design <strong>one demand test</strong> with skin in the game. LOI, deposit, paid pilot. Falsifiable. Time-boxed. Run it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 22px; padding: 14px 22px; background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 8px; font-size: 16px; color: var(--text); line-height: 1.55;">
+    We've found that to build <strong style="color: var(--white);">cash-flow effective, VC-independent companies</strong> &mdash; this discipline is the foundation. If that's the kind of company you're trying to build &mdash; <strong style="color: var(--accent);">have a look at Unleash.</strong>
+  </div>
+</div>
+
+<!-- SLIDE 17: CTA UNLEASH (NEW) -->
+<div class="slide cta-slide" id="slide-17">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+  <div class="glow-dot glow-dot-1"></div>
+  <div class="glow-dot glow-dot-3"></div>
+
+  <div class="cta-tag">If This Resonated</div>
+  <h1>Have a look at <span class="accent">Unleash.</span></h1>
+  <p class="cta-pitch">
+    We help founders build companies for the <strong>South African reality.</strong>
+  </p>
+  <p class="cta-pitch">
+    A <strong>post-exit-led venture community</strong> for early-stage companies building <em>resilient ventures.</em> We write our own cheques. <span class="em">No LPs. No nonsense.</span>
+  </p>
+  <p class="cta-pitch" style="font-size: 19px; margin-top: 14px;">
+    If that's <span class="em">you</span> &mdash; or somebody in your network &mdash; <strong>send them our way.</strong>
+  </p>
+
+  <div class="cta-links">
+    <div class="cta-link">
+      <div class="label">🚀 Apply / Sign up</div>
+      <div class="url">unleash-ventures.com</div>
+    </div>
+    <div class="cta-link">
+      <div class="label">✍🏾 Substack</div>
+      <div class="url">philunleashed.substack.com</div>
+    </div>
+    <div class="cta-link">
+      <div class="label">💼 LinkedIn</div>
+      <div class="url">/in/phil-ber-cpt</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18: Q&A -->
+<div class="slide qa-slide slide-title" id="slide-18">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
+  <div class="glow-dot glow-dot-1"></div>
+  <div class="glow-dot glow-dot-2"></div>
+  <div class="glow-dot glow-dot-3"></div>
+
+  <h1>Open <span class="accent">Q&amp;A</span></h1>
+  <p class="sub">Your turn &mdash; bring the hard ones.<br>What's the rung you're stuck on?</p>
+</div>
+
+<!-- SLIDE 19: THANK YOU -->
+<div class="slide ty-slide slide-title" id="slide-19">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="glow-dot glow-dot-1"></div>
+  <div class="glow-dot glow-dot-2"></div>
+  <div class="glow-dot glow-dot-3"></div>
+
+  <h1>Thank <span class="accent">You.</span></h1>
+  <p class="ty-sub">Go talk to 5 customers this week. The truth is on the other side of an honest conversation.</p>
+
+  <div class="ty-contacts">
+    <div class="ty-contact">
+      <div class="label">📧 Email</div>
+      <div class="val">pas@pas-ventures.com</div>
+    </div>
+    <div class="ty-contact">
+      <div class="label">💼 LinkedIn</div>
+      <div class="val">/in/phil-ber-cpt</div>
+    </div>
+    <div class="ty-contact">
+      <div class="label">🌍 Unleash</div>
+      <div class="val">unleash-ventures.com</div>
+    </div>
+  </div>
+
+  <div class="ty-foot">Guest Session for /*<span class="dit">Darkies_in_Tech</span>*/ &middot; 14 May 2026</div>
+</div>
+
+<!-- Navigation -->
+<div class="slide-counter"><span id="current">1</span> / <span id="total">19</span></div>
+<div class="nav">
+  <button onclick="prev()">&larr; Back</button>
+  <button onclick="next()">Next &rarr;</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 1;
+
+  function resetBuilds(slide) {
+    slide.dataset.currentBuild = '0';
+    slide.querySelectorAll('[data-build]').forEach(el => el.classList.remove('appear'));
+  }
+
+  function show(n) {
+    slides.forEach((s, i) => s.classList.toggle('active', i + 1 === n));
+    document.getElementById('current').textContent = n;
+    document.getElementById('total').textContent = total;
+  }
+
+  function next() {
+    const slide = slides[current - 1];
+    const buildCount = parseInt(slide.dataset.builds || '0', 10);
+    const currentBuild = parseInt(slide.dataset.currentBuild || '0', 10);
+    if (currentBuild < buildCount) {
+      slide.dataset.currentBuild = currentBuild + 1;
+      const target = slide.querySelector('[data-build="' + (currentBuild + 1) + '"]');
+      if (target) target.classList.add('appear');
+      return;
+    }
+    if (current < total) {
+      current++;
+      resetBuilds(slides[current - 1]);
+      show(current);
+    }
+  }
+
+  function prev() {
+    if (current > 1) {
+      current--;
+      resetBuilds(slides[current - 1]);
+      show(current);
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+
+  show(1);
+</script>
+
+</body>
+</html>
