@@ -399,7 +399,7 @@ footer a:hover { text-decoration: underline; }
 <div class="top-bar"></div>
 <header>
   <div class="brand">UNLEASH <span class="sep">|</span> <span class="sub">Venture Assessment</span></div>
-  <div class="status">Powered by Luna</div>
+  <div class="status">Powered by Unleash Ventures</div>
 </header>
 
 <main>
@@ -452,6 +452,8 @@ footer a:hover { text-decoration: underline; }
 
 <script>
 const WORKER_URL = 'https://luna-venture-assessment.pas-bf6.workers.dev';
+const STORAGE_KEY = 'unleash-luna-venture-assessment-v1';
+const STORAGE_MAX_AGE_DAYS = 14; // expire saved conversations after 14 days
 
 const state = {
   messages: [],
@@ -459,6 +461,44 @@ const state = {
   started: false,
   currentSection: 0,
 };
+
+function saveState() {
+  try {
+    const payload = {
+      messages: state.messages,
+      currentSection: state.currentSection,
+      savedAt: Date.now(),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.warn('Could not save state to localStorage:', e);
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const payload = JSON.parse(raw);
+    if (!payload || !Array.isArray(payload.messages) || payload.messages.length === 0) return null;
+    const ageDays = (Date.now() - (payload.savedAt || 0)) / (1000 * 60 * 60 * 24);
+    if (ageDays > STORAGE_MAX_AGE_DAYS) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return payload;
+  } catch (e) {
+    console.warn('Could not load state from localStorage:', e);
+    return null;
+  }
+}
+
+function clearState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  state.messages = [];
+  state.currentSection = 0;
+  state.started = false;
+}
 
 const welcomeEl = document.getElementById('welcome');
 const chatEl = document.getElementById('chat');
@@ -499,6 +539,39 @@ startBtn.addEventListener('click', () => startConversation());
 sendBtn.addEventListener('click', () => sendMessage());
 doneBtn.addEventListener('click', () => finishAndSend());
 
+// On page load — check for saved conversation
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = loadState();
+  if (saved) {
+    // Auto-restore the conversation
+    state.messages = saved.messages;
+    state.currentSection = saved.currentSection || 0;
+    state.started = true;
+
+    welcomeEl.style.display = 'none';
+    chatEl.classList.add('active');
+    inputBarEl.style.display = 'flex';
+    progressWrap.classList.add('active');
+    renderMessages();
+    // Reapply progress bar based on last Luna message
+    const lastLuna = [...state.messages].reverse().find(m => m.role === 'assistant');
+    if (lastLuna) updateProgress(lastLuna.content);
+
+    // Show a small banner at top of chat that they resumed
+    const resumeBanner = document.createElement('div');
+    resumeBanner.style.cssText = 'padding: 8px 14px; margin-bottom: 8px; background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.2); border-radius: 8px; font-size: 13px; color: #888; text-align: center; font-family: Montserrat, sans-serif; letter-spacing: 0.5px;';
+    resumeBanner.innerHTML = '↻ Picked up where you left off — <a href="#" id="startOverLink" style="color: #FF6B35; text-decoration: underline;">start over</a>';
+    messagesEl.insertBefore(resumeBanner, messagesEl.firstChild);
+    document.getElementById('startOverLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm('Start a fresh conversation? Your current progress will be cleared.')) {
+        clearState();
+        location.reload();
+      }
+    });
+  }
+});
+
 userInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -526,6 +599,7 @@ async function sendMessage() {
   const text = userInput.value.trim();
   if (!text || state.isLoading) return;
   state.messages.push({ role: 'user', content: text });
+  saveState();
   userInput.value = '';
   userInput.style.height = 'auto';
   renderMessages();
@@ -550,6 +624,7 @@ async function callWorker() {
     }
     const data = await response.json();
     state.messages.push({ role: 'assistant', content: data.reply });
+    saveState();
     renderMessages();
     updateProgress(data.reply);
   } catch (err) {
@@ -596,7 +671,10 @@ async function finishAndSend() {
     }
     chatEl.classList.remove('active');
     inputBarEl.style.display = 'none';
+    progressWrap.classList.remove('active');
     summaryEl.classList.add('active');
+    // Clear saved state after successful send
+    clearState();
   } catch (err) {
     alert('⚠️ Could not send to the team right now. Error: ' + err.message + ' — Please try again in a moment.');
     state.isLoading = false;
