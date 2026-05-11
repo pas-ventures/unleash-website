@@ -536,7 +536,7 @@ footer a:hover { text-decoration: underline; }
   <div class="welcome" id="welcome">
     <div class="tag">Unleash · Venture Advisory</div>
     <h1>Talk to <span class="accent">Luna.</span></h1>
-    <p>Luna is Unleash &amp; Phil's venture AI. She'll guide you through a structured 20–30 minute conversation about your venture — product, target group, metrics, team, GTM, goals, and working style. At the end, you can send your Venture Assessment to the Unleash team for review.</p>
+    <p>Luna is Unleash Ventures' AI intake. She'll guide you through an 11-section conversation about your venture — covering company, founders, customer &amp; problem, product, market, traction, economics, GTM, roadmap, fundraising, and risks. Replaces a pitch deck. Takes 20–25 minutes. At the end, your Venture Assessment goes to Phil and Nicolene for review, with a copy in your inbox.</p>
     <button class="start-btn" id="startBtn">Let's go</button>
     <div class="meta">~25 min · Written or voice · Send to Phil &amp; team at the end</div>
   </div>
@@ -742,14 +742,17 @@ const saveCloseBtn = document.getElementById('saveCloseBtn');
 
 const SECTION_LABELS = [
   'Getting started',
-  'Contact info',
-  'Company & customer',
-  'Key metrics',
-  'Team',
-  'Sales & marketing',
-  'Goals',
-  'Blockers',
-  'Working style',
+  'Company snapshot',
+  'Founders & origin story',
+  'Customer & problem',
+  'Product & value prop',
+  'Market & competition',
+  'Traction & PMF',
+  'Business model & economics',
+  'GTM plan',
+  'Roadmap & defensibility',
+  'Fundraising',
+  'Risks & how we can help',
 ];
 
 const THINKING_VARIANTS = [
@@ -1014,29 +1017,29 @@ function hideTyping() {
 
 function updateProgress(lunaReply) {
   // Detect section numbers from Luna's reply.
-  // Match patterns like "Section 3 of 8" or "Section 3" or "✅ ... 2 of 8 done"
+  // Match patterns like "Section 3 of 11" or "Section 3" or "✅ ... 2 of 11 done"
   const patterns = [
-    /Section\s+(\d)\s*of\s*8/i,
-    /(\d)\s*of\s*8\s*done/i,
-    /Section\s+(\d)\b/i,
+    /Section\s+(\d{1,2})\s*of\s*11/i,
+    /(\d{1,2})\s*of\s*11\s*done/i,
+    /Section\s+(\d{1,2})\b/i,
   ];
   let detected = null;
   for (const pat of patterns) {
     const match = lunaReply.match(pat);
     if (match) {
       const n = parseInt(match[1], 10);
-      if (n >= 1 && n <= 8 && (detected === null || n > detected)) {
+      if (n >= 1 && n <= 11 && (detected === null || n > detected)) {
         detected = n;
       }
     }
   }
   if (detected !== null) {
     state.currentSection = detected;
-    const pct = Math.min(100, Math.round((detected / 8) * 100));
+    const pct = Math.min(100, Math.round((detected / 11) * 100));
     progressFill.style.width = pct + '%';
     progressPct.textContent = pct + '%';
-    // Show next section coming up (detected + 1, or "Wrapping up" at 8)
-    const nextIdx = detected < 8 ? detected + 1 : 8;
+    // Show next section coming up (detected + 1, or "Wrapping up" past 11)
+    const nextIdx = detected < 11 ? detected + 1 : 11;
     progressText.textContent = SECTION_LABELS[nextIdx] || 'Wrapping up';
   }
 }
