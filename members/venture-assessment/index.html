@@ -333,7 +333,23 @@ main {
 .input-row .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .input-row .send-btn:hover:not(:disabled) { opacity: 0.9; }
 
-.done-row { display: flex; justify-content: flex-end; }
+.done-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.save-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 9px 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.save-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+.save-btn.saved { color: var(--accent); border-color: var(--accent-border); }
 .done-btn {
   background: transparent;
   color: var(--accent);
@@ -350,6 +366,85 @@ main {
 }
 .done-btn:hover:not(:disabled) { background: var(--accent-light); }
 .done-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* CONFIRM + PROGRESS OVERLAYS */
+.overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.overlay.active { display: flex; }
+.overlay-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 38px 42px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+.overlay-card .stag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.overlay-card h3 {
+  font-family: 'Spectral', serif;
+  font-size: 26px;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+.overlay-card h3 .accent { color: var(--accent); }
+.overlay-card p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+.overlay-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.overlay-btn {
+  padding: 12px 24px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--accent-border);
+  transition: all 0.15s;
+}
+.overlay-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.overlay-btn.primary:hover { opacity: 0.9; }
+.overlay-btn.secondary { background: transparent; color: var(--accent); }
+.overlay-btn.secondary:hover { background: var(--accent-light); }
+
+/* Spinner animation */
+.spinner {
+  width: 44px; height: 44px;
+  border: 3px solid var(--accent-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress-step {
+  font-size: 13px;
+  color: var(--muted);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 14px;
+  min-height: 16px;
+}
 
 /* SUMMARY SCREEN */
 .summary-screen {
@@ -462,10 +557,10 @@ footer a:hover { text-decoration: underline; }
 
   <!-- SUMMARY -->
   <div class="summary-screen" id="summaryScreen">
-    <div class="tag">Sent</div>
+    <div class="tag">Sent ✓</div>
     <h2>Off to the <span class="accent">Unleash team.</span></h2>
-    <p>Thanks for going through the full Venture Assessment.</p>
-    <p>Phil and the team have received your responses and will be in touch.</p>
+    <p>Thanks for going through the full Venture Assessment with Luna.</p>
+    <p>Phil and Nicolene have received your responses, and a copy is in your inbox too. They'll be in touch.</p>
   </div>
 
   <!-- INPUT BAR -->
@@ -475,10 +570,47 @@ footer a:hover { text-decoration: underline; }
       <button class="send-btn" id="sendBtn">Send</button>
     </div>
     <div class="done-row">
+      <button class="save-btn" id="saveBtn" title="Your progress is auto-saved in this browser for 14 days">Save & continue later</button>
       <button class="done-btn" id="doneBtn">I'm done — send to Unleash team</button>
     </div>
   </div>
 </main>
+
+<!-- CONFIRM SEND MODAL -->
+<div class="overlay" id="confirmOverlay">
+  <div class="overlay-card">
+    <div class="stag">Almost there</div>
+    <h3>Ready to send to the <span class="accent">Unleash team?</span></h3>
+    <p>Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
+    <div class="overlay-actions">
+      <button class="overlay-btn secondary" id="confirmAddMoreBtn">Wait, I want to add more</button>
+      <button class="overlay-btn primary" id="confirmSendBtn">Yes, send it</button>
+    </div>
+  </div>
+</div>
+
+<!-- SENDING PROGRESS MODAL -->
+<div class="overlay" id="sendingOverlay">
+  <div class="overlay-card">
+    <div class="spinner"></div>
+    <div class="stag">Sending</div>
+    <h3>Putting your <span class="accent">Venture Assessment</span> together</h3>
+    <p>This usually takes 20–40 seconds. Don't close the page yet.</p>
+    <div class="progress-step" id="progressStep">Compiling your responses…</div>
+  </div>
+</div>
+
+<!-- SAVE CONFIRMATION MODAL -->
+<div class="overlay" id="saveOverlay">
+  <div class="overlay-card">
+    <div class="stag">Saved</div>
+    <h3>Your progress is <span class="accent">safe.</span></h3>
+    <p>Your conversation is stored in this browser for 14 days. Come back any time — close the tab, reopen the URL, you'll pick up right where you left off.</p>
+    <div class="overlay-actions">
+      <button class="overlay-btn primary" id="saveCloseBtn">Got it</button>
+    </div>
+  </div>
+</div>
 
 <footer>
   © Unleash Ventures · <a href="https://unleash-ventures.com">unleash-ventures.com</a>
@@ -599,6 +731,14 @@ const progressWrap = document.getElementById('progressWrap');
 const progressText = document.getElementById('progressText');
 const progressPct = document.getElementById('progressPct');
 const progressFill = document.getElementById('progressFill');
+const saveBtn = document.getElementById('saveBtn');
+const confirmOverlay = document.getElementById('confirmOverlay');
+const confirmAddMoreBtn = document.getElementById('confirmAddMoreBtn');
+const confirmSendBtn = document.getElementById('confirmSendBtn');
+const sendingOverlay = document.getElementById('sendingOverlay');
+const progressStep = document.getElementById('progressStep');
+const saveOverlay = document.getElementById('saveOverlay');
+const saveCloseBtn = document.getElementById('saveCloseBtn');
 
 const SECTION_LABELS = [
   'Getting started',
@@ -623,7 +763,56 @@ const THINKING_VARIANTS = [
 
 startBtn.addEventListener('click', () => startConversation());
 sendBtn.addEventListener('click', () => sendMessage());
-doneBtn.addEventListener('click', () => finishAndSend());
+doneBtn.addEventListener('click', () => openConfirmModal());
+confirmAddMoreBtn.addEventListener('click', () => closeConfirmModal());
+confirmSendBtn.addEventListener('click', () => { closeConfirmModal(); finishAndSend(); });
+saveBtn.addEventListener('click', () => openSaveModal());
+saveCloseBtn.addEventListener('click', () => closeSaveModal());
+
+function openConfirmModal() {
+  if (state.isLoading) return;
+  if (state.messages.length < 4) {
+    alert("Let's get a bit further into the conversation first before sending to the team.");
+    return;
+  }
+  confirmOverlay.classList.add('active');
+}
+function closeConfirmModal() { confirmOverlay.classList.remove('active'); }
+
+function openSaveModal() {
+  saveState();
+  saveBtn.classList.add('saved');
+  saveBtn.textContent = 'Saved ✓';
+  saveOverlay.classList.add('active');
+  setTimeout(() => {
+    saveBtn.classList.remove('saved');
+    saveBtn.textContent = 'Save & continue later';
+  }, 4000);
+}
+function closeSaveModal() { saveOverlay.classList.remove('active'); }
+
+const PROGRESS_MESSAGES = [
+  'Compiling your responses…',
+  'Polishing the structure…',
+  'Pulling the threads together…',
+  'Sending to the Unleash team…',
+  'Almost there…',
+];
+let progressMessageInterval = null;
+function startProgressMessages() {
+  let idx = 0;
+  progressStep.textContent = PROGRESS_MESSAGES[0];
+  progressMessageInterval = setInterval(() => {
+    idx = (idx + 1) % PROGRESS_MESSAGES.length;
+    progressStep.textContent = PROGRESS_MESSAGES[idx];
+  }, 6000);
+}
+function stopProgressMessages() {
+  if (progressMessageInterval) {
+    clearInterval(progressMessageInterval);
+    progressMessageInterval = null;
+  }
+}
 
 // On page load — check for saved conversation
 window.addEventListener('DOMContentLoaded', () => {
@@ -756,16 +945,14 @@ async function callWorker() {
 
 async function finishAndSend() {
   if (state.isLoading) return;
-  if (state.messages.length < 4) {
-    alert("Let's get a bit further into the conversation first before sending to the team.");
-    return;
-  }
-  if (!confirm('Send the Venture Assessment to Phil and the Unleash team now?')) return;
 
   state.isLoading = true;
   sendBtn.disabled = true;
   doneBtn.disabled = true;
-  showTyping();
+
+  // Show progress overlay immediately
+  sendingOverlay.classList.add('active');
+  startProgressMessages();
 
   try {
     const response = await fetch(WORKER_URL + '/api/done', {
@@ -782,18 +969,20 @@ async function finishAndSend() {
       const errText = await response.text();
       throw new Error('Server error: ' + response.status + ' — ' + errText);
     }
+    stopProgressMessages();
+    sendingOverlay.classList.remove('active');
     chatEl.classList.remove('active');
     inputBarEl.style.display = 'none';
     progressWrap.classList.remove('active');
     summaryEl.classList.add('active');
-    // Clear saved state after successful send
     clearState();
   } catch (err) {
-    alert('⚠️ Could not send to the team right now. Error: ' + err.message + ' — Please try again in a moment.');
+    stopProgressMessages();
+    sendingOverlay.classList.remove('active');
+    alert('⚠️ Could not send to the team right now. Error: ' + err.message + ' — Your conversation is saved, please try again in a moment.');
     state.isLoading = false;
     sendBtn.disabled = false;
     doneBtn.disabled = false;
-    hideTyping();
   }
 }
 
