@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venture Assessment | Unleash</title>
+<title>Go-to-Market Deep Dive | Unleash</title>
 <meta name="description" content="Talk to Luna, Unleash's venture AI. Structured intake covering product, target group, metrics, team, GTM, goals, and working style.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -511,9 +511,9 @@ footer a:hover { text-decoration: underline; }
 <!-- ============ PASSWORD GATE ============ -->
 <div id="gateView" class="gate-wrap">
   <div class="gate">
-    <div class="stag">Members · Venture Assessment</div>
+    <div class="stag">Members · Go-to-Market Deep Dive</div>
     <h1>Welcome back.</h1>
-    <p class="lede">Enter the community password to start your Venture Assessment with Luna.</p>
+    <p class="lede">Enter the community password to start your Go-to-Market Deep Dive with Luna.</p>
     <form id="gateForm" autocomplete="off">
       <input type="password" id="gatePw" placeholder="Community password" autofocus required>
       <button type="submit">Enter</button>
@@ -527,7 +527,7 @@ footer a:hover { text-decoration: underline; }
 <div id="appView" hidden>
 <div class="top-bar"></div>
 <header>
-  <div class="brand">UNLEASH <span class="sep">|</span> <span class="sub">Venture Assessment</span></div>
+  <div class="brand">UNLEASH <span class="sep">|</span> <span class="sub">Go-to-Market Deep Dive</span></div>
   <div class="status">Powered by Unleash Ventures</div>
 </header>
 
@@ -536,7 +536,7 @@ footer a:hover { text-decoration: underline; }
   <div class="welcome" id="welcome">
     <div class="tag">Unleash · Venture Advisory</div>
     <h1>Talk to <span class="accent">Luna.</span></h1>
-    <p>Luna is Unleash Ventures' AI intake. She'll guide you through an 11-section conversation about your venture — covering company, founders, customer &amp; problem, product, market, traction, economics, GTM, roadmap, fundraising, and risks. Replaces a pitch deck. Takes 20–25 minutes. At the end, your Venture Assessment goes to Phil and Nicolene for review, with a copy in your inbox.</p>
+    <p>Luna is Unleash &amp; Phil's venture AI. She'll guide you through a structured 20–30 minute conversation about your venture — product, target group, metrics, team, GTM, goals, and working style. At the end, you can send your Go-to-Market Deep Dive to the Unleash team for review.</p>
     <button class="start-btn" id="startBtn">Let's go</button>
     <div class="meta">~25 min · Written or voice · Send to Phil &amp; team at the end</div>
   </div>
@@ -559,7 +559,7 @@ footer a:hover { text-decoration: underline; }
   <div class="summary-screen" id="summaryScreen">
     <div class="tag">Sent ✓</div>
     <h2>Off to the <span class="accent">Unleash team.</span></h2>
-    <p>Thanks for going through the full Venture Assessment with Luna.</p>
+    <p>Thanks for going through the full Go-to-Market Deep Dive with Luna.</p>
     <p>Phil and Nicolene have received your responses, and a copy is in your inbox too. They'll be in touch.</p>
   </div>
 
@@ -581,7 +581,7 @@ footer a:hover { text-decoration: underline; }
   <div class="overlay-card">
     <div class="stag">Almost there</div>
     <h3>Ready to send to the <span class="accent">Unleash team?</span></h3>
-    <p>Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
+    <p>Phil and Nicolene will receive your full Go-to-Market Deep Dive by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
     <div class="overlay-actions">
       <button class="overlay-btn secondary" id="confirmAddMoreBtn">Wait, I want to add more</button>
       <button class="overlay-btn primary" id="confirmSendBtn">Yes, send it</button>
@@ -594,7 +594,7 @@ footer a:hover { text-decoration: underline; }
   <div class="overlay-card">
     <div class="spinner"></div>
     <div class="stag">Sending</div>
-    <h3>Putting your <span class="accent">Venture Assessment</span> together</h3>
+    <h3>Putting your <span class="accent">Go-to-Market Deep Dive</span> together</h3>
     <p>This usually takes 20–40 seconds. Don't close the page yet.</p>
     <div class="progress-step" id="progressStep">Compiling your responses…</div>
   </div>
@@ -669,8 +669,8 @@ gateForm.addEventListener('submit', async function(e) {
 });
 
 // ============ CHAT APP ============
-const WORKER_URL = 'https://luna-venture-assessment.pas-bf6.workers.dev';
-const STORAGE_KEY = 'unleash-luna-venture-assessment-v1';
+const WORKER_URL = 'https://luna-go-to-market-deep-dive.pas-bf6.workers.dev';
+const STORAGE_KEY = 'unleash-luna-go-to-market-deep-dive-v1';
 const STORAGE_MAX_AGE_DAYS = 14; // expire saved conversations after 14 days
 
 const state = {
@@ -742,17 +742,14 @@ const saveCloseBtn = document.getElementById('saveCloseBtn');
 
 const SECTION_LABELS = [
   'Getting started',
-  'Company snapshot',
-  'Founders & origin story',
-  'Customer & problem',
-  'Product & value prop',
-  'Market & competition',
-  'Traction & PMF',
-  'Business model & economics',
-  'GTM plan',
-  'Roadmap & defensibility',
-  'Fundraising',
-  'Risks & how we can help',
+  'Contact info',
+  'Company & customer',
+  'Key metrics',
+  'Team',
+  'Sales & marketing',
+  'Goals',
+  'Blockers',
+  'Working style',
 ];
 
 const THINKING_VARIANTS = [
@@ -909,7 +906,7 @@ async function callWorker() {
     if (response.status === 413) {
       state.messages.push({
         role: 'assistant',
-        content: "We've covered a lot of ground! ✨ Time to wrap up — could you click **\"I'm done — send to Unleash team\"** below to send your Venture Assessment to the team?",
+        content: "We've covered a lot of ground! ✨ Time to wrap up — could you click **\"I'm done — send to Unleash team\"** below to send your Go-to-Market Deep Dive to the team?",
       });
       renderMessages();
       return;
@@ -1017,29 +1014,29 @@ function hideTyping() {
 
 function updateProgress(lunaReply) {
   // Detect section numbers from Luna's reply.
-  // Match patterns like "Section 3 of 11" or "Section 3" or "✅ ... 2 of 11 done"
+  // Match patterns like "Section 3 of 8" or "Section 3" or "✅ ... 2 of 8 done"
   const patterns = [
-    /Section\s+(\d{1,2})\s*of\s*11/i,
-    /(\d{1,2})\s*of\s*11\s*done/i,
-    /Section\s+(\d{1,2})\b/i,
+    /Section\s+(\d)\s*of\s*8/i,
+    /(\d)\s*of\s*8\s*done/i,
+    /Section\s+(\d)\b/i,
   ];
   let detected = null;
   for (const pat of patterns) {
     const match = lunaReply.match(pat);
     if (match) {
       const n = parseInt(match[1], 10);
-      if (n >= 1 && n <= 11 && (detected === null || n > detected)) {
+      if (n >= 1 && n <= 8 && (detected === null || n > detected)) {
         detected = n;
       }
     }
   }
   if (detected !== null) {
     state.currentSection = detected;
-    const pct = Math.min(100, Math.round((detected / 11) * 100));
+    const pct = Math.min(100, Math.round((detected / 8) * 100));
     progressFill.style.width = pct + '%';
     progressPct.textContent = pct + '%';
-    // Show next section coming up (detected + 1, or "Wrapping up" past 11)
-    const nextIdx = detected < 11 ? detected + 1 : 11;
+    // Show next section coming up (detected + 1, or "Wrapping up" at 8)
+    const nextIdx = detected < 8 ? detected + 1 : 8;
     progressText.textContent = SECTION_LABELS[nextIdx] || 'Wrapping up';
   }
 }
