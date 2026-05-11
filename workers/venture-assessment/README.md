@@ -4,9 +4,11 @@ Backend for the founder-facing chat at `unleash-ventures.com/members/venture-ass
 
 ## What this does
 - Receives chat messages from the frontend (`/members/venture-assessment/index.html`)
-- Calls Anthropic (Claude Sonnet 4.5) to run Luna I — the 8-section venture intake
-- On `/api/done`: emails the full transcript + structured intake to the founder, with Phil and Nicolene on CC
-- Rate-limits per IP and locks CORS to the Unleash domains
+- Calls Anthropic (Claude Sonnet 4.5) to run Luna's **11-section Venture Assessment** — Phil's diligence intake that replaces a pitch deck. Sections: Company Snapshot · Founders & Origin Story · Customer & Problem · Product & Value Prop · Market & Competition · Traction & PMF · Business Model & Economics · GTM Plan · Roadmap & Defensibility · Fundraising · Biggest Risks & How We Can Help.
+- **4 forced follow-ups** baked into the prompt (research-informed against Calacanis / YC / Sequoia frameworks): why-now (§1), founder relationship (§2), last-5-customers-spoken-to (§3), founder-insight (§4).
+- **Level 2 push-back:** max one clarifying ask per section when answers are vague or cut-corner. No coaching frames, no opinions — pure intake with quality control.
+- On `/api/done`: emails the full structured Venture Assessment to the founder, with Phil and Nicolene on CC.
+- Rate-limits per IP and locks CORS to the Unleash domains.
 
 ## Live URL
 `https://luna-venture-assessment.pas-bf6.workers.dev`
@@ -75,6 +77,7 @@ wrangler deploy
 ## Version log
 | Date | Change |
 |------|--------|
+| 2026-05-11 | V3 — repurposed from 8-section GTM intake to 11-section Venture Assessment (Phil's diligence framework). 4 research-driven forced follow-ups added (why-now, founder relationship, last-5-customers, founder-insight). Level 2 push-back logic baked into prompt. Progress bar regex updated for "Section X of 11". Old GTM content preserved at `/members/go-to-market-deep-dive/` |
 | 2026-05-11 | V2: markdown→HTML email rendering, multi-recipient CC, confirmation modal frontend, progress overlay |
 | 2026-05-11 | V1: launched. CORS lockdown, rate limiting, sessionStorage password gate, localStorage 14-day persistence |
 
