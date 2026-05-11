@@ -304,11 +304,12 @@ export default {
             status: 400, headers: corsHeaders,
           });
         }
+        const todayISO = new Date().toISOString().slice(0, 10);
         const summaryMessages = [
           ...messages,
           {
             role: 'user',
-            content: 'Please now produce the complete structured Venture Assessment to send to the Unleash team. Use markdown with clear section headers matching the 11 intake sections (Company Snapshot, Founders & Origin Story, Customer & Problem, Product & Value Proposition, Market & Competitive Landscape, Traction & PMF Evidence, Business Model & Economics, GTM Plan, Product Roadmap & Defensibility, Fundraising & Use of Funds, Biggest Risks & How We Can Help) — preceded by a Contact section. Include the forced follow-up answers (why-now in §1, founder relationship in §2, last-5-customers in §3, founder-insight in §4) within their respective sections. Preserve my voice verbatim where I gave specific answers — do not summarise, merge, or compress. Polish lightly for organisation and grammar only. If a section was flagged as "not yet known at current stage", include that note verbatim.',
+            content: `[Today's date is ${todayISO}. Use this exact ISO date in the "Submitted" field.]\n\nPlease now produce the complete structured Venture Assessment to send to the Unleash team. Use markdown with clear section headers matching the 11 intake sections (Company Snapshot, Founders & Origin Story, Customer & Problem, Product & Value Proposition, Market & Competitive Landscape, Traction & PMF Evidence, Business Model & Economics, GTM Plan, Product Roadmap & Defensibility, Fundraising & Use of Funds, Biggest Risks & How We Can Help) — preceded by a Contact section that includes Submitted: ${todayISO}. Include the forced follow-up answers (why-now in §1, founder relationship in §2, last-5-customers in §3, founder-insight in §4) within their respective sections. Preserve my voice verbatim where I gave specific answers — do not summarise, merge, or compress. Polish lightly for organisation and grammar only. If a section was flagged as "not yet known at current stage", include that note verbatim.`,
           },
         ];
         const summary = await callClaude(summaryMessages, env.ANTHROPIC_API_KEY);
