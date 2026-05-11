@@ -1,20 +1,19 @@
-name: Deploy Worker — venture-assessment
+name: Deploy Workers
 
 on:
   push:
     branches: [main]
     paths:
-      - 'workers/venture-assessment/**'
+      - 'workers/**'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy-venture-assessment:
     runs-on: ubuntu-latest
-    name: Deploy to Cloudflare Workers
+    name: Deploy venture-assessment
     steps:
       - uses: actions/checkout@v4
-
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
@@ -22,3 +21,28 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: workers/venture-assessment
           command: deploy
+          secrets: |
+            ANTHROPIC_API_KEY
+            RESEND_API_KEY
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+
+  deploy-go-to-market-deep-dive:
+    runs-on: ubuntu-latest
+    name: Deploy go-to-market-deep-dive
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: workers/go-to-market-deep-dive
+          command: deploy
+          secrets: |
+            ANTHROPIC_API_KEY
+            RESEND_API_KEY
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
