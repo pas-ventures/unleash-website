@@ -300,7 +300,16 @@ async function callClaude(messages, apiKey) {
     body: JSON.stringify({
       model: 'claude-sonnet-4-5-20250929',
       max_tokens: 2048,
-      system: SYSTEM_PROMPT,
+      // Prompt caching: mark the system prompt as cacheable so subsequent
+      // turns in the same conversation reuse it at $0.30/M instead of $3/M.
+      // 5-min ephemeral TTL fits the natural cadence of a 20-min intake.
+      system: [
+        {
+          type: 'text',
+          text: SYSTEM_PROMPT,
+          cache_control: { type: 'ephemeral' },
+        },
+      ],
       messages: messages,
     }),
   });
