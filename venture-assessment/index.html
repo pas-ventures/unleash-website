@@ -63,6 +63,38 @@ header {
   text-transform: uppercase;
 }
 
+/* PROGRESS BAR */
+.progress-wrap {
+  display: none;
+  padding: 14px 0 6px 0;
+  flex-shrink: 0;
+}
+.progress-wrap.active { display: block; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.progress-label .pct { color: var(--accent); font-weight: 700; }
+.progress-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar .fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #ff9a5c);
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
 /* MAIN */
 main {
   flex: 1;
@@ -380,6 +412,15 @@ footer a:hover { text-decoration: underline; }
     <div class="meta">~25 min · Written or voice · Send to Phil &amp; team at the end</div>
   </div>
 
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span id="progressText">Getting started</span>
+      <span class="pct" id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+  </div>
+
   <!-- CHAT -->
   <div class="chat" id="chat">
     <div class="messages" id="messages"></div>
@@ -416,6 +457,7 @@ const state = {
   messages: [],
   isLoading: false,
   started: false,
+  currentSection: 0,
 };
 
 const welcomeEl = document.getElementById('welcome');
@@ -427,6 +469,31 @@ const startBtn = document.getElementById('startBtn');
 const sendBtn = document.getElementById('sendBtn');
 const doneBtn = document.getElementById('doneBtn');
 const userInput = document.getElementById('userInput');
+const progressWrap = document.getElementById('progressWrap');
+const progressText = document.getElementById('progressText');
+const progressPct = document.getElementById('progressPct');
+const progressFill = document.getElementById('progressFill');
+
+const SECTION_LABELS = [
+  'Getting started',
+  'Contact info',
+  'Company & customer',
+  'Key metrics',
+  'Team',
+  'Sales & marketing',
+  'Goals',
+  'Blockers',
+  'Working style',
+];
+
+const THINKING_VARIANTS = [
+  'Luna is thinking',
+  'Luna is making sense of your response',
+  'Luna is matching the threads',
+  'Luna is processing',
+  'Luna is reviewing',
+  'Luna is considering',
+];
 
 startBtn.addEventListener('click', () => startConversation());
 sendBtn.addEventListener('click', () => sendMessage());
@@ -448,6 +515,7 @@ async function startConversation() {
   welcomeEl.style.display = 'none';
   chatEl.classList.add('active');
   inputBarEl.style.display = 'flex';
+  progressWrap.classList.add('active');
   state.started = true;
   state.messages.push({ role: 'user', content: "let's go" });
   renderMessages();
@@ -483,6 +551,7 @@ async function callWorker() {
     const data = await response.json();
     state.messages.push({ role: 'assistant', content: data.reply });
     renderMessages();
+    updateProgress(data.reply);
   } catch (err) {
     state.messages.push({
       role: 'assistant',
@@ -553,13 +622,43 @@ function showTyping() {
   const el = document.createElement('div');
   el.className = 'typing';
   el.id = 'typingIndicator';
-  el.textContent = 'Luna is typing';
+  const variant = THINKING_VARIANTS[Math.floor(Math.random() * THINKING_VARIANTS.length)];
+  el.textContent = variant;
   messagesEl.appendChild(el);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 function hideTyping() {
   const existing = document.getElementById('typingIndicator');
   if (existing) existing.remove();
+}
+
+function updateProgress(lunaReply) {
+  // Detect section numbers from Luna's reply.
+  // Match patterns like "Section 3 of 8" or "Section 3" or "✅ ... 2 of 8 done"
+  const patterns = [
+    /Section\s+(\d)\s*of\s*8/i,
+    /(\d)\s*of\s*8\s*done/i,
+    /Section\s+(\d)\b/i,
+  ];
+  let detected = null;
+  for (const pat of patterns) {
+    const match = lunaReply.match(pat);
+    if (match) {
+      const n = parseInt(match[1], 10);
+      if (n >= 1 && n <= 8 && (detected === null || n > detected)) {
+        detected = n;
+      }
+    }
+  }
+  if (detected !== null) {
+    state.currentSection = detected;
+    const pct = Math.min(100, Math.round((detected / 8) * 100));
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+    // Show next section coming up (detected + 1, or "Wrapping up" at 8)
+    const nextIdx = detected < 8 ? detected + 1 : 8;
+    progressText.textContent = SECTION_LABELS[nextIdx] || 'Wrapping up';
+  }
 }
 
 function formatContent(text) {
