@@ -358,7 +358,7 @@ ${intro}
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Luna <onboarding@resend.dev>',
+      from: 'Luna <luna@mail.unleash-ventures.com>',
       to: recipients.to,
       cc: recipients.cc,
       subject: subject,
