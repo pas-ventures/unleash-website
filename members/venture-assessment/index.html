@@ -704,10 +704,37 @@ async function callWorker() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: state.messages }),
     });
+
+    // Specific error handling
+    if (response.status === 429) {
+      state.messages.push({
+        role: 'assistant',
+        content: "Whoa — give me a minute to catch up. Could you try sending that again in about 60 seconds? 🙏",
+      });
+      renderMessages();
+      return;
+    }
+    if (response.status === 413) {
+      state.messages.push({
+        role: 'assistant',
+        content: "We've covered a lot of ground! ✨ Time to wrap up — could you click **\"I'm done — send to Unleash team\"** below to send your Venture Assessment to the team?",
+      });
+      renderMessages();
+      return;
+    }
+    if (response.status === 403) {
+      state.messages.push({
+        role: 'assistant',
+        content: "⚠️ Looks like something's not quite right with the connection. Please refresh the page and try again — your conversation is saved.",
+      });
+      renderMessages();
+      return;
+    }
     if (!response.ok) {
       const errText = await response.text();
-      throw new Error('Server error: ' + response.status + ' — ' + errText);
+      throw new Error('Server returned ' + response.status);
     }
+
     const data = await response.json();
     state.messages.push({ role: 'assistant', content: data.reply });
     saveState();
@@ -716,7 +743,7 @@ async function callWorker() {
   } catch (err) {
     state.messages.push({
       role: 'assistant',
-      content: '⚠️ Sorry, something went wrong on my side. Please try sending your message again. (' + err.message + ')',
+      content: "Just a moment — something hiccupped on my side. Could you try sending that message again? Your conversation is saved so you won't lose anything.",
     });
     renderMessages();
   } finally {
