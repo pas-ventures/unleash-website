@@ -34,8 +34,10 @@
   .slide.active { display: flex; }
 
   .top-bar { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #ff9a5c); }
-  .logo-bar { position: absolute; top: 26px; left: 110px; }
-  .logo-bar img { height: 26px; opacity: 0.8; }
+  .logo-bar { position: absolute; top: 24px; left: 110px; display: flex; align-items: center; gap: 18px; }
+  .logo-bar img { height: 34px; opacity: 0.95; }
+  .logo-bar .logo-sep { width: 1px; height: 26px; background: rgba(255,255,255,0.22); }
+  .logo-bar img.dit-mark { height: 30px; opacity: 0.9; }
   .guest-tag { position: absolute; top: 30px; right: 110px; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
   .guest-tag .dit { color: var(--accent); }
 
@@ -268,7 +270,7 @@
 <!-- SLIDE 1: TITLE -->
 <div class="slide slide-title active" id="slide-1">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
   <div class="glow-dot glow-dot-1"></div>
   <div class="glow-dot glow-dot-2"></div>
@@ -295,7 +297,7 @@
 <!-- SLIDE 2: HOUSEKEEPING / SLIDO -->
 <div class="slide" id="slide-housekeeping">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Before We Start</div>
@@ -344,7 +346,7 @@
 <!-- SLIDE 4: AGENDA -->
 <div class="slide" id="slide-3">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Today's Plan</div>
@@ -377,7 +379,7 @@
 <!-- SLIDE 4: HOST (quick intro / warm up) -->
 <div class="slide" id="slide-host">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Your Session Host</div>
@@ -410,7 +412,7 @@
 <!-- SLIDE 5: ENGAGEMENT (progressive reveal) -->
 <div class="slide" id="slide-4" data-builds="3">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">In the Chat</div>
@@ -450,7 +452,7 @@
 <!-- SLIDE 5: TOPIC INTRO -->
 <div class="slide topic-slide" id="slide-5">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Today's Topic</div>
@@ -461,7 +463,7 @@
 <!-- SLIDE 6: COMMON ANSWERS -->
 <div class="slide" id="slide-6">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">The Usual Suspects</div>
@@ -493,7 +495,7 @@
 <!-- SLIDE 7: FALSE POSITIVES -->
 <div class="slide" id="slide-7">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="fp-grid">
@@ -522,7 +524,7 @@
 <!-- SLIDE 8: THE GAME -->
 <div class="slide game-slide" id="slide-8">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="name-of-the-game">The Name of the Game</div>
@@ -536,7 +538,7 @@
 <!-- SLIDE 9: PIPELINE TRAP (NEW) -->
 <div class="slide" id="slide-9">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Reframe</div>
@@ -558,7 +560,7 @@
 <!-- SLIDE 10: MOM TEST 4 PRINCIPLES -->
 <div class="slide" id="slide-10">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">The Book That Saves Founders</div>
@@ -595,7 +597,7 @@
 <!-- SLIDE 11: POOR QUESTIONS -->
 <div class="slide q-slide" id="slide-11">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag" style="background: rgba(229,72,77,0.12); color: var(--red);">Stop Asking These</div>
@@ -636,7 +638,7 @@
 <!-- SLIDE 12: STRONG QUESTIONS -->
 <div class="slide q-slide" id="slide-12">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag" style="background: rgba(48,164,108,0.12); color: var(--green);">Ask These Instead</div>
@@ -677,7 +679,7 @@
 <!-- SLIDE 13: VALIDATION LADDER (NEW) -->
 <div class="slide" id="slide-13">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">From Talk → Test</div>
@@ -775,7 +777,7 @@
 <!-- SLIDE 14: EXPERIMENT DESIGN (NEW) -->
 <div class="slide" id="slide-14">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Designing Experiments</div>
@@ -817,7 +819,7 @@
 <!-- SLIDE 15: PITFALLS (NEW) -->
 <div class="slide" id="slide-15">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag" style="background: rgba(229,72,77,0.12); color: var(--red);">When Pipelines Go Wrong</div>
@@ -865,7 +867,7 @@
 <!-- SLIDE 16: HOMEWORK -->
 <div class="slide" id="slide-16">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
 
   <div class="tag">Things to Take With You</div>
@@ -901,7 +903,7 @@
 <!-- SLIDE 17: CTA UNLEASH (NEW) -->
 <div class="slide cta-slide" id="slide-17">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
   <div class="glow-dot glow-dot-1"></div>
   <div class="glow-dot glow-dot-3"></div>
@@ -937,7 +939,7 @@
 <!-- SLIDE 18: Q&A -->
 <div class="slide qa-slide slide-title" id="slide-18">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="guest-tag">Guest Session · /*<span class="dit">Darkies_in_Tech</span>*/</div>
   <div class="glow-dot glow-dot-1"></div>
   <div class="glow-dot glow-dot-2"></div>
@@ -950,7 +952,7 @@
 <!-- SLIDE 19: THANK YOU -->
 <div class="slide ty-slide slide-title" id="slide-19">
   <div class="top-bar"></div>
-  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img src="dit-logo-white.png" alt="Darkies in Tech" class="dit-mark"></div>
   <div class="glow-dot glow-dot-1"></div>
   <div class="glow-dot glow-dot-2"></div>
   <div class="glow-dot glow-dot-3"></div>
