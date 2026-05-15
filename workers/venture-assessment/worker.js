@@ -444,7 +444,34 @@ export default {
           ...messages,
           {
             role: 'user',
-            content: `[Today's date is ${todayISO}. Use this exact ISO date in the "Submitted" field.]\n\nPlease now produce the complete structured Venture Assessment to send to the Unleash team. Use markdown with clear section headers matching the 11 intake sections (Company Snapshot, Founders & Origin Story, Customer & Problem, Product & Value Proposition, Market & Competitive Landscape, Traction & PMF Evidence, Business Model & Economics, GTM Plan, Product Roadmap & Defensibility, Fundraising & Use of Funds, Biggest Risks & How We Can Help) — preceded by a Contact section that includes Submitted: ${todayISO}. Include the forced follow-up answers (why-now in §1, founder relationship in §2, last-5-customers in §3, founder-insight in §4) within their respective sections. Preserve my voice verbatim where I gave specific answers — do not summarise, merge, or compress. Polish lightly for organisation and grammar only. If a section was flagged as "not yet known at current stage", include that note verbatim.`,
+            content: `[Today's date is ${todayISO}. Use this exact ISO date in the "Submitted" field.]
+
+Please now produce the structured Venture Assessment to send to the Unleash team. CRITICAL RULES:
+
+1. **ALWAYS produce the assessment.** Do NOT refuse, do NOT say "we haven't completed the intake," do NOT ask to continue. The founder has clicked "I'm done" — they want what they have, even if partial. Generate the assessment with whatever info exists in our conversation above.
+
+2. **Format:** markdown with clear section headers matching the 11 intake sections in order:
+   - Company Snapshot
+   - Founders & Origin Story
+   - Customer & Problem
+   - Product & Value Proposition
+   - Market & Competitive Landscape
+   - Traction & PMF Evidence
+   - Business Model & Economics
+   - GTM Plan to Next Major Milestone
+   - Product Roadmap & Defensibility
+   - Fundraising & Use of Funds
+   - Biggest Risks & How We Can Help
+
+   Preceded by a Contact section that includes Submitted: ${todayISO}.
+
+3. **For sections that WERE covered in our conversation:** include the founder's voice verbatim where they gave specific answers. Do not summarise, merge, or compress. Polish lightly for organisation and grammar only. Include the forced follow-up answers (why-now in §1, founder relationship in §2, customer examples in §3, founder-insight in §4) within their respective sections if asked and answered.
+
+4. **For sections that were NOT reached in our conversation (the founder ended early):** include the section header anyway, with the text: *"Not yet covered — founder ended the intake before reaching this section."* in italics. Do this for every missing section so the structure stays whole.
+
+5. **For sections where the founder said "not yet known at current stage":** include that note verbatim.
+
+6. **No commentary, no preamble, no "here's your assessment".** Output the assessment markdown directly, starting with the company name as h2.`,
           },
         ];
         const summary = await callClaude(summaryMessages, env.ANTHROPIC_API_KEY);
