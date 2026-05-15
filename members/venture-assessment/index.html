@@ -225,20 +225,75 @@ main {
 }
 .welcome h1 {
   font-family: 'Spectral', serif;
-  font-size: 56px;
+  font-size: 52px;
   font-weight: 700;
   line-height: 1.08;
   color: var(--white);
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   max-width: 680px;
 }
 .welcome h1 .accent { color: var(--accent); }
+.welcome p.lede {
+  font-size: 17px;
+  color: var(--text);
+  max-width: 640px;
+  margin-bottom: 36px;
+  line-height: 1.65;
+}
+/* legacy single paragraph fallback (kept for safety) */
 .welcome p {
-  font-size: 18px;
-  color: var(--muted);
-  max-width: 580px;
+  font-size: 17px;
+  color: var(--text);
+  max-width: 640px;
   margin-bottom: 32px;
-  line-height: 1.6;
+  line-height: 1.65;
+}
+
+/* Value cards */
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto 36px;
+  text-align: left;
+}
+.value-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.value-card.vc-accent {
+  background: linear-gradient(135deg, rgba(255,103,25,0.10), rgba(255,103,25,0.02));
+  border-color: var(--accent-border);
+}
+.vc-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.value-card h3 {
+  font-family: 'Spectral', serif;
+  font-size: 21px;
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.value-card p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+  max-width: none;
 }
 .welcome .start-btn {
   background: var(--accent);
@@ -589,11 +644,14 @@ footer a:hover { text-decoration: underline; }
 /* MOBILE */
 @media (max-width: 640px) {
   .welcome { padding: 32px 4px; }
-  .welcome h1 { font-size: 36px; }
-  .welcome p { font-size: 15px; }
+  .welcome h1 { font-size: 34px; }
+  .welcome p, .welcome p.lede { font-size: 15px; }
   .welcome .tag { font-size: 11px; letter-spacing: 2px; }
   .welcome .start-btn { padding: 14px 32px; font-size: 13px; }
   .welcome .meta { font-size: 11px; }
+  .value-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 28px; }
+  .value-card { padding: 18px 18px 16px; }
+  .value-card h3 { font-size: 19px; }
   .msg { max-width: 94%; font-size: 15px; padding: 12px 14px; }
   header { padding: 12px 14px; }
   .brand { font-size: 11px; letter-spacing: 1.5px; }
@@ -673,11 +731,30 @@ footer a:hover { text-decoration: underline; }
 <main>
   <!-- WELCOME -->
   <div class="welcome" id="welcome">
-    <div class="tag">Unleash · Venture Advisory</div>
-    <h1>Talk to <span class="accent">Luna.</span></h1>
-    <p>Luna is Unleash Ventures' AI intake. She'll guide you through an 11-section conversation about your venture — covering company, founders, customer &amp; problem, product, market, traction, economics, GTM, roadmap, fundraising, and risks. Replaces a pitch deck. Takes 20–25 minutes. At the end, your Venture Assessment goes to Phil and Nicolene for review, with a copy in your inbox.</p>
+    <div class="tag">Unleash · Venture Intake</div>
+    <h1>Get your venture <span class="accent">on paper.</span></h1>
+    <p class="lede">Hey — welcome. Most founders never sit down and write their venture out properly. It's surprisingly hard to do alone, but it sharpens things when you do. 25 minutes with Luna does both — and you get a real read back from the team.</p>
+
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="vc-tag">✍️ For you</div>
+        <h3>Get clarity, fast.</h3>
+        <p>By the end, your venture is written down across 11 lenses founders normally only touch when investors push. Many founders use the output as their first real pitch deck.</p>
+      </div>
+      <div class="value-card">
+        <div class="vc-tag">🤝 For us</div>
+        <h3>Real signal.</h3>
+        <p>Phil, Nicolene, and the team get a proper read on what you're building. When we help, we help with substance — not generic advice.</p>
+      </div>
+      <div class="value-card vc-accent">
+        <div class="vc-tag">📬 What comes back</div>
+        <h3>A Venture Analysis.</h3>
+        <p>Drawn from the best venture-building literature — YC, Sequoia, Calacanis, the Mom Test. The Unleash team responds within 48 hours with their read.</p>
+      </div>
+    </div>
+
     <button class="start-btn" id="startBtn">Let's go</button>
-    <div class="meta">~25 min · Written or voice · Send to Phil &amp; team at the end</div>
+    <div class="meta">~25 min · Voice or written · Pause &amp; resume any time — saved for 14 days</div>
   </div>
 
   <!-- PROGRESS BAR -->
@@ -716,12 +793,12 @@ footer a:hover { text-decoration: underline; }
   </div>
 </main>
 
-<!-- CONFIRM SEND MODAL -->
+<!-- CONFIRM SEND MODAL (dynamic — copy varies by completion) -->
 <div class="overlay" id="confirmOverlay">
   <div class="overlay-card">
-    <div class="stag">Almost there</div>
-    <h3>Ready to send to the <span class="accent">Unleash team?</span></h3>
-    <p>Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
+    <div class="stag" id="confirmStag">Almost there</div>
+    <h3 id="confirmTitle">Ready to send to the <span class="accent">Unleash team?</span></h3>
+    <p id="confirmText">Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
     <div class="overlay-actions">
       <button class="overlay-btn secondary" id="confirmAddMoreBtn">Wait, I want to add more</button>
       <button class="overlay-btn primary" id="confirmSendBtn">Yes, send it</button>
@@ -902,6 +979,9 @@ const privacyCloseBtn = document.getElementById('privacyCloseBtn');
 const confirmOverlay = document.getElementById('confirmOverlay');
 const confirmAddMoreBtn = document.getElementById('confirmAddMoreBtn');
 const confirmSendBtn = document.getElementById('confirmSendBtn');
+const confirmStag = document.getElementById('confirmStag');
+const confirmTitle = document.getElementById('confirmTitle');
+const confirmText = document.getElementById('confirmText');
 const sendingOverlay = document.getElementById('sendingOverlay');
 const progressStep = document.getElementById('progressStep');
 const saveOverlay = document.getElementById('saveOverlay');
@@ -1023,12 +1103,48 @@ function stopRecording() {
   userInput.focus();
 }
 
+// Minimum sections required before "I'm done" can be used at all.
+// Below this, we don't send — the founder needs at least company snapshot + founders + customer & problem
+// for the analysis to be meaningful.
+const MIN_SECTIONS_TO_SEND = 3;
+
 function openConfirmModal() {
   if (state.isLoading) return;
-  if (state.messages.length < 4) {
-    alert("Let's get a bit further into the conversation first before sending to the team.");
+
+  const completed = state.currentSection || 0;
+
+  // Hard floor — refuse to send if the founder hasn't even covered the first 3 sections.
+  if (completed < MIN_SECTIONS_TO_SEND) {
+    alert(
+      `We need at least the first three sections covered before we can send anything useful — ` +
+      `Company Snapshot, Founders, and Customer & Problem. ` +
+      (completed === 0
+        ? `It looks like you haven't started the sections yet. Tell Luna a bit about your venture first.`
+        : `You're at Section ${completed} of 11 right now — keep going for a couple more sections.`)
+    );
     return;
   }
+
+  // Swap modal copy based on completion
+  if (completed >= 11) {
+    // Full completion — send confidently
+    confirmStag.textContent = 'Almost there';
+    confirmTitle.innerHTML = 'Ready to send to the <span class="accent">Unleash team?</span>';
+    confirmText.textContent = "Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?";
+    confirmAddMoreBtn.textContent = 'Wait, I want to add more';
+    confirmSendBtn.textContent = 'Yes, send it';
+  } else {
+    // Partial — warn it'll be incomplete
+    confirmStag.textContent = 'Heads up — partial';
+    confirmTitle.innerHTML = `You're at <span class="accent">Section ${completed} of 11.</span>`;
+    confirmText.textContent =
+      `The Venture Assessment we send will only cover what you've answered so far — the rest will be ` +
+      `marked as "not yet covered". The Unleash team will still receive it (and you'll get a copy), ` +
+      `but the read back will be lighter than a full intake. You can also keep going and finish all 11 first.`;
+    confirmAddMoreBtn.textContent = 'Keep going';
+    confirmSendBtn.textContent = 'Send what we have';
+  }
+
   confirmOverlay.classList.add('active');
 }
 function closeConfirmModal() { confirmOverlay.classList.remove('active'); }
