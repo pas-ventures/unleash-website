@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Interactive CAC × ACV calculator for bootstrapped founders. Enter what one customer pays you per year and what it costs to acquire one. See your payback period, viability verdict, and what would clear the bar.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bootstrap Viability Check | Unleash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B35;
+    --orange-soft: rgba(255, 107, 53, 0.10);
+    --orange-mid: rgba(255, 107, 53, 0.25);
+    --black: #000000;
+    --body: #222222;
+    --muted: #666666;
+    --rule: #E5E5E5;
+    --bg: #FFFFFF;
+    --bg-alt: #FAFAFA;
+    --green: #1B7F3B;
+    --green-bg: rgba(27, 127, 59, 0.12);
+    --yellow: #B7791F;
+    --yellow-bg: rgba(183, 121, 31, 0.15);
+    --red: #C0392B;
+    --red-bg: rgba(192, 57, 43, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    color: var(--body);
+    background: var(--bg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--black);
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+  h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 32px 96px 32px; }
+
+  header.hero {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    color: var(--orange);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 12px;
+  }
+  .lede { font-size: 16px; color: var(--muted); max-width: 720px; margin-top: 8px; }
+
+  /* Grid layouts */
+  .grid {
+    display: grid;
+    gap: 24px;
+  }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 760px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    h1 { font-size: 28px; }
+    .wrap { padding: 32px 18px 64px 18px; }
+  }
+
+  /* Panels */
+  .panel {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .panel.alt { background: var(--bg-alt); }
+
+  /* Inputs */
+  .input-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .field { flex: 1; min-width: 140px; }
+  label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  input[type="number"], select {
+    width: 100%;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--black);
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    padding: 12px 14px;
+    border-radius: 3px;
+    transition: border-color 0.15s ease;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  select { cursor: pointer; }
+
+  .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* Verdict block */
+  .verdict {
+    margin-top: 36px;
+    padding: 28px;
+    border-radius: 4px;
+    border-left: 4px solid var(--orange);
+    background: var(--bg-alt);
+  }
+  .verdict.green { border-left-color: var(--green); background: var(--green-bg); }
+  .verdict.yellow { border-left-color: var(--yellow); background: var(--yellow-bg); }
+  .verdict.red { border-left-color: var(--red); background: var(--red-bg); }
+  .verdict-label {
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .verdict.green .verdict-label { color: var(--green); }
+  .verdict.yellow .verdict-label { color: var(--yellow); }
+  .verdict.red .verdict-label { color: var(--red); }
+  .verdict-headline {
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.2;
+  }
+  .verdict-detail { margin-top: 12px; font-size: 14px; color: var(--body); }
+
+  /* Metric row */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 28px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .metric {
+    padding: 20px;
+    border-right: 1px solid var(--rule);
+  }
+  .metric:last-child { border-right: none; }
+  .metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-family: "Montserrat", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1;
+  }
+  .metric-value .unit { font-size: 14px; color: var(--muted); margin-left: 4px; font-weight: 500; }
+  .metric-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  @media (max-width: 760px) {
+    .metrics { grid-template-columns: 1fr; }
+    .metric { border-right: none; border-bottom: 1px solid var(--rule); }
+    .metric:last-child { border-bottom: none; }
+  }
+
+  /* Zone map */
+  .zone-section { margin-top: 56px; }
+  .zone-wrap {
+    position: relative;
+    background: var(--bg-alt);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .zone-svg-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  svg { display: block; width: 100%; height: 100%; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+    font-size: 12px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
+  .swatch-green { background: var(--green); opacity: 0.6; }
+  .swatch-yellow { background: var(--yellow); opacity: 0.6; }
+  .swatch-red { background: var(--red); opacity: 0.6; }
+
+  /* What needs to change */
+  .nudges {
+    margin-top: 28px;
+    padding: 24px;
+    background: var(--bg-alt);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .nudge-list { margin: 12px 0 0 0; padding: 0; list-style: none; }
+  .nudge-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .nudge-list li:last-child { border-bottom: none; }
+  .nudge-list strong { color: var(--orange); font-weight: 700; }
+
+  /* Toggle for Real CAC sub-tool */
+  .toggle-row {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  .toggle-btn {
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--orange);
+    background: none;
+    border: 1px solid var(--orange);
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+  }
+  .toggle-btn:hover { background: var(--orange); color: white; }
+  .field label .abbr {
+    font-weight: 400;
+    color: #777;
+    font-size: 13px;
+    margin-left: 6px;
+  }
+  .field label .abbr-strong { font-weight: 700; color: #222; }
+  .cta-help {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .cta-help:hover { background: #e55a2a; }
+  .field .hint a { color: var(--orange); text-decoration: underline; font-weight: 500; }
+  .field .hint a:hover { color: #c84a1c; }
+  .toggle-btn .arrow { display: inline-block; margin-left: 6px; transition: transform 0.2s ease; }
+  .toggle-btn.open .arrow { transform: rotate(180deg); }
+
+  .real-cac-panel {
+    display: none;
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--bg-alt);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .real-cac-panel.open { display: block; }
+
+  .real-cac-output {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--bg);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 3px 3px 0;
+  }
+  .real-cac-output .multiplier {
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .real-cac-output .multiplier .label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .breakdown {
+    margin-top: 18px;
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+  }
+  .breakdown-row.total {
+    border-top: 1px solid var(--rule);
+    margin-top: 6px;
+    padding-top: 10px;
+    font-weight: 700;
+    color: var(--black);
+  }
+  .breakdown-row .v { font-family: "Montserrat", sans-serif; font-weight: 600; color: var(--black); }
+
+  /* Thesis card */
+  .thesis-block {
+    margin-top: 56px;
+    padding: 32px;
+    background: var(--black);
+    color: white;
+    border-radius: 4px;
+  }
+  .thesis-block h2 { color: white; }
+  .thesis-block .thesis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 760px) { .thesis-block .thesis-grid { grid-template-columns: 1fr; } }
+  .thesis-cell .marker {
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .thesis-cell.green .marker { color: #6FD693; }
+  .thesis-cell.yellow .marker { color: #FFD27A; }
+  .thesis-cell.red .marker { color: #FF8E7C; }
+  .thesis-cell .threshold {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .thesis-cell .desc { font-size: 13px; color: #BBBBBB; line-height: 1.5; }
+
+  /* References */
+  .refs {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  .refs h3 { color: var(--black); margin-bottom: 16px; }
+  .refs ul { padding-left: 0; list-style: none; }
+  .refs li { padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--rule); }
+  .refs li:last-child { border-bottom: none; }
+  .refs a { color: var(--orange); text-decoration: none; word-break: break-word; }
+  .refs a:hover { text-decoration: underline; }
+  .refs .quote { display: block; color: var(--muted); font-style: italic; margin-top: 4px; font-size: 12px; }
+
+  footer { margin-top: 48px; font-size: 12px; color: var(--muted); }
+  footer a { color: var(--orange); text-decoration: none; }
+
+  /* ============ DARK SITE NAV ============ */
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(17,17,17,0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .site-nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 12px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .site-nav .brand { display: flex; align-items: center; gap: 10px; color: #f0f0f0; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; text-decoration: none; }
+  .site-nav .brand img { height: 22px; opacity: 0.9; }
+  .site-nav .back-link { color: #999; font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+  .site-nav .back-link:hover { color: #FF6719; }
+  /* Push the light tool body down past the fixed nav */
+  body { padding-top: 54px; }
+
+  /* ============ GATE ============ */
+  .gate-wrap {
+    min-height: 100vh;
+    background: #111;
+    color: #c8c8c8;
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px 28px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    margin-top: -54px; /* counteract body padding-top so gate is truly full-viewport */
+    padding-top: 114px;
+  }
+  .gate {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+  .gate .stag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: #FF6719;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .gate h1 {
+    font-family: 'Spectral', 'Georgia', serif;
+    font-size: 32px; font-weight: 700;
+    color: #f0f0f0;
+    line-height: 1.2; margin-bottom: 14px;
+  }
+  .gate p.gate-lede { font-size: 14px; color: #888; margin-bottom: 30px; line-height: 1.6; }
+  .gate form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+  .gate input[type="password"] {
+    width: 100%;
+    background: #181818;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #f0f0f0;
+    padding: 13px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .gate input[type="password"]:focus { border-color: #FF6719; }
+  .gate button[type="submit"] {
+    background: #f0f0f0;
+    color: #111;
+    padding: 13px 24px;
+    border-radius: 6px;
+    font-size: 14px; font-weight: 600;
+    border: none; cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .gate button[type="submit"]:hover { background: #ddd; transform: translateY(-1px); }
+  .gate .gate-err { font-size: 12px; color: #ff6b6b; min-height: 16px; }
+  .gate .gate-hint { font-size: 12px; color: #777; margin-top: 14px; }
+  .gate .gate-hint a { color: #FF6719; text-decoration: none; }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/members/" class="brand">UNLEASH</a>
+    <a href="/members/" class="back-link">← back to members</a>
+  </div>
+</nav>
+
+<div id="gateView" class="gate-wrap">
+  <div class="gate">
+    <div class="stag">Members Area</div>
+    <h1>Bootstrap Viability Check</h1>
+    <p class="gate-lede">A founder-friendly CAC × ACV calculator. Enter the community password to continue.</p>
+    <form id="gateForm" autocomplete="off">
+      <input type="password" id="gatePw" placeholder="Community password" autofocus required>
+      <button type="submit">Enter</button>
+    </form>
+    <div class="gate-err" id="gateErr"></div>
+    <p class="gate-hint">Don't have the password? Members receive it in the Unleash WhatsApp group.</p>
+  </div>
+</div>
+
+<div id="appView" hidden>
+  <div class="wrap">
+
+    <header class="hero">
+      <div class="eyebrow">Unleash · Bootstrap Viability Tool</div>
+      <h1>Can your business pay back CAC fast enough to bootstrap?</h1>
+      <p class="lede">Enter CAC and ACV. See payback period, LTV/CAC, and where you sit on the bootstrap-vs-VC zone map.</p>
+    </header>
+
+    <!-- ========== MAIN CALCULATOR ========== -->
+    <section>
+      <div class="grid grid-2">
+
+        <!-- Inputs -->
+        <div class="panel">
+          <h3>Inputs</h3>
+
+          <div class="field" style="margin-top: 16px;">
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option value="EUR" selected>EUR €</option>
+              <option value="ZAR">ZAR R</option>
+              <option value="USD">USD $</option>
+            </select>
+          </div>
+
+          <div class="field" style="margin-top: 16px;">
+            <label for="acv">What does <strong>one customer pay you per year</strong>?<span class="abbr">(ACV — annual contract value)</span></label>
+            <input type="number" id="acv" value="8000" min="0" step="100" />
+            <div class="hint">If you sell one-shot (no subscription), use total revenue per customer over the lifetime.</div>
+          </div>
+
+          <div class="field" style="margin-top: 16px;">
+            <label for="cac">What does it cost you to <strong>acquire one customer</strong>?<span class="abbr">(CAC — customer acquisition cost)</span></label>
+            <input type="number" id="cac" value="3000" min="0" step="100" />
+            <div class="hint">The <strong>real</strong> cost: your own salary, your salespeople, marketing, tools — all of it. For B2B in SA, true CAC rarely lands below <strong>R20,000</strong>. In DE/EU, rarely below <strong>€2,000</strong>. <a href="https://andrewchen.com/how-to-actually-calculate-cac/" target="_blank" rel="noopener">Why CAC is usually 3–5× what founders think →</a></div>
+            <button class="cta-help" id="cta-cac-help" type="button">Help me work out my real CAC →</button>
+          </div>
+
+          <div class="field" style="margin-top: 16px;">
+            <label for="gm">Out of every 100 in revenue, how much <strong>actually stays with you</strong> after delivery costs?<span class="abbr">(gross margin, %)</span></label>
+            <input type="number" id="gm" value="60" min="0" max="100" step="5" />
+            <div class="hint">Software / SaaS: typically 70–80%. Services or hardware: often 30–50%. Your CAC payback is calculated on this number, not revenue.</div>
+          </div>
+
+          <div class="field" style="margin-top: 16px;">
+            <label for="lifetime">How long does a typical customer <strong>stay with you</strong>?<span class="abbr">(lifetime, in months)</span></label>
+            <input type="number" id="lifetime" value="24" min="1" step="1" />
+            <div class="hint">Default 24 months. Lower it if you have real churn data; raise it only if you have proven multi-year retention.</div>
+          </div>
+        </div>
+
+        <!-- Verdict + metrics -->
+        <div>
+          <div class="verdict" id="verdict">
+            <div class="verdict-label" id="verdict-label">Verdict</div>
+            <div class="verdict-headline" id="verdict-headline">—</div>
+            <div class="verdict-detail" id="verdict-detail">—</div>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">CAC payback</div>
+              <div class="metric-value"><span id="m-payback">—</span><span class="unit">months</span></div>
+              <div class="metric-sub">CAC ÷ (ACV × gross margin ÷ 12)</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">LTV / CAC</div>
+              <div class="metric-value" id="m-ltvcac">—</div>
+              <div class="metric-sub">Healthy bootstrap: 3×+. SaaS rule of thumb: 3-5×.</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">Gross-profit-per-customer</div>
+              <div class="metric-value"><span id="m-gp-sym">€</span><span id="m-gp">—</span></div>
+              <div class="metric-sub">Per year, at the gross margin above.</div>
+            </div>
+          </div>
+
+          <div class="nudges">
+            <h4>What would clear the bar?</h4>
+            <ul class="nudge-list" id="nudges"></ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== ZONE MAP ========== -->
+    <section class="zone-section">
+      <h2>Where do you sit?</h2>
+      <p class="lede" style="margin-bottom: 20px;">x-axis: ACV per customer. y-axis: CAC per customer. Your dot is plotted on the bootstrap-vs-VC plane.</p>
+
+      <div class="zone-wrap">
+        <div class="zone-svg-wrap">
+          <svg id="zone-svg" viewBox="0 0 800 450" preserveAspectRatio="none">
+            <!-- Background zones drawn dynamically by JS so they reflect currency thresholds -->
+            <defs>
+              <pattern id="grid" width="80" height="45" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 45" fill="none" stroke="#EEE" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <g id="zones"></g>
+            <rect width="800" height="450" fill="url(#grid)" pointer-events="none"/>
+            <g id="axes"></g>
+            <g id="markers"></g>
+          </svg>
+        </div>
+
+        <div class="legend">
+          <div class="legend-item"><span class="legend-swatch swatch-green"></span> Bootstrap-workable (payback ≤ 3 mo)</div>
+          <div class="legend-item"><span class="legend-swatch swatch-yellow"></span> Borderline (payback 3-12 mo)</div>
+          <div class="legend-item"><span class="legend-swatch swatch-red"></span> VC-only or broken (payback > 12 mo)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== THESIS BLOCK ========== -->
+    <section class="thesis-block">
+      <h2>The bootstrap-viability thesis</h2>
+      <p style="color: #BBBBBB; font-size: 14px; max-width: 720px;">Without VC fuel, every new customer either funds the next one within 1-3 months — or extends your time-to-zero. There is no middle ground on a long enough runway.</p>
+      <div class="thesis-grid">
+        <div class="thesis-cell green">
+          <div class="marker">Green · ACV > €10K / R100K+</div>
+          <div class="threshold">Bootstrap workable</div>
+          <div class="desc">CAC payback hits 1-3 months if discipline holds. Each customer funds the next. Cash compounds.</div>
+        </div>
+        <div class="thesis-cell yellow">
+          <div class="marker">Yellow · ACV €5-10K / R50-100K</div>
+          <div class="threshold">Borderline</div>
+          <div class="desc">Survivable only with brutal CAC discipline. Most founders here under-report CAC by 3-5×. Real numbers usually push this into red.</div>
+        </div>
+        <div class="thesis-cell red">
+          <div class="marker">Red · ACV < €5K / R50K</div>
+          <div class="threshold">Bootstrap math breaks</div>
+          <div class="desc">VC-backed peers can absorb 12-18 month paybacks. You can't. Either raise ACV, slash CAC to near zero (PLG / referral), or raise capital.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== REAL CAC SUB-TOOL ========== -->
+    <section class="toggle-row">
+      <button class="toggle-btn" id="real-cac-toggle">
+        What's my real CAC? <span class="arrow">▼</span>
+      </button>
+
+      <div class="real-cac-panel" id="real-cac-panel">
+        <h3 style="color: var(--black);">Help me work out my real CAC</h3>
+        <p class="lede" style="margin-bottom: 20px;">Most founders count only their ad spend and miss the big chunks: their own time, the salesperson they'll need when they step out, the tools that make it all run. Fill in the boxes below — we'll add it up.</p>
+
+        <div class="grid grid-3">
+          <div class="field">
+            <label for="reported-cac">What do you <strong>currently think</strong> your CAC is?</label>
+            <input type="number" id="reported-cac" value="1000" min="0" step="100" />
+            <div class="hint">Usually founders count only ad spend ÷ new customers. We'll show you the rest below.</div>
+          </div>
+          <div class="field">
+            <label for="new-customers">How many new customers do you sign <strong>per month</strong>?</label>
+            <input type="number" id="new-customers" value="5" min="1" step="1" />
+            <div class="hint">Today's number, not the goal.</div>
+          </div>
+          <div class="field">
+            <label for="founder-salary">What's <strong>your own salary</strong> (or what would it cost to replace you)?</label>
+            <input type="number" id="founder-salary" value="6000" min="0" step="500" />
+            <div class="hint">Per month. Put 0 only if you're genuinely not in any sales conversation.</div>
+          </div>
+          <div class="field">
+            <label for="ae-salary">A <strong>senior salesperson's</strong> monthly cost (salary + commission)?</label>
+            <input type="number" id="ae-salary" value="6000" min="0" step="500" />
+            <div class="hint">What one would cost when you step out of closing — even if you don't have them yet.</div>
+          </div>
+          <div class="field">
+            <label for="ae-count">How many <strong>salespeople</strong> do you have (or will you need)?</label>
+            <input type="number" id="ae-count" value="1" min="0" step="1" />
+            <div class="hint">Future-state headcount counts here.</div>
+          </div>
+          <div class="field">
+            <label for="marketing-spend"><strong>Marketing + tools + events</strong> per month?</label>
+            <input type="number" id="marketing-spend" value="2000" min="0" step="100" />
+            <div class="hint">Ads, CRM, sales software, networking events, content production — everything.</div>
+          </div>
+        </div>
+
+        <div class="real-cac-output">
+          <div class="multiplier">
+            <span class="label">Likely true CAC vs reported</span>
+            <span id="multiplier-value">—</span>×
+          </div>
+
+          <div class="breakdown">
+            <div class="breakdown-row">
+              <span>Reported CAC (input)</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-reported">—</span></span>
+            </div>
+            <div class="breakdown-row">
+              <span>+ Founder salary allocation per customer</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-founder">—</span></span>
+            </div>
+            <div class="breakdown-row">
+              <span>+ Senior AE cost per customer</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-ae">—</span></span>
+            </div>
+            <div class="breakdown-row">
+              <span>+ Marketing/tools/events per customer</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-mkt">—</span></span>
+            </div>
+            <div class="breakdown-row">
+              <span>+ 50% loaded overhead</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-oh">—</span></span>
+            </div>
+            <div class="breakdown-row total">
+              <span>Real (fully-loaded) CAC</span>
+              <span class="v"><span class="rc-sym">€</span><span id="b-total">—</span></span>
+            </div>
+          </div>
+
+          <p style="margin-top: 16px; font-size: 13px; color: var(--muted);">
+            <strong style="color: var(--orange);">Use this number above</strong> as CAC in the main calculator. That's the figure that survives founder replacement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== REFERENCES ========== -->
+    <section class="refs">
+      <h3>References</h3>
+      <ul>
+        <li>
+          <a href="https://www.forentrepreneurs.com/saas-metrics/" target="_blank" rel="noopener">David Skok — SaaS Metrics: A Guide to Measuring and Improving What Matters (For Entrepreneurs)</a>
+          <span class="quote">"Startups need to recover their cost of customer acquisition in less than 12 months."</span>
+        </li>
+        <li>
+          <a href="https://tomtunguz.com/payback_period_cash/" target="_blank" rel="noopener">Tomasz Tunguz — The Importance of Payback Period for SaaS Startups</a>
+          <span class="quote">"The median SaaS startup has a payback period of 15 months on a gross margin basis."</span>
+        </li>
+        <li>
+          <a href="https://www.saastr.com/dear-saastr-what-are-the-top-10-metrics-series-a-investors-look-at/" target="_blank" rel="noopener">Jason Lemkin (SaaStr) — Top 10 Metrics Series A Investors Look At</a>
+          <span class="quote">"Your customer acquisition cost (CAC) payback period should be 12 months or less."</span>
+        </li>
+        <li>
+          <a href="https://www.saastr.com/dear-saastr-what-are-the-two-most-important-marketing-kpis-on-the-way-to-10m-arr/" target="_blank" rel="noopener">Jason Lemkin (SaaStr) — Top Two Marketing KPIs on the Way to $10M ARR</a>
+          <span class="quote">"Aim for a payback period of 12 months or less for SMBs, and 15-18 months for enterprise customers."</span>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/pulse/bootstrapping-saas-works-add-4-years-ipo-timeline-jason-m-lemkin" target="_blank" rel="noopener">Jason Lemkin (LinkedIn) — Bootstrapping in SaaS? It Works. But Add ~4 Years to the IPO Timeline</a>
+          <span class="quote">"When bootstrapped, it's really hard to pay much more than 20% of total ACV in sales comp." — bootstrap economics are a different game.</span>
+        </li>
+        <li>
+          <a href="https://andrewchen.com/how-to-actually-calculate-cac/" target="_blank" rel="noopener">Brian Balfour (via andrewchen.com) — How To (Actually) Calculate CAC</a>
+          <span class="quote">"You need to include the salaries of all people working on marketing and sales." — fully loaded CAC includes salaries, overhead, and tools.</span>
+        </li>
+        <li>
+          <a href="https://openviewpartners.com/blog/cac-payback-period-mistakes/" target="_blank" rel="noopener">Kyle Poyar (OpenView) — Avoid These Common CAC Payback Period Mistakes</a>
+          <span class="quote">CAC payback should always be on a gross-margin basis. Most founders miscalculate by skipping overhead and product/R&D allocation.</span>
+        </li>
+        <li>
+          <a href="https://www.bvp.com/atlas/state-of-the-cloud-2024" target="_blank" rel="noopener">Bessemer Venture Partners — State of the Cloud 2024</a>
+          <span class="quote">Institutional cloud benchmarks: Series B narratives now expect CAC payback < 18 months and burn multiple < 1.5. Bar has tightened.</span>
+        </li>
+        <li>
+          <a href="https://www.bvp.com/atlas/cloud-computing-metrics" target="_blank" rel="noopener">Bessemer — The Five Accounting Metrics for Cloud Companies</a>
+          <span class="quote">CAC payback by segment: SMB < 12 months, mid-market < 18, enterprise < 24.</span>
+        </li>
+        <li>
+          <a href="https://www.amazon.com/100M-Money-Models-Make-Acquisition-com/dp/B0FN4SPQZF" target="_blank" rel="noopener">Alex Hormozi — $100M Money Models (book)</a>
+          <span class="quote">Client-Financed Acquisition: 30-day gross profit > 2 × (CAC + COGS). The cash-machine version of bootstrap viability.</span>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      Built for Unleash Ventures · <a href="https://unleash-ventures.com">unleash-ventures.com</a>
+    </footer>
+  </div>
+
+
+<script>
+// ============ PASSWORD GATE (matches /members/) ============
+(function() {
+  const EXPECTED_PW_HASH = '50ade15ca2984ec440f5fc3588b1b38729275dafe4597157d93735b4500e0fe1';
+  const AUTH_STORAGE_KEY = 'unleash_members_v1';
+  const gateView = document.getElementById('gateView');
+  const appView = document.getElementById('appView');
+  const gateForm = document.getElementById('gateForm');
+  const gatePw = document.getElementById('gatePw');
+  const gateErr = document.getElementById('gateErr');
+
+  function showApp() {
+    gateView.hidden = true;
+    appView.hidden = false;
+  }
+
+  async function sha256Hex(str) {
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  try {
+    if (sessionStorage.getItem(AUTH_STORAGE_KEY) === '1') {
+      showApp();
+    }
+  } catch(e) {}
+
+  gateForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    gateErr.textContent = '';
+    const pw = gatePw.value.trim();
+    if (!pw) return;
+    try {
+      const hex = await sha256Hex(pw);
+      if (hex === EXPECTED_PW_HASH) {
+        try { sessionStorage.setItem(AUTH_STORAGE_KEY, '1'); } catch(e){}
+        showApp();
+      } else {
+        gateErr.textContent = 'Incorrect password. Try again.';
+        gatePw.value = '';
+        gatePw.focus();
+      }
+    } catch (e) {
+      gateErr.textContent = 'Something went wrong. Refresh and try again.';
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+  // ============ STATE & CONFIG ============
+  const SYM = { EUR: "€", ZAR: "R", USD: "$" };
+
+  // Currency-specific zone thresholds — applied to ACV
+  // Greens / yellows / reds match Phil's thesis
+  const ZONE_THRESHOLDS = {
+    EUR: { redMax: 5000,   yellowMax: 10000  },
+    ZAR: { redMax: 50000,  yellowMax: 100000 },
+    USD: { redMax: 5500,   yellowMax: 11000  } // approx
+  };
+
+  // Plotting bounds for the zone map (x = ACV, y = CAC)
+  const PLOT_BOUNDS = {
+    EUR: { xMax: 30000,  yMax: 15000  },
+    ZAR: { xMax: 300000, yMax: 150000 },
+    USD: { xMax: 33000,  yMax: 16500  }
+  };
+
+  // ============ ELEMENT REFS ============
+  const $ = id => document.getElementById(id);
+
+  const elCurrency = $("currency");
+  const elCAC = $("cac");
+  const elACV = $("acv");
+  const elGM = $("gm");
+  const elLifetime = $("lifetime");
+
+  const elPayback = $("m-payback");
+  const elLTVCAC = $("m-ltvcac");
+  const elGP = $("m-gp");
+  const elGPSym = $("m-gp-sym");
+
+  const elVerdict = $("verdict");
+  const elVLabel = $("verdict-label");
+  const elVHeadline = $("verdict-headline");
+  const elVDetail = $("verdict-detail");
+  const elNudges = $("nudges");
+
+  const elZoneSVG = $("zone-svg");
+  const elZonesGroup = $("zones");
+  const elAxes = $("axes");
+  const elMarkers = $("markers");
+
+  // Real CAC sub-tool
+  const elRealCacToggle = $("real-cac-toggle");
+  const elRealCacPanel = $("real-cac-panel");
+
+  const elReportedCAC = $("reported-cac");
+  const elNewCustomers = $("new-customers");
+  const elFounderSalary = $("founder-salary");
+  const elAESalary = $("ae-salary");
+  const elAECount = $("ae-count");
+  const elMarketingSpend = $("marketing-spend");
+
+  const elMultiplier = $("multiplier-value");
+  const elBReported = $("b-reported");
+  const elBFounder = $("b-founder");
+  const elBAE = $("b-ae");
+  const elBMkt = $("b-mkt");
+  const elBOH = $("b-oh");
+  const elBTotal = $("b-total");
+
+  // ============ FORMATTERS ============
+  function fmt(n) {
+    if (!isFinite(n)) return "—";
+    if (Math.abs(n) >= 1000) return Math.round(n).toLocaleString("en-US");
+    if (Math.abs(n) >= 10) return Math.round(n).toLocaleString("en-US");
+    return n.toFixed(1);
+  }
+  function fmt1(n) {
+    if (!isFinite(n)) return "—";
+    return n.toFixed(1);
+  }
+  function currencySym() { return SYM[elCurrency.value]; }
+
+  // ============ ZONE CLASSIFICATION ============
+  // Verdict is driven by PAYBACK (the actual thesis test), not just ACV.
+  // ACV threshold is the secondary screen.
+  function classify(paybackMonths, acv) {
+    const t = ZONE_THRESHOLDS[elCurrency.value];
+    if (!isFinite(paybackMonths) || paybackMonths <= 0) {
+      return { zone: "red", label: "Broken", headline: "CAC > ACV. Each sale loses money.", detail: "Real CAC exceeds annual revenue per customer. No payback math works." };
+    }
+    // Hard payback-driven verdict — this IS the thesis
+    if (paybackMonths <= 3) {
+      // Hard ACV-floor cap: sub-floor ACV downgrades to yellow regardless of payback (Phil's thesis)
+      if (acv < t.redMax) {
+        const sym = currencySym();
+        return {
+          zone: "yellow",
+          label: "Borderline — sub-floor ACV",
+          headline: `Payback in ${fmt1(paybackMonths)} months, but ACV ${sym}${fmt(acv)} sits below the ${sym}${fmt(t.redMax)} bootstrap floor.`,
+          detail: "Math passes on paper, but sub-floor ACV rarely holds under real-world CAC pressure. Founders here under-report CAC by 3-5×. Raise ACV before scaling — see Real CAC below."
+        };
+      }
+      return {
+        zone: "green",
+        label: "Bootstrap workable",
+        headline: `Payback in ${fmt1(paybackMonths)} months. Each customer funds the next.`,
+        detail: "You're inside the 1-3 month bootstrap floor. Cash compounds. The only watch-item: keep CAC honest as you scale — see Real CAC below."
+      };
+    }
+    if (paybackMonths <= 12) {
+      return {
+        zone: "yellow",
+        label: "Borderline",
+        headline: `Payback in ${fmt1(paybackMonths)} months. Survivable, not comfortable.`,
+        detail: "VC-backed players can carry 12-18 month paybacks because they have fuel. Bootstrappers can't — every month of payback is a month of personal-balance-sheet risk. Tighten one of the levers below."
+      };
+    }
+    return {
+      zone: "red",
+      label: "Bootstrap math breaks",
+      headline: `Payback in ${fmt1(paybackMonths)} months. Time-to-profitability extends with every new sale.`,
+      detail: "This is a VC-fueled game at these numbers. Either raise ACV materially, slash CAC (PLG / inbound / referral-only), or accept that you need outside capital."
+    };
+  }
+
+  // ============ NUDGES — what would clear the bar? ============
+  function computeNudges(cac, acv, gmPct) {
+    const gm = gmPct / 100;
+    const sym = currencySym();
+    const out = [];
+
+    // What ACV would land you at 3-month payback at current CAC?
+    // payback = CAC / (ACV * gm / 12) = 3  =>  ACV = CAC * 4 / gm
+    const acvFor3mo = cac * 4 / gm;
+    // What CAC would land you at 3 months at current ACV?
+    // CAC = 3 * ACV * gm / 12 = ACV * gm / 4
+    const cacFor3mo = acv * gm / 4;
+
+    // What ACV would clear the 12-month (yellow → green threshold via Lemkin/Skok)
+    const acvFor12mo = cac * 1 / gm;
+    const cacFor12mo = acv * gm;
+
+    const t = ZONE_THRESHOLDS[elCurrency.value];
+
+    out.push(`Raise <strong>ACV to ${sym}${fmt(acvFor3mo)}</strong> to clear the bootstrap floor (3-month payback at current CAC).`);
+    out.push(`Or cut <strong>CAC to ${sym}${fmt(cacFor3mo)}</strong> at current ACV.`);
+    if (acv < t.yellowMax) {
+      out.push(`Bootstrap green zone starts at <strong>ACV > ${sym}${fmt(t.yellowMax)}</strong> — anchor pricing there if your buyer can absorb it.`);
+    }
+    if (gmPct < 70) {
+      out.push(`Raise gross margin to <strong>70%+</strong> — every margin point shortens payback. You're currently at ${gmPct}%.`);
+    }
+    return out;
+  }
+
+  // ============ ZONE MAP RENDERING ============
+  function renderZoneMap(cac, acv) {
+    const bounds = PLOT_BOUNDS[elCurrency.value];
+    const t = ZONE_THRESHOLDS[elCurrency.value];
+    const W = 800, H = 450;
+    const PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 50;
+    const plotW = W - PAD_L - PAD_R;
+    const plotH = H - PAD_T - PAD_B;
+
+    // x = ACV, y = CAC (inverted because higher CAC = worse = top)
+    function xScale(acv) { return PAD_L + (acv / bounds.xMax) * plotW; }
+    function yScale(cac) { return PAD_T + (1 - (cac / bounds.yMax)) * plotH; }
+
+    // Build zones SVG.
+    // Zone logic on the map: classify a (CAC, ACV) cell by what its payback would be
+    // assuming gm = 70% (visual heuristic — actual verdict uses live gm input).
+    // For a cell to be GREEN: payback ≤ 3mo → CAC ≤ ACV * 0.7 / 4 ≈ ACV * 0.175
+    // YELLOW: payback ≤ 12mo → CAC ≤ ACV * 0.7
+    // RED: above that.
+    // We render two boundary lines and fill the regions.
+
+    const SLOPE_GREEN = 0.175;  // CAC = 0.175 * ACV → 3-month payback at 70% GM
+    const SLOPE_YELLOW = 0.7;   // CAC = 0.7 * ACV → 12-month payback at 70% GM
+
+    // Green polygon: below the green line, within plot bounds
+    const greenAtRight = SLOPE_GREEN * bounds.xMax;
+    const yellowAtRight = SLOPE_YELLOW * bounds.xMax;
+
+    // We must also enforce the ACV-floor red zone: ACV < t.redMax is always red,
+    // ACV between redMax and yellowMax is yellow at best, rest follows payback math.
+
+    const redFloor = xScale(t.redMax);
+    const yellowFloor = xScale(t.yellowMax);
+    const yAxisBottom = yScale(0);
+    const yAxisTop = yScale(bounds.yMax);
+
+    // Build path for green region: x >= yellowFloor AND CAC <= 0.175 * ACV
+    // Approximated as polygon
+    const greenPath = (() => {
+      const x0 = yellowFloor;
+      const x1 = xScale(bounds.xMax);
+      const yAtX0 = yScale(Math.min(SLOPE_GREEN * t.yellowMax, bounds.yMax));
+      const yAtX1 = yScale(Math.min(SLOPE_GREEN * bounds.xMax, bounds.yMax));
+      const yBottom = yScale(0);
+      return `M ${x0} ${yBottom} L ${x0} ${yAtX0} L ${x1} ${yAtX1} L ${x1} ${yBottom} Z`;
+    })();
+
+    // Yellow region: x >= redFloor, below 0.7 line, above green region OR within (redMax, yellowMax) regardless
+    const yellowPath = (() => {
+      const x0 = redFloor;
+      const x1 = xScale(bounds.xMax);
+      const yAtX0Top = yScale(Math.min(SLOPE_YELLOW * t.redMax, bounds.yMax));
+      const yAtX1Top = yScale(Math.min(SLOPE_YELLOW * bounds.xMax, bounds.yMax));
+      const yBottom = yScale(0);
+      return `M ${x0} ${yBottom} L ${x0} ${yAtX0Top} L ${x1} ${yAtX1Top} L ${x1} ${yBottom} Z`;
+    })();
+
+    // Red zone is everything else — we paint full rect red first, then overlay yellow & green
+    const fullRect = `M ${PAD_L} ${PAD_T} L ${W - PAD_R} ${PAD_T} L ${W - PAD_R} ${H - PAD_B} L ${PAD_L} ${H - PAD_B} Z`;
+
+    elZonesGroup.innerHTML = `
+      <path d="${fullRect}" fill="${getCSSVar('--red')}" opacity="0.16" />
+      <path d="${yellowPath}" fill="${getCSSVar('--yellow')}" opacity="0.30" />
+      <path d="${greenPath}" fill="${getCSSVar('--green')}" opacity="0.30" />
+      <line x1="${redFloor}" y1="${PAD_T}" x2="${redFloor}" y2="${H - PAD_B}" stroke="${getCSSVar('--red')}" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+      <line x1="${yellowFloor}" y1="${PAD_T}" x2="${yellowFloor}" y2="${H - PAD_B}" stroke="${getCSSVar('--yellow')}" stroke-width="1" stroke-dasharray="4,4" opacity="0.5" />
+    `;
+
+    // Axes & labels
+    const sym = currencySym();
+    elAxes.innerHTML = `
+      <line x1="${PAD_L}" y1="${H - PAD_B}" x2="${W - PAD_R}" y2="${H - PAD_B}" stroke="#000" stroke-width="1.5" />
+      <line x1="${PAD_L}" y1="${PAD_T}" x2="${PAD_L}" y2="${H - PAD_B}" stroke="#000" stroke-width="1.5" />
+      <text x="${(PAD_L + (W - PAD_R)) / 2}" y="${H - 12}" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="13" font-weight="700" fill="#000">ACV (${sym})</text>
+      <text x="14" y="${(PAD_T + (H - PAD_B)) / 2}" text-anchor="middle" transform="rotate(-90, 14, ${(PAD_T + (H - PAD_B)) / 2})" font-family="Montserrat, sans-serif" font-size="13" font-weight="700" fill="#000">CAC (${sym})</text>
+
+      <!-- X axis ticks: 0, redMax, yellowMax, xMax -->
+      <text x="${PAD_L}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#666">0</text>
+      <text x="${redFloor}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#666">${sym}${(t.redMax/1000)}k</text>
+      <text x="${yellowFloor}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#666">${sym}${(t.yellowMax/1000)}k</text>
+      <text x="${W - PAD_R}" y="${H - PAD_B + 18}" text-anchor="middle" font-size="11" fill="#666">${sym}${(bounds.xMax/1000)}k</text>
+
+      <!-- Y axis ticks: 0, 50%, 100% -->
+      <text x="${PAD_L - 8}" y="${H - PAD_B + 4}" text-anchor="end" font-size="11" fill="#666">0</text>
+      <text x="${PAD_L - 8}" y="${yScale(bounds.yMax/2) + 4}" text-anchor="end" font-size="11" fill="#666">${sym}${(bounds.yMax/2/1000)}k</text>
+      <text x="${PAD_L - 8}" y="${PAD_T + 4}" text-anchor="end" font-size="11" fill="#666">${sym}${(bounds.yMax/1000)}k</text>
+    `;
+
+    // Marker — clamp to bounds so dot stays visible
+    const clampedX = Math.min(Math.max(acv, 0), bounds.xMax);
+    const clampedY = Math.min(Math.max(cac, 0), bounds.yMax);
+    const cx = xScale(clampedX);
+    const cy = yScale(clampedY);
+
+    const outOfBounds = (acv > bounds.xMax) || (cac > bounds.yMax);
+
+    elMarkers.innerHTML = `
+      <circle cx="${cx}" cy="${cy}" r="14" fill="${getCSSVar('--orange')}" opacity="0.25" />
+      <circle cx="${cx}" cy="${cy}" r="7" fill="${getCSSVar('--orange')}" stroke="#000" stroke-width="2" />
+      ${outOfBounds ? `<text x="${cx + 14}" y="${cy - 14}" font-size="11" fill="#666">(off-chart)</text>` : ""}
+    `;
+  }
+
+  function getCSSVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  // ============ REAL CAC CALC ============
+  function computeRealCAC() {
+    const reported = Math.max(0, +elReportedCAC.value || 0);
+    const newCust = Math.max(1, +elNewCustomers.value || 1);
+    const founderM = Math.max(0, +elFounderSalary.value || 0);
+    const aeM = Math.max(0, +elAESalary.value || 0);
+    const aeCount = Math.max(0, +elAECount.value || 0);
+    const mktM = Math.max(0, +elMarketingSpend.value || 0);
+
+    // Per-customer allocations
+    const founderPerCust = founderM / newCust;
+    const aePerCust = (aeM * aeCount) / newCust;
+    const mktPerCust = mktM / newCust;
+
+    const subtotal = reported + founderPerCust + aePerCust + mktPerCust;
+    const overhead = subtotal * 0.5;
+    const total = subtotal + overhead;
+    const mult = reported > 0 ? (total / reported) : 0;
+
+    const sym = currencySym();
+    document.querySelectorAll('.rc-sym').forEach(el => el.textContent = sym);
+
+    elBReported.textContent = fmt(reported);
+    elBFounder.textContent = fmt(founderPerCust);
+    elBAE.textContent = fmt(aePerCust);
+    elBMkt.textContent = fmt(mktPerCust);
+    elBOH.textContent = fmt(overhead);
+    elBTotal.textContent = fmt(total);
+
+    elMultiplier.textContent = mult > 0 ? mult.toFixed(1) : "—";
+  }
+
+  // ============ MAIN UPDATE ============
+  function update() {
+    const cac = Math.max(0, +elCAC.value || 0);
+    const acv = Math.max(0, +elACV.value || 0);
+    const gmPct = Math.max(0, Math.min(100, +elGM.value || 0));
+    const lifetime = Math.max(1, +elLifetime.value || 1);
+
+    const gm = gmPct / 100;
+    const sym = currencySym();
+    elGPSym.textContent = sym;
+
+    // Monthly gross profit per customer
+    const monthlyGP = (acv * gm) / 12;
+    const annualGP = acv * gm;
+    const payback = monthlyGP > 0 ? (cac / monthlyGP) : Infinity;
+
+    // LTV = lifetime months * monthly gross profit (gross-margin lifetime value)
+    const ltv = lifetime * monthlyGP;
+    const ltvCac = cac > 0 ? (ltv / cac) : 0;
+
+    elPayback.textContent = isFinite(payback) ? fmt1(payback) : "∞";
+    elLTVCAC.textContent = ltvCac > 0 ? (ltvCac.toFixed(1) + "×") : "—";
+    elGP.textContent = fmt(annualGP);
+
+    // Verdict
+    const v = classify(payback, acv);
+    elVerdict.classList.remove("green", "yellow", "red");
+    elVerdict.classList.add(v.zone);
+    elVLabel.textContent = v.label;
+    elVHeadline.textContent = v.headline;
+    elVDetail.textContent = v.detail;
+
+    // Nudges
+    const nudges = computeNudges(cac, acv, gmPct);
+    elNudges.innerHTML = nudges.map(n => `<li>${n}</li>`).join("");
+
+    // Zone map
+    renderZoneMap(cac, acv);
+
+    // Keep Real CAC sub-tool currency symbols + math in sync
+    computeRealCAC();
+  }
+
+  // ============ EVENT WIRING ============
+  [elCurrency, elCAC, elACV, elGM, elLifetime].forEach(el => {
+    el.addEventListener("input", update);
+    el.addEventListener("change", update);
+  });
+  [elReportedCAC, elNewCustomers, elFounderSalary, elAESalary, elAECount, elMarketingSpend].forEach(el => {
+    el.addEventListener("input", computeRealCAC);
+    el.addEventListener("change", computeRealCAC);
+  });
+
+  elRealCacToggle.addEventListener("click", () => {
+    elRealCacPanel.classList.toggle("open");
+    elRealCacToggle.classList.toggle("open");
+  });
+
+  // Inline CTA under CAC input — opens panel + scrolls to it
+  const elCtaCacHelp = document.getElementById("cta-cac-help");
+  if (elCtaCacHelp) {
+    elCtaCacHelp.addEventListener("click", () => {
+      elRealCacPanel.classList.add("open");
+      elRealCacToggle.classList.add("open");
+      setTimeout(() => {
+        elRealCacPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    });
+  }
+
+  // ============ INIT ============
+  update();
+  computeRealCAC();
+})();
+</script>
+</div><!-- /#appView -->
+</body>
+</html>
