@@ -304,6 +304,12 @@ main {
   align-self: flex-start;
   border-bottom-left-radius: 4px;
 }
+/* Second / follow-on Luna bubble in a two-part response — tighter gap, no role label, slight indent so it visually belongs to the same turn */
+.msg.luna.luna-follow {
+  margin-top: -8px;
+  margin-left: 12px;
+  background: rgba(255,103,25,0.05);
+}
 .msg.user {
   background: var(--bubble-user);
   border: 1px solid var(--border);
@@ -1245,10 +1251,23 @@ async function finishAndSend() {
 function renderMessages() {
   messagesEl.innerHTML = '';
   for (const msg of state.messages) {
-    const el = document.createElement('div');
-    el.className = 'msg ' + (msg.role === 'user' ? 'user' : 'luna');
-    el.innerHTML = '<div class="role">' + (msg.role === 'user' ? 'You' : 'Luna') + '</div>' + formatContent(msg.content);
-    messagesEl.appendChild(el);
+    if (msg.role === 'user') {
+      const el = document.createElement('div');
+      el.className = 'msg user';
+      el.innerHTML = '<div class="role">You</div>' + formatContent(msg.content);
+      messagesEl.appendChild(el);
+    } else {
+      // Luna messages: split on `---` delimiter (on its own line) into separate bubbles.
+      // Only the first bubble shows the "Luna" role label. Tight visual coupling for follow-on bubbles.
+      const parts = msg.content.split(/\n\s*---\s*\n/).map(s => s.trim()).filter(Boolean);
+      parts.forEach((part, idx) => {
+        const el = document.createElement('div');
+        el.className = 'msg luna' + (idx > 0 ? ' luna-follow' : '');
+        const roleLabel = idx === 0 ? '<div class="role">Luna</div>' : '';
+        el.innerHTML = roleLabel + formatContent(part);
+        messagesEl.appendChild(el);
+      });
+    }
   }
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
