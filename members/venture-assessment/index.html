@@ -10,22 +10,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --accent: #FF6B35;
-  --accent-light: rgba(255,107,53,0.12);
-  --accent-border: rgba(255,107,53,0.25);
+  --accent: #FF6719;
+  --accent-light: rgba(255,103,25,0.12);
+  --accent-border: rgba(255,103,25,0.25);
   --dark: #111;
   --card: #181818;
   --border: rgba(255,255,255,0.06);
   --text: #c8c8c8;
   --muted: #888;
   --white: #f0f0f0;
-  --bubble-luna: rgba(255,107,53,0.08);
+  --bubble-luna: rgba(255,103,25,0.08);
   --bubble-user: #1f1f1f;
 }
 [hidden] { display: none !important; }
 
 /* PASSWORD GATE */
-.gate-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 28px; background: var(--dark); }
+.gate-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 28px; }
 .gate { max-width: 420px; width: 100%; text-align: center; }
 .gate .stag { font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--accent); letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
 .gate h1 { font-family: 'Spectral', serif; font-size: 34px; font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 14px; }
@@ -48,6 +48,86 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== AMBIENT BACKGROUND (matches DiT presentation look + gentle motion) ===== */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255,103,25,0.10) 0%, transparent 32%),
+    radial-gradient(circle at 15% 80%, rgba(255,103,25,0.05) 0%, transparent 32%),
+    linear-gradient(rgba(17,17,17,0.94), rgba(17,17,17,0.94)),
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.018) 39px, rgba(255,255,255,0.018) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.018) 39px, rgba(255,255,255,0.018) 40px);
+  background-color: var(--dark);
+}
+
+/* Large pulsing glow dots — Unleash orange, like the presentation */
+.glow-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 14px 5px rgba(255,103,25,0.35);
+  animation: pulse 5s ease-in-out infinite;
+}
+.glow-dot.g1 { top: 14%; left: 9%; animation-delay: 0s; }
+.glow-dot.g2 { top: 22%; right: 11%; width: 8px; height: 8px; box-shadow: 0 0 18px 6px rgba(255,103,25,0.4); animation-delay: 1.6s; }
+.glow-dot.g3 { bottom: 18%; right: 14%; animation-delay: 3.1s; }
+.glow-dot.g4 { bottom: 28%; left: 7%; width: 5px; height: 5px; box-shadow: 0 0 12px 4px rgba(255,103,25,0.3); animation-delay: 2.3s; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+/* Drifting micro-stars — small, soft, slow */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  animation: drift linear infinite, twinkle ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.star.warm { background: rgba(255,180,130,0.7); }
+.star.s1  { left: 6%;  top: -2%; animation-duration: 95s, 4.5s; animation-delay: 0s, 0s; }
+.star.s2  { left: 18%; top: -2%; animation-duration: 130s, 5.8s; animation-delay: -25s, -1.2s; }
+.star.s3  { left: 27%; top: -2%; animation-duration: 110s, 6.4s; animation-delay: -55s, -2.5s; }
+.star.s4  { left: 38%; top: -2%; animation-duration: 145s, 4.1s; animation-delay: -10s, -0.7s; }
+.star.s5  { left: 49%; top: -2%; animation-duration: 100s, 5.2s; animation-delay: -70s, -3.4s; }
+.star.s6  { left: 58%; top: -2%; animation-duration: 120s, 4.8s; animation-delay: -35s, -1.9s; }
+.star.s7  { left: 66%; top: -2%; animation-duration: 90s,  6.0s; animation-delay: -50s, -2.1s; }
+.star.s8  { left: 74%; top: -2%; animation-duration: 135s, 5.5s; animation-delay: -15s, -0.4s; }
+.star.s9  { left: 83%; top: -2%; animation-duration: 105s, 4.6s; animation-delay: -65s, -3.0s; }
+.star.s10 { left: 91%; top: -2%; animation-duration: 125s, 5.1s; animation-delay: -40s, -1.5s; }
+.star.s11 { left: 12%; top: -2%; animation-duration: 115s, 4.3s; animation-delay: -80s, -2.7s; }
+.star.s12 { left: 78%; top: -2%; animation-duration: 150s, 5.7s; animation-delay: -22s, -1.0s; }
+
+@keyframes drift {
+  from { transform: translateY(-10vh); }
+  to   { transform: translateY(115vh); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.95; }
+}
+
+/* All app content sits above the bg-layer */
+.gate-wrap, #appView { position: relative; z-index: 1; }
+
+/* Respect users who prefer no motion */
+@media (prefers-reduced-motion: reduce) {
+  .glow-dot, .star { animation: none !important; }
+  .star { opacity: 0.5; transform: translateY(40vh); }
 }
 
 /* HEADER */
@@ -134,29 +214,6 @@ main {
   padding: 40px 20px;
   position: relative;
 }
-.welcome::before {
-  content: '';
-  position: absolute;
-  top: 12%;
-  right: 8%;
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 16px 6px rgba(255,107,53,0.4);
-}
-.welcome::after {
-  content: '';
-  position: absolute;
-  bottom: 18%;
-  left: 6%;
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 12px 4px rgba(255,107,53,0.3);
-  opacity: 0.7;
-}
 .welcome .tag {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
@@ -199,7 +256,7 @@ main {
 }
 .welcome .start-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(255,107,53,0.35);
+  box-shadow: 0 8px 28px rgba(255,103,25,0.35);
 }
 .welcome .meta {
   font-size: 13px;
@@ -332,6 +389,37 @@ main {
 }
 .input-row .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .input-row .send-btn:hover:not(:disabled) { opacity: 0.9; }
+
+/* Mic button — voice input via Web Speech API */
+.input-row .mic-btn {
+  background: var(--card);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  width: 50px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.input-row .mic-btn:hover:not(:disabled) { border-color: var(--accent-border); background: #1c1c1c; }
+.input-row .mic-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.input-row .mic-btn.recording {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  animation: mic-pulse 1.4s ease-in-out infinite;
+}
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,103,25,0.6); }
+  50%      { box-shadow: 0 0 0 8px rgba(255,103,25,0); }
+}
+.input-row .mic-btn[hidden] { display: none; }
+.input-row textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+.input-row.loading textarea { background: #161616; }
 
 .done-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .save-btn {
@@ -494,19 +582,64 @@ footer a:hover { text-decoration: underline; }
 
 /* MOBILE */
 @media (max-width: 640px) {
+  .welcome { padding: 32px 4px; }
   .welcome h1 { font-size: 36px; }
   .welcome p { font-size: 15px; }
   .welcome .tag { font-size: 11px; letter-spacing: 2px; }
-  .msg { max-width: 92%; font-size: 15px; padding: 12px 14px; }
-  header { padding: 12px 16px; }
+  .welcome .start-btn { padding: 14px 32px; font-size: 13px; }
+  .welcome .meta { font-size: 11px; }
+  .msg { max-width: 94%; font-size: 15px; padding: 12px 14px; }
+  header { padding: 12px 14px; }
   .brand { font-size: 11px; letter-spacing: 1.5px; }
   .brand .sub { display: none; }
-  main { padding: 0 14px; }
+  main { padding: 0 12px; }
+  .summary-screen { padding: 40px 16px; }
   .summary-screen h2 { font-size: 30px; }
+  /* Tighter input area on phones */
+  .input-bar { padding: 10px 0 14px 0; gap: 8px; }
+  .input-row { gap: 6px; }
+  .input-row textarea { padding: 11px 14px; font-size: 16px; min-height: 46px; }  /* 16px prevents iOS zoom-on-focus */
+  .input-row .send-btn { padding: 0 16px; font-size: 12px; letter-spacing: 1px; }
+  .input-row .mic-btn { width: 44px; font-size: 18px; }
+  /* Don't let the bottom row wrap clunky on small screens */
+  .done-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .done-row button { width: 100%; text-align: center; }
+  .save-btn, .done-btn { padding: 11px 14px; font-size: 11px; }
+  /* Overlay modal padding tighter */
+  .overlay-card { padding: 28px 22px; }
+  .overlay-card h3 { font-size: 22px; }
+  .overlay-card p { font-size: 14px; }
+  .overlay-actions { flex-direction: column; }
+  .overlay-actions button { width: 100%; }
+  /* Progress text shorter */
+  .progress-label { font-size: 10px; letter-spacing: 1px; }
+  /* Background motion: tone down on mobile to save battery */
+  .star { display: none; }
+  .star.s2, .star.s5, .star.s8, .star.s11 { display: block; }
 }
 </style>
 </head>
 <body>
+
+<!-- ============ AMBIENT BACKGROUND (gradients, grid, glow dots, drifting stars) ============ -->
+<div class="bg-layer" aria-hidden="true">
+  <div class="glow-dot g1"></div>
+  <div class="glow-dot g2"></div>
+  <div class="glow-dot g3"></div>
+  <div class="glow-dot g4"></div>
+  <div class="star s1"></div>
+  <div class="star warm s2"></div>
+  <div class="star s3"></div>
+  <div class="star s4"></div>
+  <div class="star warm s5"></div>
+  <div class="star s6"></div>
+  <div class="star s7"></div>
+  <div class="star warm s8"></div>
+  <div class="star s9"></div>
+  <div class="star s10"></div>
+  <div class="star s11"></div>
+  <div class="star s12"></div>
+</div>
 
 <!-- ============ PASSWORD GATE ============ -->
 <div id="gateView" class="gate-wrap">
@@ -565,8 +698,9 @@ footer a:hover { text-decoration: underline; }
 
   <!-- INPUT BAR -->
   <div class="input-bar" id="inputBar" style="display:none;">
-    <div class="input-row">
-      <textarea id="userInput" placeholder="Type your response..." rows="1"></textarea>
+    <div class="input-row" id="inputRow">
+      <textarea id="userInput" placeholder="Type your response — or tap the mic to talk" rows="1"></textarea>
+      <button class="mic-btn" id="micBtn" hidden title="Tap to talk — Luna will transcribe" aria-label="Voice input">🎤</button>
       <button class="send-btn" id="sendBtn">Send</button>
     </div>
     <div class="done-row">
@@ -613,8 +747,30 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <footer>
-  © Unleash Ventures · <a href="https://unleash-ventures.com">unleash-ventures.com</a>
+  © Unleash Ventures · <a href="https://unleash-ventures.com">unleash-ventures.com</a> · <a href="#" id="privacyLink">Privacy &amp; data</a>
 </footer>
+
+<!-- PRIVACY MODAL -->
+<div class="overlay" id="privacyOverlay">
+  <div class="overlay-card" style="text-align: left; max-width: 560px;">
+    <div class="stag">Privacy &amp; data</div>
+    <h3 style="margin-bottom: 18px;">How your conversation is <span class="accent">handled</span></h3>
+    <div style="font-size: 14.5px; color: var(--text); line-height: 1.65; text-align: left;">
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">While you're chatting:</strong><br>
+      Your messages are sent to Anthropic (Claude) so Luna can respond. Anthropic processes them under its standard API terms and does not train on them. We do not log or store your conversation on Unleash servers.</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">When you click "I'm done":</strong><br>
+      Luna assembles the structured Venture Assessment. We email it via Resend to you, Phil (pas@pas-ventures.com), and Nicolene (nicolene@pas-ventures.com). That's where your data lives from then on — in those three inboxes.</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">Local browser save:</strong><br>
+      Your in-progress conversation is saved to your own browser (localStorage) for up to 14 days so you can resume. It never leaves your device until you send. You can wipe it any time by clicking "start over".</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">GDPR &amp; your rights:</strong><br>
+      Unleash Ventures is operated by PAS Ventures GmbH (Berlin, Germany). To request access, correction, or deletion of your Venture Assessment, email <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a>.</p>
+      <p style="font-size: 13px; color: var(--muted); margin-top: 18px;">This is a beta tool. We're refining the privacy posture continuously.</p>
+    </div>
+    <div class="overlay-actions" style="margin-top: 22px;">
+      <button class="overlay-btn primary" id="privacyCloseBtn">Got it</button>
+    </div>
+  </div>
+</div>
 </div>
 <!-- ============ END APP ============ -->
 
@@ -732,6 +888,11 @@ const progressText = document.getElementById('progressText');
 const progressPct = document.getElementById('progressPct');
 const progressFill = document.getElementById('progressFill');
 const saveBtn = document.getElementById('saveBtn');
+const micBtn = document.getElementById('micBtn');
+const inputRow = document.getElementById('inputRow');
+const privacyLink = document.getElementById('privacyLink');
+const privacyOverlay = document.getElementById('privacyOverlay');
+const privacyCloseBtn = document.getElementById('privacyCloseBtn');
 const confirmOverlay = document.getElementById('confirmOverlay');
 const confirmAddMoreBtn = document.getElementById('confirmAddMoreBtn');
 const confirmSendBtn = document.getElementById('confirmSendBtn');
@@ -759,10 +920,15 @@ const THINKING_VARIANTS = [
   'Luna is thinking',
   'Luna is making sense of your response',
   'Luna is matching the threads',
-  'Luna is processing',
-  'Luna is reviewing',
-  'Luna is considering',
+  'Luna is canoodling the details',
+  'Luna is consulting the playbook',
+  'Luna is reading between the lines',
+  'Luna is pulling it together',
+  'Luna is finding the right next question',
+  'Luna is letting that sink in',
+  'Luna is composing',
 ];
+let typingCycleInterval = null;
 
 startBtn.addEventListener('click', () => startConversation());
 sendBtn.addEventListener('click', () => sendMessage());
@@ -771,6 +937,85 @@ confirmAddMoreBtn.addEventListener('click', () => closeConfirmModal());
 confirmSendBtn.addEventListener('click', () => { closeConfirmModal(); finishAndSend(); });
 saveBtn.addEventListener('click', () => openSaveModal());
 saveCloseBtn.addEventListener('click', () => closeSaveModal());
+privacyLink.addEventListener('click', (e) => { e.preventDefault(); privacyOverlay.classList.add('active'); });
+privacyCloseBtn.addEventListener('click', () => privacyOverlay.classList.remove('active'));
+privacyOverlay.addEventListener('click', (e) => { if (e.target === privacyOverlay) privacyOverlay.classList.remove('active'); });
+
+// ============ VOICE INPUT (Web Speech API) ============
+// Supported in Chrome/Edge/Safari (with webkit prefix). Fails silently elsewhere.
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isRecording = false;
+let voiceBaseText = '';
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = (navigator.language && navigator.language.startsWith('de')) ? 'de-DE' : 'en-US';
+
+  recognition.onresult = (event) => {
+    let finalText = '';
+    let interim = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const t = event.results[i][0].transcript;
+      if (event.results[i].isFinal) finalText += t;
+      else interim += t;
+    }
+    if (finalText) {
+      voiceBaseText = (voiceBaseText + ' ' + finalText).trim();
+    }
+    const combined = (voiceBaseText + (interim ? ' ' + interim : '')).trim();
+    userInput.value = combined;
+    userInput.style.height = 'auto';
+    userInput.style.height = Math.min(userInput.scrollHeight, 200) + 'px';
+  };
+
+  recognition.onerror = (e) => {
+    console.warn('Speech recognition error:', e.error);
+    stopRecording();
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      alert('Microphone access was blocked. Allow microphone permission in your browser settings to use voice input.');
+    }
+  };
+
+  recognition.onend = () => {
+    // If the user is still recording (browser auto-ended after silence), restart
+    if (isRecording) {
+      try { recognition.start(); } catch(err) { stopRecording(); }
+    }
+  };
+
+  micBtn.hidden = false;
+  micBtn.addEventListener('click', () => {
+    if (isRecording) stopRecording();
+    else startRecording();
+  });
+}
+
+function startRecording() {
+  if (!recognition || isRecording) return;
+  voiceBaseText = userInput.value.trim();
+  try {
+    recognition.start();
+    isRecording = true;
+    micBtn.classList.add('recording');
+    micBtn.textContent = '⏹';
+    micBtn.title = 'Tap to stop recording';
+  } catch (err) {
+    console.warn('Could not start recognition:', err);
+  }
+}
+
+function stopRecording() {
+  if (!recognition) return;
+  isRecording = false;
+  try { recognition.stop(); } catch(e) {}
+  micBtn.classList.remove('recording');
+  micBtn.textContent = '🎤';
+  micBtn.title = 'Tap to talk — Luna will transcribe';
+  userInput.focus();
+}
 
 function openConfirmModal() {
   if (state.isLoading) return;
@@ -837,7 +1082,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Show a small banner at top of chat that they resumed
     const resumeBanner = document.createElement('div');
-    resumeBanner.style.cssText = 'padding: 8px 14px; margin-bottom: 8px; background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.2); border-radius: 8px; font-size: 13px; color: #888; text-align: center; font-family: Montserrat, sans-serif; letter-spacing: 0.5px;';
+    resumeBanner.style.cssText = 'padding: 8px 14px; margin-bottom: 8px; background: rgba(255,103,25,0.08); border: 1px solid rgba(255,103,25,0.2); border-radius: 8px; font-size: 13px; color: #888; text-align: center; font-family: Montserrat, sans-serif; letter-spacing: 0.5px;';
     resumeBanner.innerHTML = '↻ Picked up where you left off — <a href="#" id="startOverLink" style="color: #FF6B35; text-decoration: underline;">start over</a>';
     messagesEl.insertBefore(resumeBanner, messagesEl.firstChild);
     document.getElementById('startOverLink').addEventListener('click', (e) => {
@@ -887,7 +1132,7 @@ async function sendMessage() {
 async function callWorker() {
   if (state.isLoading) return;
   state.isLoading = true;
-  sendBtn.disabled = true;
+  setInputLocked(true);
   showTyping();
 
   try {
@@ -940,10 +1185,18 @@ async function callWorker() {
     renderMessages();
   } finally {
     state.isLoading = false;
-    sendBtn.disabled = false;
+    setInputLocked(false);
     hideTyping();
     userInput.focus();
   }
+}
+
+function setInputLocked(locked) {
+  sendBtn.disabled = locked;
+  userInput.disabled = locked;
+  if (micBtn) micBtn.disabled = locked;
+  if (inputRow) inputRow.classList.toggle('loading', locked);
+  if (locked && isRecording) stopRecording();
 }
 
 async function finishAndSend() {
@@ -1005,12 +1258,21 @@ function showTyping() {
   const el = document.createElement('div');
   el.className = 'typing';
   el.id = 'typingIndicator';
-  const variant = THINKING_VARIANTS[Math.floor(Math.random() * THINKING_VARIANTS.length)];
-  el.textContent = variant;
+  // Start with a random variant, then cycle every 2.6s so the founder sees Luna actively working
+  let idx = Math.floor(Math.random() * THINKING_VARIANTS.length);
+  el.textContent = THINKING_VARIANTS[idx];
   messagesEl.appendChild(el);
   messagesEl.scrollTop = messagesEl.scrollHeight;
+  typingCycleInterval = setInterval(() => {
+    idx = (idx + 1) % THINKING_VARIANTS.length;
+    el.textContent = THINKING_VARIANTS[idx];
+  }, 2600);
 }
 function hideTyping() {
+  if (typingCycleInterval) {
+    clearInterval(typingCycleInterval);
+    typingCycleInterval = null;
+  }
   const existing = document.getElementById('typingIndicator');
   if (existing) existing.remove();
 }
