@@ -219,7 +219,22 @@
   .trust-callout p { font-family: 'Spectral', serif; font-size: 21px; color: var(--white); font-weight: 600; line-height: 1.45; }
   .trust-callout p .accent { font-weight: 700; }
 
-  /* ===== SLIDE 10: PRINCIPLES + BOOKS ===== */
+  /* ===== SLIDE 10: NAIL IT BEFORE YOU SCALE IT ===== */
+  .nail-slide h2 { font-size: 50px; line-height: 1.1; }
+  .nail-slide .lede { font-size: 19px; color: var(--text); line-height: 1.55; margin-top: 6px; margin-bottom: 22px; max-width: 1000px; }
+  .nail-slide .lede strong { color: var(--white); }
+  .nail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .nail-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+  .nail-card .nail-ico { font-size: 32px; margin-bottom: 10px; line-height: 1; }
+  .nail-card h3 { font-family: 'Spectral', serif; font-size: 20px; color: var(--white); margin-bottom: 12px; font-weight: 700; line-height: 1.25; }
+  .nail-card h3 .accent { font-weight: 700; }
+  .nail-card ul { list-style: none; padding: 0; }
+  .nail-card li { padding: 7px 0 7px 18px; position: relative; font-size: 14px; color: var(--text); line-height: 1.5; }
+  .nail-card li::before { content: ''; position: absolute; left: 0; top: 14px; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .nail-card li strong { color: var(--white); }
+  .nail-card li .em { color: var(--accent); font-weight: 600; }
+
+  /* ===== SLIDE 11: PRINCIPLES + BOOKS ===== */
   .take-slide h2 { font-size: 46px; margin-bottom: 22px; }
   .take-principles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 26px; }
   .pr-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 14px; text-align: center; }
@@ -236,7 +251,7 @@
   .book-card .b-author strong { color: var(--white); }
   .book-card .b-why { font-size: 13px; color: var(--muted); line-height: 1.5; font-style: italic; }
 
-  /* ===== SLIDE 11: CLOSE / CTA ===== */
+  /* ===== SLIDE 12: CLOSE / CTA ===== */
   .cta-slide { background: radial-gradient(circle at 80% 20%, rgba(255,103,25,0.15) 0%, transparent 35%), linear-gradient(rgba(17,17,17,0.95), rgba(17,17,17,0.95)); }
   .cta-slide .cta-tag { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 24px; }
   .cta-slide h1 { font-size: 60px; line-height: 1.08; max-width: 1100px; margin-bottom: 18px; }
@@ -664,8 +679,49 @@
   </div>
 </div>
 
-<!-- SLIDE 10: PRINCIPLES + BOOKS -->
-<div class="slide take-slide" id="slide-10">
+<!-- SLIDE 10: NAIL IT BEFORE YOU SCALE IT -->
+<div class="slide nail-slide" id="slide-10">
+  <div class="top-bar"></div>
+  <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img class="fi-logo" src="https://fi.co/assets/logo_plain-eb88d2988068de2be10d2a3f98573db2d73d6310a997e30776e8a869ca5a475e.png" alt="Founders Institute"></div>
+  <div class="guest-tag">Sales Masterclass &middot; <span class="fi">FI Cohort</span></div>
+
+  <div class="part-tag">Section 3 &middot; Before You Scale</div>
+  <h2>Nail it <span class="accent">before</span> you scale it.</h2>
+  <p class="lede">The first <strong>30–50 customers</strong> is the founder's job. Nobody else's. Here's what that actually means.</p>
+
+  <div class="nail-grid">
+    <div class="nail-card">
+      <div class="nail-ico">🎯</div>
+      <h3>Make 5 people incredibly happy. <span class="accent">Before</span> you chase 20.</h3>
+      <ul>
+        <li>Get to <strong>5 incredible case studies</strong> with your early customers</li>
+        <li><span class="em">Do things that don't scale</span> &mdash; that's how you learn in depth</li>
+        <li>Depth before breadth. Every time.</li>
+      </ul>
+    </div>
+    <div class="nail-card">
+      <div class="nail-ico">📓</div>
+      <h3>Document. Document. <span class="accent">Document.</span></h3>
+      <ul>
+        <li>Write the process from <strong>first touch to conversion</strong></li>
+        <li>Build <strong>scripts</strong> from real conversations</li>
+        <li><strong>No playbook = no hiring.</strong> Period.</li>
+      </ul>
+    </div>
+    <div class="nail-card">
+      <div class="nail-ico">🌍</div>
+      <h3>Humans are <span class="accent">the same</span> everywhere.</h3>
+      <ul>
+        <li>People believe African markets are uniquely different. <strong>They're not.</strong></li>
+        <li>Our attention is on <strong>our own problems</strong> &mdash; always</li>
+        <li>Boardroom &middot; WhatsApp &middot; social &mdash; <strong>same dynamic, different channel</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: PRINCIPLES + BOOKS -->
+<div class="slide take-slide" id="slide-11">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img class="fi-logo" src="https://fi.co/assets/logo_plain-eb88d2988068de2be10d2a3f98573db2d73d6310a997e30776e8a869ca5a475e.png" alt="Founders Institute"></div>
   <div class="guest-tag">Sales Masterclass &middot; <span class="fi">FI Cohort</span></div>
@@ -721,8 +777,8 @@
   </div>
 </div>
 
-<!-- SLIDE 11: CLOSE / CTA / Q&A -->
-<div class="slide slide-title cta-slide" id="slide-11">
+<!-- SLIDE 12: CLOSE / CTA / Q&A -->
+<div class="slide slide-title cta-slide" id="slide-12">
   <div class="top-bar"></div>
   <div class="logo-bar"><img src="unleash-logo-transparent.png" alt="Unleash"><span class="logo-sep"></span><img class="fi-logo" src="https://fi.co/assets/logo_plain-eb88d2988068de2be10d2a3f98573db2d73d6310a997e30776e8a869ca5a475e.png" alt="Founders Institute"></div>
   <div class="guest-tag">Sales Masterclass &middot; <span class="fi">FI Cohort</span></div>
@@ -754,7 +810,7 @@
 </div>
 
 <!-- Navigation -->
-<div class="slide-counter"><span id="current">1</span> / <span id="total">11</span></div>
+<div class="slide-counter"><span id="current">1</span> / <span id="total">12</span></div>
 <div class="nav">
   <button onclick="prev()">&larr; Back</button>
   <button onclick="next()">Next &rarr;</button>
