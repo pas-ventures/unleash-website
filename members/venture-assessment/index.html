@@ -687,6 +687,11 @@ main {
 .consent-check input[type="checkbox"] { margin-top:2px; width:16px; height:16px; flex:0 0 auto; accent-color:var(--accent); cursor:pointer; }
 .consent-check a { color:var(--accent); }
 .overlay-btn.primary:disabled { opacity:0.4; cursor:not-allowed; }
+.email-confirm { text-align:left; margin:14px 0 0; }
+.email-confirm label { display:block; font-size:12.5px; color:var(--white); font-weight:600; margin-bottom:5px; }
+.email-confirm input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.18); color:var(--white); padding:11px 13px; border-radius:7px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box; }
+.email-confirm input:focus { border-color:var(--accent); }
+.email-err { font-size:12px; color:#ff6b6b; margin-top:5px; }
 .review-send-btn.pulse-cta {
   animation: send-cta-pulse 1.4s ease-in-out infinite;
 }
@@ -1165,6 +1170,7 @@ footer a:hover { text-decoration: underline; }
     </div>
     <div class="review-foot">
       <div class="promise">📬 <strong>You'll only receive your assessment by email once you send.</strong> Phil &amp; Nicolene respond within 48 hours.</div>
+      <div class="email-confirm"><label for="reviewEmail">📧 Send your copy to</label><input type="email" id="reviewEmail" placeholder="you@yourcompany.com" autocomplete="email" inputmode="email"><div class="email-err" id="reviewEmailErr"></div></div>
       <label class="consent-check"><input type="checkbox" id="reviewConsent"><span>I'm sharing only what I'm comfortable with, and I consent to Unleash (PAS Ventures GmbH) storing &amp; processing my Venture Assessment to review my venture — including via providers that may process it outside South Africa. My browser draft auto-deletes after 30 days; my submitted assessment is kept until I ask to delete it (pas@pas-ventures.com). <a href="#" id="reviewPrivacyLink">Privacy &amp; data →</a></span></label>
       <button class="review-send-btn" id="reviewSendBtn">📤 SEND TO PHIL &amp; NICOLENE — RECEIVE MY COPY</button>
       <div class="review-nudge" id="reviewNudge">👋 Ready? click above to receive your assessment by email.</div>
@@ -1201,6 +1207,7 @@ footer a:hover { text-decoration: underline; }
     <div class="stag" id="confirmStag">Almost there</div>
     <h3 id="confirmTitle">Ready to send to the <span class="accent">Unleash team?</span></h3>
     <p id="confirmText">Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
+    <div class="email-confirm"><label for="confirmEmail">📧 Send your copy to</label><input type="email" id="confirmEmail" placeholder="you@yourcompany.com" autocomplete="email" inputmode="email"><div class="email-err" id="confirmEmailErr"></div></div>
     <label class="consent-check"><input type="checkbox" id="confirmConsent"><span>I'm sharing only what I'm comfortable with, and I consent to Unleash (PAS Ventures GmbH) storing &amp; processing my Venture Assessment — incl. via providers that may process it outside South Africa. Browser draft auto-deletes after 30 days; my submission is kept until I ask to delete it (pas@pas-ventures.com). <a href="#" id="confirmPrivacyLink">Privacy &amp; data →</a></span></label>
     <div class="overlay-actions">
       <button class="overlay-btn secondary" id="confirmAddMoreBtn">Wait, I want to add more</button>
@@ -1474,7 +1481,13 @@ doneBtn.addEventListener('click', () => {
   }
 });
 confirmAddMoreBtn.addEventListener('click', () => closeConfirmModal());
-confirmSendBtn.addEventListener('click', () => { closeConfirmModal(); finishAndSend(); });
+confirmSendBtn.addEventListener('click', () => {
+  const v = ((confirmEmail && confirmEmail.value) || '').trim();
+  if (!isValidEmail(v)) { if (confirmEmailErr) confirmEmailErr.textContent = 'Enter a valid email so your copy reaches the right inbox.'; if (confirmEmail) confirmEmail.focus(); return; }
+  state.confirmedEmail = v;
+  closeConfirmModal();
+  finishAndSend();
+});
 saveBtn.addEventListener('click', () => openSaveModal());
 saveCloseBtn.addEventListener('click', () => closeSaveModal());
 privacyLink.addEventListener('click', (e) => { e.preventDefault(); privacyOverlay.classList.add('active'); });
@@ -1493,8 +1506,19 @@ if (confirmConsent) confirmConsent.addEventListener('change', () => { confirmSen
   if (el) el.addEventListener('click', (e) => { e.preventDefault(); privacyOverlay.classList.add('active'); });
 });
 
+// ===== Recipient confirmation — the founder confirms the email their copy goes to,
+// so the assessment can never be sent to a wrong address guessed from the chat.
+const reviewEmail = document.getElementById('reviewEmail');
+const reviewEmailErr = document.getElementById('reviewEmailErr');
+const confirmEmail = document.getElementById('confirmEmail');
+const confirmEmailErr = document.getElementById('confirmEmailErr');
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((e || '').trim()); }
+
 // Review modal — the new primary send gate
 reviewSendBtn.addEventListener('click', () => {
+  const v = ((reviewEmail && reviewEmail.value) || '').trim();
+  if (!isValidEmail(v)) { if (reviewEmailErr) reviewEmailErr.textContent = 'Enter a valid email so your copy reaches the right inbox.'; if (reviewEmail) reviewEmail.focus(); return; }
+  state.confirmedEmail = v;
   closeReviewModal();
   finishAndSend();
 });
@@ -1642,6 +1666,7 @@ function openConfirmModal() {
   }
 
   if (confirmConsent) { confirmConsent.checked = false; confirmSendBtn.disabled = true; }
+  if (confirmEmail) { const g = extractFounderEmail(state.messages); confirmEmail.value = (g && g !== 'unknown') ? g : ''; if (confirmEmailErr) confirmEmailErr.textContent = ''; }
   confirmOverlay.classList.add('active');
 }
 function closeConfirmModal() { confirmOverlay.classList.remove('active'); }
@@ -1832,6 +1857,7 @@ function openReviewModal() {
   reviewBody.scrollTop = 0;
   reviewOverlay.classList.add('active');
   if (reviewConsent) { reviewConsent.checked = false; reviewSendBtn.disabled = true; }
+  if (reviewEmail) { const g = extractFounderEmail(state.messages); reviewEmail.value = (g && g !== 'unknown') ? g : ''; if (reviewEmailErr) reviewEmailErr.textContent = ''; }
   reviewSendBtn.classList.remove('pulse-cta');
   reviewNudge.classList.remove('active');
 
@@ -1877,7 +1903,7 @@ async function finishAndSend() {
   sendingOverlay.classList.add('active');
   startProgressMessages();
 
-  const founderEmail = extractFounderEmail(state.messages);
+  const founderEmail = state.confirmedEmail || extractFounderEmail(state.messages);
   const founderName = extractFounderName(state.messages);
   const companyName = extractCompanyName(state.messages);
 
