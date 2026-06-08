@@ -2,6 +2,11 @@ name = "luna-venture-assessment"
 main = "worker.js"
 compatibility_date = "2026-05-11"
 
+# Notion mirror — each submission is also written as a row in the "Venture Assessments"
+# founder table. Token set via: wrangler secret put NOTION_TOKEN
+[vars]
+NOTION_DB_ID = "44cd7e22bd2a429aa74d1e79a3858e1c"
+
 # Workers Logs — visible in Cloudflare dashboard
 [observability]
 enabled = true
@@ -13,3 +18,14 @@ name = "RATE_LIMITER"
 type = "ratelimit"
 namespace_id = "1001"
 simple = { limit = 20, period = 60 }
+
+# Submission persistence (KV) — every /api/done write before email; webhook updates delivery status
+# CREATE THIS NAMESPACE BEFORE DEPLOY:
+#   wrangler kv:namespace create SUBMISSIONS_KV
+# then paste the returned id below (replace REPLACE_WITH_KV_NAMESPACE_ID).
+[[kv_namespaces]]
+binding = "SUBMISSIONS_KV"
+id = "125c227e74c949ff9fa5fde35b4fbba0"
+
+# Resend webhook signing secret (set via: wrangler secret put RESEND_WEBHOOK_SECRET)
+# Verifies webhooks really come from Resend. Get from resend.com → Webhooks → reveal secret.

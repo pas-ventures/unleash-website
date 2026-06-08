@@ -381,6 +381,25 @@ export default {
       });
     }
 
+    // Resend webhook — server-to-server, no CORS check (Resend signs requests).
+    // Set up at resend.com → Webhooks → endpoint: https://luna-venture-assessment.pas-bf6.workers.dev/webhook/resend
+    // Events to subscribe: email.sent, email.delivered, email.delivery_delayed, email.bounced, email.complained
+    if (url.pathname === '/webhook/resend' && request.method === 'POST') {
+      return await handleResendWebhook(request, env);
+    }
+
+    // Status polling — frontend calls GET /api/status/<submissionId> to learn delivery state.
+    // Allowed-origin lockdown applies (same as /api/done).
+    if (url.pathname.startsWith('/api/status/') && request.method === 'GET') {
+      if (!isOriginAllowed(request)) {
+        return new Response(JSON.stringify({ error: 'Forbidden — origin not allowed' }), {
+          status: 403, headers: corsHeaders,
+        });
+      }
+      const submissionId = url.pathname.slice('/api/status/'.length);
+      return await handleStatusLookup(submissionId, env, corsHeaders);
+    }
+
     // All other endpoints require allowed origin (CORS lockdown)
     if (!isOriginAllowed(request)) {
       return new Response(JSON.stringify({ error: 'Forbidden — origin not allowed' }), {
@@ -420,7 +439,7 @@ export default {
           });
         }
 
-        const reply = await callClaude(messages, env.ANTHROPIC_API_KEY);
+        const reply = await callClaude(messages, env.ANTHROPIC_API_KEY, { model: 'claude-haiku-4-5-20251001', maxTokens: 1024 });
         return new Response(JSON.stringify({ reply }), { headers: corsHeaders });
       }
 
@@ -433,18 +452,55 @@ export default {
           });
         }
 
-        const { messages, founderName, founderEmail, companyName } = await request.json();
+        const { messages, founderName, founderEmail, companyName, preGeneratedSummary } = await request.json();
         if (!Array.isArray(messages) || messages.length === 0) {
           return new Response(JSON.stringify({ error: 'messages required' }), {
             status: 400, headers: corsHeaders,
           });
         }
         const todayISO = new Date().toISOString().slice(0, 10);
-        const summaryMessages = [
-          ...messages,
-          {
-            role: 'user',
-            content: `[Today's date is ${todayISO}. Use this exact ISO date in the "Submitted" field.]
+
+        // Generate submission ID FIRST — persisted record exists even if every downstream step fails.
+        const submissionId = generateSubmissionId();
+        const createdAt = new Date().toISOString();
+
+        // Raw transcript of the founder's actual answers — the ultimate fallback copy.
+        const transcript = messages
+          .map((m) => `${m.role === 'assistant' ? 'Luna' : 'Founder'}: ${typeof m.content === 'string' ? m.content : JSON.stringify(m.content)}`)
+          .join('\n\n');
+
+        // PERSIST RAW FIRST — before summary generation or email, both of which can fail.
+        // The founder's answers are saved server-side the instant they submit, no matter
+        // what breaks downstream (this is the core "never lose their input" guarantee).
+        const submissionRecord = {
+          submissionId,
+          status: 'received',       // received → queued → sent → delivered (or failed/bounced)
+          founderName: founderName || 'Unknown Founder',
+          founderEmail: founderEmail || 'unknown',
+          companyName: companyName || 'Unknown Company',
+          transcript,               // raw conversation — always present, the copy-paste fallback
+          summary: null,            // filled in after generation below
+          messageCount: messages.length,
+          ip,
+          createdAt,
+          updatedAt: createdAt,
+          deliveryEvents: [],       // appended to by /webhook/resend
+        };
+        await persistSubmission(env, submissionRecord);
+
+        // Generate the structured summary. If the AI step fails, degrade gracefully
+        // to the raw transcript so the email + the founder's screen still carry their content.
+        let summary;
+        let summaryFailed = false;
+        try {
+        if (preGeneratedSummary && typeof preGeneratedSummary === 'string' && preGeneratedSummary.length > 200) {
+          summary = preGeneratedSummary;
+        } else {
+          const summaryMessages = [
+            ...messages,
+            {
+              role: 'user',
+              content: `[Today's date is ${todayISO}. Use this exact ISO date in the "Submitted" field.]
 
 Please now produce the structured Venture Assessment to send to the Unleash team. CRITICAL RULES:
 
@@ -472,29 +528,89 @@ Please now produce the structured Venture Assessment to send to the Unleash team
 5. **For sections where the founder said "not yet known at current stage":** include that note verbatim.
 
 6. **No commentary, no preamble, no "here's your assessment".** Output the assessment markdown directly, starting with the company name as h2.`,
-          },
-        ];
-        const summary = await callClaude(summaryMessages, env.ANTHROPIC_API_KEY);
-        await emailSummary({
-          summary,
-          founderName: founderName || 'Unknown Founder',
-          founderEmail: founderEmail || 'unknown',
-          companyName: companyName || 'Unknown Company',
-          resendKey: env.RESEND_API_KEY,
-        });
+            },
+          ];
+          summary = await callClaude(summaryMessages, env.ANTHROPIC_API_KEY, { model: 'claude-sonnet-4-5-20250929', maxTokens: 2048 });
+        }
+        } catch (e) {
+          summaryFailed = true;
+          console.error('Summary generation failed; falling back to raw transcript:', e);
+        }
+
+        // Graceful fallback: if the AI summary is missing/too short, use the raw transcript
+        // so the email and the founder's on-screen copy still contain their full answers.
+        if (!summary || typeof summary !== 'string' || summary.length < 20) {
+          summaryFailed = true;
+          summary = `## ${submissionRecord.companyName} — Venture Assessment (raw intake)\n\n_The automated summary could not be generated, so the founder's raw intake is included below. Submitted: ${todayISO}._\n\n${transcript}`;
+        }
+
+        // Update the persisted record with the summary (or fallback) before emailing.
+        submissionRecord.summary = summary;
+        submissionRecord.summaryFailed = summaryFailed;
+        submissionRecord.status = 'queued';      // queued → sent → delivered (or bounced/failed)
+        submissionRecord.updatedAt = new Date().toISOString();
+        await persistSubmission(env, submissionRecord);
+
+        // Now attempt the email.
+        let resendId = null;
+        let resendError = null;
+        try {
+          const resendResponse = await emailSummary({
+            summary,
+            founderName: submissionRecord.founderName,
+            founderEmail: submissionRecord.founderEmail,
+            companyName: submissionRecord.companyName,
+            submissionId,
+            resendKey: env.RESEND_API_KEY,
+          });
+          resendId = resendResponse && resendResponse.id ? resendResponse.id : null;
+        } catch (e) {
+          resendError = e.message;
+          console.error('Resend send failed:', e);
+        }
+
+        // Update the persisted record with send result.
+        submissionRecord.status = resendError ? 'failed' : 'sent';
+        submissionRecord.resendId = resendId;
+        submissionRecord.resendError = resendError;
+        submissionRecord.updatedAt = new Date().toISOString();
+        await persistSubmission(env, submissionRecord);
+
+        // Mirror to the Notion founder table — fire-and-forget AFTER the response is sent.
+        // Wrapped so a Notion outage can never block, slow, or break the founder flow or the KV record.
+        ctx.waitUntil(mirrorToNotion(env, submissionRecord));
 
         // Log for observability (visible in Cloudflare Workers Logs dashboard)
         console.log(JSON.stringify({
           event: 'submission',
+          submissionId,
+          resendId,
+          status: submissionRecord.status,
           ip,
-          founderName,
-          founderEmail,
-          companyName,
+          founderName: submissionRecord.founderName,
+          founderEmail: submissionRecord.founderEmail,
+          companyName: submissionRecord.companyName,
           messageCount: messages.length,
-          timestamp: new Date().toISOString(),
+          timestamp: createdAt,
         }));
 
-        return new Response(JSON.stringify({ success: true, summary }), { headers: corsHeaders });
+        // If Resend failed, the submission is persisted but email didn't go.
+        // Return success: false so the frontend tells the founder honestly.
+        if (resendError) {
+          return new Response(JSON.stringify({
+            success: false,
+            submissionId,
+            status: 'failed',
+            error: 'Email delivery service rejected the send. Your assessment is safely stored — Phil will reach out.',
+          }), { status: 502, headers: corsHeaders });
+        }
+
+        return new Response(JSON.stringify({
+          success: true,
+          submissionId,
+          status: 'sent',          // Resend accepted; webhook will upgrade to 'delivered' when confirmed
+          summary,                 // returned so frontend doesn't have to keep its copy
+        }), { headers: corsHeaders });
       }
 
       return new Response(JSON.stringify({ error: 'Not found' }), { status: 404, headers: corsHeaders });
@@ -505,7 +621,10 @@ Please now produce the structured Venture Assessment to send to the Unleash team
   },
 };
 
-async function callClaude(messages, apiKey) {
+async function callClaude(messages, apiKey, options = {}) {
+  // Conversational turns default to Haiku 4.5 (fast); the final assessment passes Sonnet for quality.
+  const model = options.model || 'claude-haiku-4-5-20251001';
+  const maxTokens = options.maxTokens || 1024;
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -514,8 +633,8 @@ async function callClaude(messages, apiKey) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 2048,
+      model,
+      max_tokens: maxTokens,
       // Prompt caching: mark the system prompt as cacheable so subsequent
       // turns in the same conversation reuse it at $0.30/M instead of $3/M.
       // 5-min ephemeral TTL fits the natural cadence of a 20-min intake.
@@ -534,10 +653,13 @@ async function callClaude(messages, apiKey) {
     throw new Error(`Anthropic API error ${response.status}: ${errText}`);
   }
   const data = await response.json();
+  if (!data || !Array.isArray(data.content) || !data.content[0] || typeof data.content[0].text !== 'string') {
+    throw new Error('Anthropic returned an unexpected/empty response');
+  }
   return data.content[0].text;
 }
 
-async function emailSummary({ summary, founderName, founderEmail, companyName, resendKey }) {
+async function emailSummary({ summary, founderName, founderEmail, companyName, submissionId, resendKey }) {
   const isValidEmail = (e) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(e);
   const founderHasEmail = isValidEmail(founderEmail);
 
@@ -576,6 +698,8 @@ ${intro}
     ? { to: [founderEmail], cc: ['pas@pas-ventures.com', 'nicolene@pas-ventures.com'] }
     : { to: ['pas@pas-ventures.com'], cc: ['nicolene@pas-ventures.com'] };
 
+  // Tag the email with the submissionId so the Resend webhook can look it up.
+  // Resend headers: X-Entity-Ref-ID is also visible on every event; tags are queryable on the dashboard.
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -583,12 +707,14 @@ ${intro}
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'Luna <luna@mail.unleash-ventures.com>',
+      from: 'Unleash Ventures <luna@mail.unleash-ventures.com>',
       to: recipients.to,
       cc: recipients.cc,
       subject: subject,
       html: htmlBody,
       text: summary,
+      headers: submissionId ? { 'X-Submission-ID': submissionId } : undefined,
+      tags: submissionId ? [{ name: 'submission_id', value: submissionId }] : undefined,
     }),
   });
   if (!response.ok) {
@@ -596,6 +722,280 @@ ${intro}
     throw new Error(`Resend API error ${response.status}: ${errText}`);
   }
   return await response.json();
+}
+
+// ============ Submission persistence (KV) ============
+// Every /api/done call writes here BEFORE the email goes. Webhook updates the record
+// with delivery state. Frontend polls /api/status/<id> to learn current state.
+
+function generateSubmissionId() {
+  // Format: sub_<unix-seconds>_<6-char-random>. Sortable + readable + collision-resistant enough.
+  const ts = Math.floor(Date.now() / 1000).toString(36);
+  const rand = Array.from(crypto.getRandomValues(new Uint8Array(4)))
+    .map(b => b.toString(36).padStart(2, '0'))
+    .join('')
+    .slice(0, 6);
+  return `sub_${ts}_${rand}`;
+}
+
+async function persistSubmission(env, record) {
+  if (!env.SUBMISSIONS_KV) {
+    console.warn('SUBMISSIONS_KV binding missing — submission not persisted:', record.submissionId);
+    return;
+  }
+  try {
+    // 90-day TTL — plenty of time for follow-up but not forever.
+    await env.SUBMISSIONS_KV.put(record.submissionId, JSON.stringify(record), {
+      expirationTtl: 60 * 60 * 24 * 90,
+    });
+  } catch (e) {
+    console.error('KV write failed for', record.submissionId, e);
+  }
+}
+
+async function readSubmission(env, submissionId) {
+  if (!env.SUBMISSIONS_KV) return null;
+  try {
+    const raw = await env.SUBMISSIONS_KV.get(submissionId);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    console.error('KV read failed for', submissionId, e);
+    return null;
+  }
+}
+
+// ============ Notion mirror ============
+// Writes each submission as a row in the "Venture Assessments" Notion DB: founder identity +
+// the 11 assessment sections parsed into columns + the full assessment in the page body.
+// Best-effort + fully isolated — any failure is logged and swallowed, never affecting the founder.
+
+const NOTION_SECTION_MAP = [
+  { col: '1. Company Snapshot', keys: ['company snapshot'] },
+  { col: '2. Founders & Origin', keys: ['founders & origin', 'founders and origin', 'origin story', 'founders'] },
+  { col: '3. Customer & Problem', keys: ['customer & problem', 'customer and problem'] },
+  { col: '4. Product & Value Prop', keys: ['product & value', 'product and value', 'value proposition'] },
+  { col: '5. Market & Competition', keys: ['market & competitive', 'market and competitive', 'competitive landscape', 'market &'] },
+  { col: '6. Traction & PMF', keys: ['traction', 'pmf'] },
+  { col: '7. Business Model', keys: ['business model', 'economics'] },
+  { col: '8. GTM Plan', keys: ['gtm plan', 'go-to-market', 'go to market', 'gtm'] },
+  { col: '9. Roadmap & Defensibility', keys: ['roadmap', 'defensibility'] },
+  { col: '10. Fundraising & Use of Funds', keys: ['fundraising', 'use of funds'] },
+  { col: '11. Risks & How We Help', keys: ['risks', 'how we can help', 'how we help'] },
+];
+
+function parseAssessmentSections(summary) {
+  // Split markdown on ## / ### headers, map each block to one of the 11 sections by keyword.
+  // Best-effort: unmatched sections are simply skipped (full text is always in the page body).
+  const out = {};
+  if (!summary || typeof summary !== 'string') return out;
+  let current = null;
+  let buf = [];
+  const flush = () => {
+    if (current !== null) {
+      const hl = current.toLowerCase();
+      const m = NOTION_SECTION_MAP.find(s => s.keys.some(k => hl.includes(k)));
+      if (m && !out[m.col]) out[m.col] = buf.join('\n').trim().slice(0, 1900);
+    }
+    buf = [];
+  };
+  for (const line of summary.split('\n')) {
+    const h = line.match(/^#{2,3}\s+(.*\S)\s*$/);
+    if (h) { flush(); current = h[1]; }
+    else { buf.push(line); }
+  }
+  flush();
+  return out;
+}
+
+function notionText(content) {
+  return [{ type: 'text', text: { content: String(content || '').slice(0, 1900) } }];
+}
+
+async function mirrorToNotion(env, record) {
+  if (!env.NOTION_TOKEN || !env.NOTION_DB_ID) {
+    console.warn('Notion mirror skipped — NOTION_TOKEN/NOTION_DB_ID not configured');
+    return;
+  }
+  try {
+    const sections = parseAssessmentSections(record.summary);
+    const props = {
+      'Company': { title: notionText(record.companyName || 'Unknown Company') },
+      'Founder': { rich_text: notionText(record.founderName || 'Unknown Founder') },
+      'Status': { select: { name: record.status || 'received' } },
+      'Submitted': { date: { start: record.createdAt } },
+      'Submission ID': { rich_text: notionText(record.submissionId) },
+      'Messages': { number: record.messageCount || 0 },
+      'Summary Failed': { checkbox: !!record.summaryFailed },
+    };
+    if (record.founderEmail && record.founderEmail.includes('@')) {
+      props['Email'] = { email: record.founderEmail };
+    }
+    for (const { col } of NOTION_SECTION_MAP) {
+      if (sections[col]) props[col] = { rich_text: notionText(sections[col]) };
+    }
+    // Body: the full assessment, chunked into <=1900-char paragraph blocks (Notion limits).
+    const bodyText = record.summary || record.transcript || '(no content captured)';
+    const children = [];
+    for (let i = 0; i < bodyText.length && children.length < 95; i += 1900) {
+      children.push({
+        object: 'block', type: 'paragraph',
+        paragraph: { rich_text: [{ type: 'text', text: { content: bodyText.slice(i, i + 1900) } }] },
+      });
+    }
+    const resp = await fetch('https://api.notion.com/v1/pages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.NOTION_TOKEN}`,
+        'Notion-Version': '2022-06-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ parent: { database_id: env.NOTION_DB_ID }, properties: props, children }),
+    });
+    if (!resp.ok) {
+      console.error('Notion mirror failed:', resp.status, (await resp.text()).slice(0, 400));
+    } else {
+      console.log('Notion mirror ok:', record.submissionId);
+    }
+  } catch (e) {
+    console.error('Notion mirror error for', record.submissionId, e);
+  }
+}
+
+async function handleStatusLookup(submissionId, env, corsHeaders) {
+  if (!submissionId || !/^sub_[a-z0-9_]+$/i.test(submissionId)) {
+    return new Response(JSON.stringify({ error: 'Invalid submission id' }), {
+      status: 400, headers: corsHeaders,
+    });
+  }
+  const record = await readSubmission(env, submissionId);
+  if (!record) {
+    return new Response(JSON.stringify({ error: 'Not found', status: 'unknown' }), {
+      status: 404, headers: corsHeaders,
+    });
+  }
+  // Return only the public-safe slice. No summary content, no IP, no Resend internals.
+  return new Response(JSON.stringify({
+    submissionId: record.submissionId,
+    status: record.status,                            // queued | sent | delivered | bounced | complained | failed
+    deliveryEvents: record.deliveryEvents || [],
+    createdAt: record.createdAt,
+    updatedAt: record.updatedAt,
+  }), { headers: corsHeaders });
+}
+
+// ============ Resend webhook handler ============
+// Resend POSTs JSON like: { type: 'email.delivered', created_at, data: { email_id, tags: [...], to, ... } }
+// We look up our submission by the submission_id tag and update its status.
+
+async function handleResendWebhook(request, env) {
+  const headers = { 'Content-Type': 'application/json' };
+
+  // Verify signature when secret is configured. (Resend uses svix-style headers.)
+  // We accept unsigned webhooks only if no secret is set, to ease initial setup.
+  const secret = env.RESEND_WEBHOOK_SECRET;
+  const rawBody = await request.text();
+  if (secret) {
+    const verified = await verifyResendWebhook(request, rawBody, secret);
+    if (!verified) {
+      console.warn('Resend webhook signature verification failed');
+      return new Response(JSON.stringify({ error: 'Invalid signature' }), { status: 401, headers });
+    }
+  }
+
+  let payload;
+  try { payload = JSON.parse(rawBody); }
+  catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers }); }
+
+  const eventType = payload && payload.type;
+  const data = payload && payload.data;
+  if (!eventType || !data) {
+    return new Response(JSON.stringify({ ok: true, ignored: 'missing-type-or-data' }), { headers });
+  }
+
+  // Resend includes our tags array. Find the submission_id tag we set in emailSummary.
+  let submissionId = null;
+  if (Array.isArray(data.tags)) {
+    const tag = data.tags.find(t => t && t.name === 'submission_id');
+    if (tag) submissionId = tag.value;
+  }
+  if (!submissionId) {
+    // Older sends without tags — log + bail.
+    console.log('Resend webhook with no submission_id tag:', eventType);
+    return new Response(JSON.stringify({ ok: true, ignored: 'no-submission-id' }), { headers });
+  }
+
+  const record = await readSubmission(env, submissionId);
+  if (!record) {
+    console.warn('Resend webhook for unknown submission:', submissionId);
+    return new Response(JSON.stringify({ ok: true, ignored: 'unknown-submission' }), { headers });
+  }
+
+  // Append the event + update status if this is a state transition we care about.
+  record.deliveryEvents = record.deliveryEvents || [];
+  record.deliveryEvents.push({ type: eventType, at: payload.created_at || new Date().toISOString() });
+  record.updatedAt = new Date().toISOString();
+
+  // Status priority: failure states override; delivered wins over sent; sent wins over queued.
+  const statusFromEvent = ({
+    'email.sent': 'sent',
+    'email.delivered': 'delivered',
+    'email.delivery_delayed': 'delayed',
+    'email.bounced': 'bounced',
+    'email.complained': 'complained',
+  })[eventType];
+  if (statusFromEvent) {
+    const PRIORITY = { queued: 0, sent: 1, delayed: 2, delivered: 3, bounced: 4, complained: 5, failed: 6 };
+    if ((PRIORITY[statusFromEvent] || 0) > (PRIORITY[record.status] || 0) || ['bounced', 'complained', 'failed'].includes(statusFromEvent)) {
+      record.status = statusFromEvent;
+    }
+  }
+
+  await persistSubmission(env, record);
+
+  // Surface bounces / complaints in the logs so Phil sees them in Cloudflare dashboard.
+  if (['bounced', 'complained'].includes(statusFromEvent)) {
+    console.error(JSON.stringify({
+      event: 'delivery-failure',
+      type: eventType,
+      submissionId,
+      founderEmail: record.founderEmail,
+      data,
+    }));
+  }
+
+  return new Response(JSON.stringify({ ok: true, submissionId, status: record.status }), { headers });
+}
+
+// Resend uses svix-style signed webhooks: headers `svix-id`, `svix-timestamp`, `svix-signature`.
+// We verify: HMAC-SHA256("{svix-id}.{svix-timestamp}.{rawBody}", secret) base64-encoded.
+async function verifyResendWebhook(request, rawBody, secret) {
+  try {
+    const svixId = request.headers.get('svix-id');
+    const svixTs = request.headers.get('svix-timestamp');
+    const svixSig = request.headers.get('svix-signature');
+    if (!svixId || !svixTs || !svixSig) return false;
+
+    // Reject events older than 5 minutes to prevent replay.
+    const tsSec = parseInt(svixTs, 10);
+    if (!Number.isFinite(tsSec) || Math.abs(Date.now() / 1000 - tsSec) > 300) return false;
+
+    // Resend secrets are prefixed with `whsec_` and the rest is base64. Strip the prefix before decoding.
+    const cleanedSecret = secret.startsWith('whsec_') ? secret.slice(6) : secret;
+    const keyBytes = Uint8Array.from(atob(cleanedSecret), c => c.charCodeAt(0));
+    const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const signed = `${svixId}.${svixTs}.${rawBody}`;
+    const sigBuf = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(signed));
+    const computed = btoa(String.fromCharCode(...new Uint8Array(sigBuf)));
+
+    // svix-signature header is space-separated list of `v1,<sig>` pairs — accept if ANY matches.
+    return svixSig.split(' ').some(part => {
+      const [, sig] = part.split(',');
+      return sig === computed;
+    });
+  } catch (e) {
+    console.error('Webhook signature verification crashed:', e);
+    return false;
+  }
 }
 
 // Lightweight markdown → HTML converter for email rendering
