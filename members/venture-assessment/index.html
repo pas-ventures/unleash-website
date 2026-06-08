@@ -683,6 +683,10 @@ main {
   background: #ff7c33;
 }
 .review-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.consent-check { display:flex; gap:10px; align-items:flex-start; text-align:left; font-size:12.5px; color:var(--muted); line-height:1.55; margin:14px 0 0; cursor:pointer; }
+.consent-check input[type="checkbox"] { margin-top:2px; width:16px; height:16px; flex:0 0 auto; accent-color:var(--accent); cursor:pointer; }
+.consent-check a { color:var(--accent); }
+.overlay-btn.primary:disabled { opacity:0.4; cursor:not-allowed; }
 .review-send-btn.pulse-cta {
   animation: send-cta-pulse 1.4s ease-in-out infinite;
 }
@@ -1053,7 +1057,7 @@ footer a:hover { text-decoration: underline; }
     </div>
 
     <button class="start-btn" id="startBtn">Let's go</button>
-    <div class="meta">~25 min · Voice or written · Pause &amp; resume any time — saved for 14 days</div>
+    <div class="meta">~25 min · Voice or written · Pause &amp; resume any time — saved for 30 days</div>
   </div>
 
   <!-- PROGRESS BAR -->
@@ -1136,7 +1140,7 @@ footer a:hover { text-decoration: underline; }
       <button class="send-btn" id="sendBtn">Send</button>
     </div>
     <div class="done-row">
-      <button class="save-btn" id="saveBtn" title="Your progress is auto-saved in this browser for 14 days">Save & continue later</button>
+      <button class="save-btn" id="saveBtn" title="Your progress is auto-saved in this browser for 30 days">Save & continue later</button>
       <button class="done-btn" id="doneBtn">I'm done — send to Unleash team</button>
     </div>
   </div>
@@ -1161,6 +1165,7 @@ footer a:hover { text-decoration: underline; }
     </div>
     <div class="review-foot">
       <div class="promise">📬 <strong>You'll only receive your assessment by email once you send.</strong> Phil &amp; Nicolene respond within 48 hours.</div>
+      <label class="consent-check"><input type="checkbox" id="reviewConsent"><span>I'm sharing only what I'm comfortable with, and I consent to Unleash (PAS Ventures GmbH) storing &amp; processing my Venture Assessment to review my venture — including via providers that may process it outside South Africa. My browser draft auto-deletes after 30 days; my submitted assessment is kept until I ask to delete it (pas@pas-ventures.com). <a href="#" id="reviewPrivacyLink">Privacy &amp; data →</a></span></label>
       <button class="review-send-btn" id="reviewSendBtn">📤 SEND TO PHIL &amp; NICOLENE — RECEIVE MY COPY</button>
       <div class="review-nudge" id="reviewNudge">👋 Ready? click above to receive your assessment by email.</div>
       <div class="review-secondary">
@@ -1182,7 +1187,7 @@ footer a:hover { text-decoration: underline; }
   <div class="overlay-card">
     <div class="stag">Almost there</div>
     <h3>Don't lose your <span class="accent">Venture Assessment.</span></h3>
-    <p id="leaveText">You're <strong id="leavePct">—</strong> through. You'll only get the written assessment by email once you click <strong>SEND</strong>. Your progress is saved here for 14 days, so you can pick up right where you left off.</p>
+    <p id="leaveText">You're <strong id="leavePct">—</strong> through. You'll only get the written assessment by email once you click <strong>SEND</strong>. Your progress is saved here for 30 days, so you can pick up right where you left off.</p>
     <div class="overlay-actions">
       <button class="overlay-btn secondary" id="leaveCloseBtn">Close this reminder</button>
       <button class="overlay-btn primary" id="leaveResumeBtn">Take me to the SEND button</button>
@@ -1196,6 +1201,7 @@ footer a:hover { text-decoration: underline; }
     <div class="stag" id="confirmStag">Almost there</div>
     <h3 id="confirmTitle">Ready to send to the <span class="accent">Unleash team?</span></h3>
     <p id="confirmText">Phil and Nicolene will receive your full Venture Assessment by email — and you'll get a copy in your inbox too. Anything you'd like to add first?</p>
+    <label class="consent-check"><input type="checkbox" id="confirmConsent"><span>I'm sharing only what I'm comfortable with, and I consent to Unleash (PAS Ventures GmbH) storing &amp; processing my Venture Assessment — incl. via providers that may process it outside South Africa. Browser draft auto-deletes after 30 days; my submission is kept until I ask to delete it (pas@pas-ventures.com). <a href="#" id="confirmPrivacyLink">Privacy &amp; data →</a></span></label>
     <div class="overlay-actions">
       <button class="overlay-btn secondary" id="confirmAddMoreBtn">Wait, I want to add more</button>
       <button class="overlay-btn primary" id="confirmSendBtn">Yes, send it</button>
@@ -1219,7 +1225,7 @@ footer a:hover { text-decoration: underline; }
   <div class="overlay-card">
     <div class="stag">Saved</div>
     <h3>Your progress is <span class="accent">safe.</span></h3>
-    <p>Your conversation is stored in this browser for 14 days. Come back any time — close the tab, reopen the URL, you'll pick up right where you left off.</p>
+    <p>Your conversation is stored in this browser for 30 days. Come back any time — close the tab, reopen the URL, you'll pick up right where you left off.</p>
     <div class="overlay-actions">
       <button class="overlay-btn primary" id="saveCloseBtn">Got it</button>
     </div>
@@ -1236,15 +1242,15 @@ footer a:hover { text-decoration: underline; }
     <div class="stag">Privacy &amp; data</div>
     <h3 style="margin-bottom: 18px;">How your conversation is <span class="accent">handled</span></h3>
     <div style="font-size: 14.5px; color: var(--text); line-height: 1.65; text-align: left;">
-      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">While you're chatting:</strong><br>
-      Your messages are sent to Anthropic (Claude) so Luna can respond. Anthropic processes them under its standard API terms and does not train on them. We do not log or store your conversation on Unleash servers.</p>
-      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">When you click "I'm done":</strong><br>
-      Luna assembles the structured Venture Assessment. We email it via Resend to you, Phil (pas@pas-ventures.com), and Nicolene (nicolene@pas-ventures.com). That's where your data lives from then on — in those three inboxes.</p>
-      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">Local browser save:</strong><br>
-      Your in-progress conversation is saved to your own browser (localStorage) for up to 14 days so you can resume. It never leaves your device until you send. You can wipe it any time by clicking "start over".</p>
-      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">GDPR &amp; your rights:</strong><br>
-      Unleash Ventures is operated by PAS Ventures GmbH (Berlin, Germany). To request access, correction, or deletion of your Venture Assessment, email <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a>.</p>
-      <p style="font-size: 13px; color: var(--muted); margin-top: 18px;">This is a beta tool. We're refining the privacy posture continuously.</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">What we collect &amp; why:</strong><br>
+      Your answers in this assessment, plus your name, email and company — so the Unleash team can review your venture for possible mentorship, introductions or investment.</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">Who processes it for us:</strong><br>
+      Anthropic (runs the Luna conversation), Resend (emails your copy), Cloudflare (secure hosting + storage of your submission), and Notion (our internal database). Some of these process data outside South Africa (US / EU).</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">How long we keep it:</strong><br>
+      Your in-progress draft is stored only in your own browser and auto-deletes after 30 days. Your submitted assessment is stored securely by Unleash and kept until you ask us to delete it.</p>
+      <p style="margin-bottom: 14px;"><strong style="color: var(--white);">Your choices &amp; rights:</strong><br>
+      You decide what to share, and nothing leaves your device until you click send. Unleash Ventures is operated by PAS Ventures GmbH (Berlin, Germany). You can request access, correction or deletion of your data anytime at <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a>. Handled in line with POPIA (South Africa) and the GDPR (EU).</p>
+      <p style="font-size: 13px; color: var(--muted); margin-top: 18px;">See our full <a href="https://unleash-ventures.com/privacy/" style="color: var(--accent);">Privacy Policy</a>.</p>
     </div>
     <div class="overlay-actions" style="margin-top: 22px;">
       <button class="overlay-btn primary" id="privacyCloseBtn">Got it</button>
@@ -1307,7 +1313,7 @@ gateForm.addEventListener('submit', async function(e) {
 // ============ CHAT APP ============
 const WORKER_URL = 'https://luna-venture-assessment.pas-bf6.workers.dev';
 const STORAGE_KEY = 'unleash-luna-venture-assessment-v1';
-const STORAGE_MAX_AGE_DAYS = 14; // expire saved conversations after 14 days
+const STORAGE_MAX_AGE_DAYS = 30; // expire saved conversations after 30 days
 
 const state = {
   messages: [],
@@ -1475,6 +1481,18 @@ privacyLink.addEventListener('click', (e) => { e.preventDefault(); privacyOverla
 privacyCloseBtn.addEventListener('click', () => privacyOverlay.classList.remove('active'));
 privacyOverlay.addEventListener('click', (e) => { if (e.target === privacyOverlay) privacyOverlay.classList.remove('active'); });
 
+// ===== Consent gate (POPIA/GDPR). Send stays disabled until the founder ticks consent.
+// Fail-OPEN by design: if this wiring never runs, the buttons remain clickable — we never
+// lock a founder out of sending. Reset to unchecked each time a send modal opens (below).
+const reviewConsent = document.getElementById('reviewConsent');
+const confirmConsent = document.getElementById('confirmConsent');
+if (reviewConsent) reviewConsent.addEventListener('change', () => { reviewSendBtn.disabled = !reviewConsent.checked; });
+if (confirmConsent) confirmConsent.addEventListener('change', () => { confirmSendBtn.disabled = !confirmConsent.checked; });
+['reviewPrivacyLink', 'confirmPrivacyLink'].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', (e) => { e.preventDefault(); privacyOverlay.classList.add('active'); });
+});
+
 // Review modal — the new primary send gate
 reviewSendBtn.addEventListener('click', () => {
   closeReviewModal();
@@ -1623,6 +1641,7 @@ function openConfirmModal() {
     confirmSendBtn.textContent = 'Send what we have';
   }
 
+  if (confirmConsent) { confirmConsent.checked = false; confirmSendBtn.disabled = true; }
   confirmOverlay.classList.add('active');
 }
 function closeConfirmModal() { confirmOverlay.classList.remove('active'); }
@@ -1812,6 +1831,7 @@ function openReviewModal() {
   reviewBody.innerHTML = renderMarkdownToHtml(state.pendingPreviewMarkdown);
   reviewBody.scrollTop = 0;
   reviewOverlay.classList.add('active');
+  if (reviewConsent) { reviewConsent.checked = false; reviewSendBtn.disabled = true; }
   reviewSendBtn.classList.remove('pulse-cta');
   reviewNudge.classList.remove('active');
 
