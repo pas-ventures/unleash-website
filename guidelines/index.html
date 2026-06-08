@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community Guidelines — Unleash</title>
-<meta name="description" content="A free community for South African early-stage founders. Quarterly cohorts, honest feedback, operator mentorship.">
+<meta name="description" content="The Unleash Community — a free, invite-only community for early-stage founders. Honest feedback, operator mentorship, and a three-month program: assess, execute, decide.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -28,6 +28,15 @@
   .page-hero h1 { font-family: 'Spectral', serif; font-size: clamp(32px, 4vw, 46px); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
   .page-hero p { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 580px; }
 
+  /* intro video */
+  .video-wrap { max-width: 720px; margin: 0 auto; padding: 8px 28px 0; }
+  .video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--card); border: 1px dashed rgba(255,103,25,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; cursor: pointer; transition: border-color 0.2s; }
+  .video-frame:hover { border-color: var(--accent); }
+  .video-frame .vtag { position: absolute; top: 14px; left: 16px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .video-frame .play { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(255,103,25,0.35); }
+  .video-frame .play svg { margin-left: 4px; }
+  .video-frame .vcap { font-size: 13px; color: var(--muted); font-weight: 500; }
+
   .content { max-width: 720px; margin: 0 auto; padding: 20px 28px 80px; }
   .content section { padding: 44px 0; border-top: 1px solid var(--border); }
   .content section:first-child { border-top: none; padding-top: 30px; }
@@ -36,6 +45,8 @@
   .content p { font-size: 15px; color: var(--text); line-height: 1.8; margin-bottom: 16px; }
   .content p:last-child { margin-bottom: 0; }
   .content .lead { color: var(--white); font-weight: 500; font-size: 16px; }
+  .content .month { color: var(--white); font-family: 'Spectral', serif; font-size: 18px; font-weight: 600; margin: 26px 0 4px; }
+  .content .month:first-of-type { margin-top: 4px; }
   .content a { color: var(--accent); word-break: break-word; }
 
   .content ul, .content ol { list-style: none; padding: 0; margin: 14px 0 0 0; }
@@ -51,10 +62,11 @@
 
   .cta { max-width: 720px; margin: 0 auto; padding: 60px 28px 100px; text-align: center; border-top: 1px solid var(--border); }
   .cta h3 { font-family: 'Spectral', serif; font-size: clamp(24px, 3vw, 32px); color: var(--white); margin-bottom: 12px; font-weight: 700; }
-  .cta p { font-size: 14px; color: var(--muted); max-width: 440px; margin: 0 auto 28px; line-height: 1.6; }
+  .cta p { font-size: 14px; color: var(--muted); max-width: 460px; margin: 0 auto 28px; line-height: 1.6; }
   .btn-w { display: inline-block; background: var(--white); color: var(--dark); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
   .btn-w:hover { background: #ddd; transform: translateY(-1px); }
   .cta .hint { margin-top: 14px; font-size: 12px; color: var(--muted); }
+  .cta .hint a { color: var(--muted); text-decoration: underline; }
 
   footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; }
   footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
@@ -85,117 +97,139 @@
 <div class="page-hero">
   <div class="stag">Community Guidelines</div>
   <h1>The Unleash Community</h1>
-  <p>A free community for South African early-stage founders. Quarterly cohorts, honest feedback, operator mentorship. This page sets out how it works and what we ask of you.</p>
+  <p>The Unleash Community sits at the heart of Unleash Ventures — the investment studio of Philipp Alexander Ströhemann. A free, invite-only community for early-stage founders: the team brings you in when there's a match. This page sets out how it works and what we ask of you.</p>
+</div>
+
+<div class="video-wrap">
+  <div class="video-frame" role="button" aria-label="Play introduction video">
+    <div class="vtag">▶ Video placeholder — embed Loom</div>
+    <div class="play">
+      <svg width="22" height="24" viewBox="0 0 22 24" fill="none"><path d="M20 10.27a2 2 0 0 1 0 3.46L3 23.66A2 2 0 0 1 0 21.93V2.07A2 2 0 0 1 3 .34L20 10.27Z" fill="#111"/></svg>
+    </div>
+    <div class="vcap">Phil walks you through how the Unleash Community works · ~5 min</div>
+  </div>
 </div>
 
 <div class="content">
 
   <section>
     <div class="stag">01 — What it is</div>
-    <h2>What Unleash is</h2>
-    <p class="lead">A free community for South African early-stage founders.</p>
-    <p>You get access to Phil and our mentors, a WhatsApp peer group, our playbooks and tools, and three community calls each quarter. Calls are led by the founders in the room, working through real problems in real time.</p>
-    <p>Pre-revenue hunting product-market fit, scaling sales, working toward a co-founder hire, or preparing your next round — the cohort works on it with you.</p>
-    <p class="lead">You are part of your cohort.</p>
+    <h2>What the Unleash Community is</h2>
+    <p class="lead">A free community for early-stage founders. What that means in practice:</p>
+    <ul>
+      <li>A WhatsApp group.</li>
+      <li>Open Q&amp;A calls.</li>
+      <li>One-on-one sparring sessions with Phil.</li>
+    </ul>
+    <p style="margin-top: 18px;">Whether you're pre-revenue, hunting product-market fit, validating with your first customers, looking for funding, or getting a co-founder on board — the community works on it with you.</p>
   </section>
 
   <section>
     <div class="stag">02 — What it isn't</div>
-    <h2>What Unleash is not</h2>
+    <h2>What Unleash Ventures isn't</h2>
+    <p>Unleash Ventures is the private investment firm of Philipp Ströhemann and his co-investors. The Unleash Community is a free part of it, not a funnel into it. So, to be clear:</p>
     <ul>
-      <li><strong>Not a VC, not a fund.</strong> We provide value whether we invest or not.</li>
-      <li><strong>Not an accelerator.</strong> No curriculum, no demo day, no equity.</li>
-      <li><strong>Not a pitch room.</strong> The point is the work, not introductions. Show up to move forward, not to pitch.</li>
+      <li><strong>Not a VC.</strong></li>
+      <li><strong>Not an accelerator.</strong> No demo days.</li>
+      <li><strong>No equity taken to join.</strong></li>
+    </ul>
+    <p style="margin-top: 18px;">The community is free, but it asks something of you: honest reflection, introspection, and collaboration. Only founders who stay active stay in.</p>
+  </section>
+
+  <section>
+    <div class="stag">03 — Who it's for</div>
+    <h2>Who the Unleash Community is for</h2>
+    <p>Good early-stage founders. A fit usually looks like one or more of these:</p>
+    <ul>
+      <li>You're early — pre-revenue, or with your first revenue coming in.</li>
+      <li>You want to build a camel, not a unicorn — cash-efficient, founder-controlled.</li>
+      <li>You'd rather prove you can charge money first.</li>
+      <li>You've found a real problem and want to build it out.</li>
+    </ul>
+    <p style="margin-top: 18px;">We're invite-only — the team brings founders in when there's a match.</p>
+  </section>
+
+  <section>
+    <div class="stag">04 — What you get</div>
+    <h2>What you get</h2>
+    <ul>
+      <li><strong>The investment studio</strong> — Phil, Nicolene and the Unleash team, reading your venture and giving you an honest read.</li>
+      <li><strong>Phil and our network</strong> of operators who've built and sold real companies.</li>
+      <li><strong>The WhatsApp community</strong> and open Q&amp;A calls every two weeks.</li>
+      <li><strong>The peer cohort.</strong></li>
+      <li><strong>The members section.</strong></li>
+      <li><strong>The AI Venture Assessment.</strong></li>
     </ul>
   </section>
 
   <section>
-    <div class="stag">03 — The why</div>
-    <h2>Why we do this</h2>
-    <p>Building a company costs less than it used to. Leaner teams. Faster software. Less capital needed before you have real signal.</p>
-    <p class="lead">That changes the order of operations.</p>
-    <p>Isolate a real problem. Get in front of customers early. Get to revenue before you raise. Build cash-resilient from day one.</p>
-    <p>Mentorship from people who've built and sold — not consultants, not coaches.</p>
-    <p>South African funds look for revenue. So does every serious investor. Build to that standard.</p>
-  </section>
-
-  <section>
-    <div class="stag">04 — Who's behind it</div>
-    <h2>Who's behind this</h2>
-    <p>Unleash is run by <strong>PAS Ventures</strong> — Philipp Ströhemann's family holding, which finances the initiative — together with the supporters and mentors we've met along the way.</p>
-    <p class="lead">Two things we're trying to do.</p>
-    <p>Get as many South African companies as possible to self-sustaining revenue — or to funding that actually fits: revenue-based, angel, operator money. Not every business needs VC.</p>
-    <p>See the best businesses early. Some we'll back through our studio model. Most we won't. A founder who spends a quarter here should be further along — whether we invest or not.</p>
-  </section>
-
-  <section>
-    <div class="stag">05 — Who can join</div>
-    <h2>Who can join</h2>
-    <p>We work with South African early-stage founders. A good fit usually looks like one or more of these:</p>
+    <div class="stag">05 — The program</div>
+    <h2>Three months: assess, execute, decide</h2>
+    <p class="month">Month 1 — Assess</p>
     <ul>
-      <li>Pre-revenue or up to R500k in annual revenue.</li>
-      <li>You've identified a real problem and want to build further.</li>
-      <li>You want operator-level feedback on your business.</li>
-      <li>You're prepping for or thinking through your next round of funding.</li>
-      <li>You have your first paying customers and want to figure out how to scale.</li>
+      <li>You join the WhatsApp group.</li>
+      <li>Run the Venture Assessment if you want feedback on your business.</li>
+      <li>Together we find the two or three blockers that, once cleared, will truly unleash your business.</li>
+      <li>You start posting your weekly progress on the dashboard.</li>
     </ul>
-    <p style="margin-top: 18px;">If that's you, <a href="https://tally.so/r/7Rx9z2" target="_blank">apply</a>.</p>
-  </section>
-
-  <section>
-    <div class="stag">06 — How it works</div>
-    <h2>Quarterly cohorts</h2>
+    <p class="month">Month 2 — Execute</p>
     <ul>
-      <li>Up to 15 new founders join per cohort. The wider community grows as each cohort rolls in.</li>
-      <li>Each cohort runs for one quarter.</li>
-      <li>Three community calls per quarter. Attend at least two.</li>
-      <li>Maximum stay is three quarters. After that you move on, so we can bring in the next founder. If you miss the 2/3 attendance bar in any quarter, your spot rolls earlier. We want to give value to as many South African founders as we can.</li>
-      <li>Applications for the next cohort open the last month of the current quarter.</li>
+      <li>A month to build — no new busywork. You work on those two or three blockers.</li>
+      <li>You keep posting your weekly progress on the dashboard.</li>
+    </ul>
+    <p class="month">Month 3 — Decide and next steps</p>
+    <ul>
+      <li>We work out the right path together.</li>
+      <li>If you're a fit for investment through Unleash, we'll tell you.</li>
+      <li>If you're a better fit for another investor, we'll tell you that too — and what's still missing for you to raise.</li>
     </ul>
   </section>
 
   <section>
-    <div class="stag">07 — WhatsApp norms</div>
-    <h2>How we use the WhatsApp group</h2>
+    <div class="stag">06 — Keeping it alive</div>
+    <h2>How we keep the community alive</h2>
     <ul>
-      <li>Tell us what you're working on, what's been hard, and what you've been solving.</li>
-      <li>Don't wait for the community call — Phil, the mentors, and other founders will try to unblock you right there.</li>
-      <li>Share progress when it's useful to others.</li>
-      <li>Speak from experience. Keep it straight.</li>
+      <li><strong>Post your weekly progress.</strong> The most active founders get the most attention from us, so show up on the dashboard.</li>
+      <li><strong>Use the founder directory</strong> — who everyone is, and what they can help you with.</li>
+      <li><strong>Point people</strong> — a few founders help run the odd Q&amp;A or share their experience. If that's you, tell us.</li>
     </ul>
   </section>
 
   <section>
-    <div class="stag">08 — The deal</div>
-    <h2>What we commit to you</h2>
-    <p>By the end of your first quarter in the community:</p>
-    <ol>
-      <li>A clear view of your entrepreneurial journey and your business.</li>
-      <li>An honest assessment from Phil and our co-mentors.</li>
-      <li>A clear picture of your funding options.</li>
-      <li>If it's an investment opportunity for Unleash, we'll say so — and if not, why.</li>
-    </ol>
+    <div class="stag">07 — How we show up</div>
+    <h2>How we show up</h2>
+    <ul>
+      <li><strong>Keep it confidential.</strong> What's shared here stays here.</li>
+      <li><strong>No pitching, no spam.</strong></li>
+      <li><strong>Be open and helpful.</strong></li>
+      <li><strong>Show up as yourself</strong>, and be open about your challenges. That's how we can actually help.</li>
+    </ul>
   </section>
 
   <section>
-    <div class="stag">09 — In return</div>
-    <h2>What we ask from you</h2>
+    <div class="stag">08 — The one ask</div>
+    <h2>The one ask</h2>
+    <p>The Unleash Community is free. When your three months are up, we ask one thing:</p>
     <ul>
-      <li>Engage fully. Make this useful for you.</li>
-      <li>Use the tools we share — playbooks, templates, skills.</li>
-      <li>Tell us what we can improve. Email Nicolene at <a href="mailto:nicolene@pas-ventures.com">nicolene@pas-ventures.com</a> with what you'd like to see.</li>
-      <li>Help other founders. Be open.</li>
-      <li>If you know a founder this is right for, send them our application link: <a href="https://tally.so/r/7Rx9z2" target="_blank">tally.so/r/7Rx9z2</a></li>
+      <li><strong>Fill out the quarterly survey and keep your progress updated.</strong></li>
     </ul>
+    <p style="margin-top: 18px;">That's how you stay in — and it's why the community can stay free.</p>
+  </section>
+
+  <section>
+    <div class="stag">09 — Our promise</div>
+    <h2>Our promise to you</h2>
+    <p>We'll always give you our honest read — even when it's not what you want to hear. We put our own capital into founders we believe in, so when we tell you something's working or it isn't, it's because we'd back it ourselves.</p>
+    <p>There's a lot of founder talent in South Africa that never finds the right room early enough. We're trying to change that.</p>
   </section>
 
 </div>
 
 <div class="cta">
-  <h3>Apply for the next cohort</h3>
-  <p>Applications for the next quarter open the last month of the current quarter. Drop your details — we review every one.</p>
-  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply Now</a>
-  <div class="hint">Free to join. Commitment required.</div>
+  <h3>Welcome to the Unleash Community</h3>
+  <p>Free to join, commitment required. Glad to have you in the room. Know a founder who belongs here? Send them our way.</p>
+  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply / refer a founder</a>
+  <div class="hint">Questions or ideas? Email Nicolene at <a href="mailto:nicolene@pas-ventures.com">nicolene@pas-ventures.com</a>.</div>
 </div>
 
 <footer>
