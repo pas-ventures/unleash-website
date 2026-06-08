@@ -162,8 +162,16 @@ header {
 /* PROGRESS BAR */
 .progress-wrap {
   display: none;
-  padding: 14px 0 6px 0;
+  padding: 12px 20px 8px;
+  margin: 0 -20px;
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(8, 8, 11, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .progress-wrap.active { display: block; }
 .progress-label {
@@ -537,6 +545,286 @@ main {
   width: 100%;
   text-align: center;
 }
+
+/* ===== REVIEW MODAL — forced send gate (replaces the in-chat preview) =====
+ * Bigger than other overlays. Scrollable preview body. SEND button is
+ * full-width and unmissable. Cannot be dismissed by backdrop click —
+ * only by clicking SEND or "Go back to tweak".
+ */
+.review-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(8px);
+  z-index: 250;             /* above other overlays */
+  padding: 20px;
+  overflow-y: auto;
+  align-items: flex-start;
+  justify-content: center;
+}
+.review-overlay.active { display: flex; }
+.review-card {
+  background: var(--card);
+  border: 1px solid var(--accent-border);
+  border-radius: 16px;
+  max-width: 760px;
+  width: 100%;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  box-shadow: 0 24px 80px rgba(255,103,25,0.18);
+}
+.review-card .review-head {
+  padding: 22px 32px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.review-head .review-stag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.review-head .pulse-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255,103,25,0.7);
+  animation: review-pulse 1.8s infinite;
+}
+@keyframes review-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,103,25,0.7); }
+  70%  { box-shadow: 0 0 0 9px rgba(255,103,25,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,103,25,0); }
+}
+.review-head h2 {
+  font-family: 'Spectral', serif;
+  font-size: 26px;
+  color: var(--white);
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.review-head h2 .accent { color: var(--accent); }
+.review-head p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 600px;
+}
+.review-body {
+  padding: 22px 32px 26px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.review-body h1, .review-body h2, .review-body h3 {
+  font-family: 'Spectral', serif;
+  color: var(--white);
+  font-weight: 700;
+  margin: 22px 0 10px 0;
+  line-height: 1.25;
+}
+.review-body h1 { font-size: 22px; }
+.review-body h2 { font-size: 19px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+.review-body h3 { font-size: 16px; }
+.review-body p { margin: 0 0 12px 0; }
+.review-body ul { margin: 8px 0 14px 0; padding-left: 22px; }
+.review-body li { margin: 4px 0; }
+.review-body strong { color: var(--white); font-weight: 700; }
+.review-body em { font-style: italic; color: var(--accent); }
+.review-body::-webkit-scrollbar { width: 6px; }
+.review-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+.review-foot {
+  padding: 20px 32px 24px;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.25);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.review-foot .promise {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+.review-foot .promise strong { color: var(--white); }
+.review-send-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 18px 28px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 6px 22px rgba(255,103,25,0.32);
+}
+.review-send-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(255,103,25,0.5);
+  background: #ff7c33;
+}
+.review-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.review-send-btn.pulse-cta {
+  animation: send-cta-pulse 1.4s ease-in-out infinite;
+}
+@keyframes send-cta-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 6px 22px rgba(255,103,25,0.32); }
+  50%      { transform: scale(1.03); box-shadow: 0 10px 36px rgba(255,103,25,0.55); }
+}
+.review-secondary {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.review-link-btn {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 6px 4px;
+  border-bottom: 1px dashed rgba(255,255,255,0.18);
+  transition: color 0.15s, border-color 0.15s;
+}
+.review-link-btn:hover { color: var(--accent); border-color: var(--accent-border); }
+.review-nudge {
+  display: none;
+  font-size: 12px;
+  color: var(--accent);
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  margin-top: -4px;
+  font-weight: 700;
+}
+.review-nudge.active { display: block; animation: review-fade-in 0.4s ease; }
+@keyframes review-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== DELIVERY STATE — replaces the old single "thank-you" screen =====
+ * Three states stacked in summary-screen: sending / delivered / failed.
+ * Body JS toggles which state-block is .active.
+ */
+.delivery-state { display: none; flex-direction: column; align-items: center; gap: 14px; max-width: 580px; }
+.delivery-state.active { display: flex; }
+.delivery-icon-wrap {
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  font-size: 38px;
+  position: relative;
+}
+.delivery-icon-wrap.sending {
+  background: rgba(255,103,25,0.12);
+  border: 2px solid var(--accent-border);
+}
+.delivery-icon-wrap.sending::after {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent);
+  animation: spin 1s linear infinite;
+}
+.delivery-icon-wrap.delivered {
+  background: rgba(80,200,120,0.12);
+  border: 2px solid rgba(80,200,120,0.4);
+  color: #6dd692;
+}
+.delivery-icon-wrap.failed {
+  background: rgba(255,80,80,0.12);
+  border: 2px solid rgba(255,80,80,0.4);
+  color: #ff8080;
+}
+.delivery-state h2 {
+  font-family: 'Spectral', serif;
+  font-size: 36px;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.1;
+  text-align: center;
+}
+.delivery-state h2 .accent { color: var(--accent); }
+.delivery-state .sub {
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.55;
+  text-align: center;
+  max-width: 520px;
+  margin: 0;
+}
+.delivery-state .step-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 6px;
+  min-height: 16px;
+}
+.delivery-state .small {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
+}
+.inbox-box {
+  margin-top: 16px;
+  background: var(--card);
+  border: 1px solid var(--accent-border);
+  border-radius: 12px;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  max-width: 460px;
+}
+.inbox-box .ib-icon { font-size: 26px; flex-shrink: 0; }
+.inbox-box .ib-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+.inbox-box .ib-text strong { color: var(--white); }
+
+@media (max-width: 640px) {
+  .review-card { margin: 12px auto; max-height: calc(100vh - 24px); }
+  .review-head { padding: 18px 20px 14px; }
+  .review-head h2 { font-size: 22px; }
+  .review-body { padding: 18px 20px 22px; font-size: 14px; }
+  .review-foot { padding: 16px 20px 20px; }
+  .review-send-btn { padding: 15px 22px; font-size: 13px; letter-spacing: 1.5px; }
+  .delivery-state h2 { font-size: 28px; }
+  .delivery-state .sub { font-size: 14px; }
+  .inbox-box { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
+}
 .overlay-card .stag {
   font-family: 'Montserrat', sans-serif;
   font-size: 11px;
@@ -731,9 +1019,20 @@ footer a:hover { text-decoration: underline; }
 <main>
   <!-- WELCOME -->
   <div class="welcome" id="welcome">
-    <div class="tag">Unleash · Venture Intake</div>
-    <h1>Get your venture <span class="accent">on paper.</span></h1>
-    <p class="lede">Hey — welcome. Most founders never sit down and write their venture out properly. It's surprisingly hard to do alone, but it sharpens things when you do. 25 minutes with Luna does both — and you get a real read back from the team.</p>
+    <div class="tag">Unleash · Venture Assessment</div>
+    <h1>Get feedback on where your venture stands — <span class="accent">built on how the best investors and operators think.</span></h1>
+    <p class="lede">Luna walks you through the same framework investors use to write a deal memo — trained on 200+ books, investor deal memos, and Phil's years backing founders. It takes about 25 minutes, and you get a read-back from the team.</p>
+    <p style="margin-top:-2px; margin-bottom:6px;"><a href="https://philunleashed.substack.com/p/for-fundraising-founders-your-deck" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; font-weight:600; font-size:14px;">Read the thinking behind it →</a></p>
+
+    <!-- Explainer video — Phil drops an embed/URL here later. -->
+    <div id="explainerVideo" style="margin:14px auto 22px; max-width:560px; width:100%;">
+      <div style="position:relative; width:100%; padding-top:56.25%; border:1px dashed rgba(255,107,53,0.55); border-radius:12px; background:rgba(255,255,255,0.03);">
+        <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:#9a9a9a; font-size:13px; letter-spacing:0.3px;">
+          <span style="font-size:32px; line-height:1;">▶</span>
+          <span>Explainer video — coming soon</span>
+        </div>
+      </div>
+    </div>
 
     <div class="value-grid">
       <div class="value-card">
@@ -771,12 +1070,62 @@ footer a:hover { text-decoration: underline; }
     <div class="messages" id="messages"></div>
   </div>
 
-  <!-- SUMMARY -->
+  <!-- SUMMARY / DELIVERY STATE — three states: sending / delivered / failed -->
   <div class="summary-screen" id="summaryScreen">
-    <div class="tag">Sent ✓</div>
-    <h2>Off to the <span class="accent">Unleash team.</span></h2>
-    <p>Thanks for going through the full Venture Assessment with Luna.</p>
-    <p>Phil and Nicolene have received your responses, and a copy is in your inbox too. They'll be in touch.</p>
+
+    <!-- State 1: sending (sent to Resend, awaiting delivery confirmation) -->
+    <div class="delivery-state" id="stateSending">
+      <div class="delivery-icon-wrap sending">📨</div>
+      <div class="tag">Sent · awaiting confirmation</div>
+      <h2>On its way to the <span class="accent">Unleash team.</span></h2>
+      <p class="sub">Your Venture Assessment is being delivered right now. Once Gmail confirms receipt, you'll see the green check below.</p>
+      <div class="step-text" id="sendingStepText">Confirming delivery…</div>
+      <div class="small" id="sendingSmallText">Usually under 30 seconds</div>
+    </div>
+
+    <!-- State 2: delivered (Resend webhook confirmed delivery) -->
+    <div class="delivery-state" id="stateDelivered">
+      <div class="delivery-icon-wrap delivered">✓</div>
+      <div class="tag">Delivered ✓</div>
+      <h2>Thank you so much for the <span class="accent">intake.</span></h2>
+      <p class="sub">Phil &amp; Nicolene have your full Venture Assessment in their inboxes — and a copy is now in <strong id="founderEmailEcho">your inbox</strong> too. They'll be in touch within 48 hours.</p>
+      <div class="inbox-box">
+        <div class="ib-icon">📬</div>
+        <div class="ib-text">
+          <strong>Check your inbox for "Your Venture Assessment".</strong><br>
+          If you don't see it in 5 minutes (incl. spam / promotions), email <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a> with ref&nbsp;<code id="submissionRefDelivered" style="font-family: monospace; color: var(--accent);">—</code>.
+        </div>
+      </div>
+    </div>
+
+    <!-- State 3: failed / bounced (Resend rejected or post-delivery bounce) -->
+    <div class="delivery-state" id="stateFailed">
+      <div class="delivery-icon-wrap failed">!</div>
+      <div class="tag">Saved · email needs help</div>
+      <h2>Your assessment is <span class="accent">safely stored</span> with us.</h2>
+      <p class="sub">Something went wrong delivering the email copy, but your assessment is saved on Unleash's side — Phil &amp; Nicolene have it. We'll reach out personally with your copy.</p>
+      <div class="inbox-box">
+        <div class="ib-icon">🤝</div>
+        <div class="ib-text">
+          <strong>No need to redo anything.</strong><br>
+          We'll be in touch within 24 hours. If you'd like to follow up sooner, email <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a> with ref&nbsp;<code id="submissionRefFailed" style="font-family: monospace; color: var(--accent);">—</code>.
+        </div>
+      </div>
+    </div>
+
+    <!-- ALWAYS-PRESENT FAIL-SAFE: the founder's full assessment on screen + copy + email-us.
+         Works even if email AND delivery confirmation both fail — their work is never lost. -->
+    <div id="assessmentCopy" style="display:none; margin-top:22px; border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:16px 18px; background:rgba(255,255,255,0.04); text-align:left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px;">
+        <strong style="font-size:14px; color:#f0f0f0;">Your full assessment — keep a copy</strong>
+        <button id="copyAssessmentBtn" type="button" style="border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:7px; padding:6px 12px; font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap;">📋 Copy</button>
+      </div>
+      <div style="font-size:13px; color:#bbb; line-height:1.5; margin-bottom:10px;">
+        A copy is also emailed to you. <strong style="color:#ddd;">Didn't get it within a few minutes (check spam &amp; promotions)? Copy your assessment below and send it to <a href="mailto:pas@pas-ventures.com?subject=My%20Venture%20Assessment" style="color:var(--accent);">pas@pas-ventures.com</a></strong> — that's all we need.
+      </div>
+      <textarea id="assessmentText" readonly rows="13" style="width:100%; box-sizing:border-box; font-family:ui-monospace,Menlo,monospace; font-size:12px; line-height:1.5; color:#ddd; border:1px solid rgba(255,255,255,0.15); border-radius:7px; padding:10px; background:rgba(0,0,0,0.25); resize:vertical;"></textarea>
+    </div>
+
   </div>
 
   <!-- INPUT BAR -->
@@ -792,6 +1141,54 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 </main>
+
+<!-- ============ REVIEW MODAL — forced send gate ============
+ * Auto-opens when Luna outputs the structured Venture Assessment.
+ * Replaces the in-chat preview as the moment of truth for sending.
+ * Only forward path is "SEND to Phil + Nicolene" — cannot be dismissed by
+ * backdrop click. "Go back" closes modal so founder can tweak in chat.
+ */
+-->
+<div class="review-overlay" id="reviewOverlay" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+  <div class="review-card">
+    <div class="review-head">
+      <div class="review-stag"><span class="pulse-dot"></span><span>PREVIEW · NOT SENT YET</span></div>
+      <h2 id="reviewTitle">Your Venture Assessment is <span class="accent">ready to send.</span></h2>
+      <p>Read through it below. When you're happy, click the orange button to deliver it to Phil &amp; Nicolene — and receive your own copy by email.</p>
+    </div>
+    <div class="review-body" id="reviewBody">
+      <!-- preview HTML injected here -->
+    </div>
+    <div class="review-foot">
+      <div class="promise">📬 <strong>You'll only receive your assessment by email once you send.</strong> Phil &amp; Nicolene respond within 48 hours.</div>
+      <button class="review-send-btn" id="reviewSendBtn">📤 SEND TO PHIL &amp; NICOLENE — RECEIVE MY COPY</button>
+      <div class="review-nudge" id="reviewNudge">👋 Ready? click above to receive your assessment by email.</div>
+      <div class="review-secondary">
+        <button class="review-link-btn" id="reviewBackBtn">← Go back &amp; tweak</button>
+        <button class="review-link-btn" id="reviewSaveBtn">💾 Save for later</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MILESTONE CELEBRATION TOAST -->
+<div id="celebrateToast" style="position:fixed; top:18px; left:50%; transform:translateX(-50%) translateY(-150%); z-index:200; background:rgba(18,18,22,0.97); border:1px solid var(--accent); border-radius:14px; padding:13px 22px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 44px rgba(0,0,0,0.5); transition:transform .5s cubic-bezier(.2,.9,.2,1); pointer-events:none; max-width:90vw;">
+  <span id="celebrateEmoji" style="font-size:32px; line-height:1;">🎉</span>
+  <span id="celebrateText" style="font-size:15px; font-weight:600; color:#fff;"></span>
+</div>
+
+<!-- LEAVE-SESSION REMINDER (custom modal — shown if user tries to close mid-flow OR returns to a paused session) -->
+<div class="overlay" id="leaveOverlay">
+  <div class="overlay-card">
+    <div class="stag">Almost there</div>
+    <h3>Don't lose your <span class="accent">Venture Assessment.</span></h3>
+    <p id="leaveText">You're <strong id="leavePct">—</strong> through. You'll only get the written assessment by email once you click <strong>SEND</strong>. Your progress is saved here for 14 days, so you can pick up right where you left off.</p>
+    <div class="overlay-actions">
+      <button class="overlay-btn secondary" id="leaveCloseBtn">Close this reminder</button>
+      <button class="overlay-btn primary" id="leaveResumeBtn">Take me to the SEND button</button>
+    </div>
+  </div>
+</div>
 
 <!-- CONFIRM SEND MODAL (dynamic — copy varies by completion) -->
 <div class="overlay" id="confirmOverlay">
@@ -917,6 +1314,16 @@ const state = {
   isLoading: false,
   started: false,
   currentSection: 0,
+  // Preview / send state
+  pendingPreviewMarkdown: null,   // the structured assessment Luna generated, awaiting send
+  hasShownPreview: false,         // true once the review modal has opened in this session
+  // Delivery tracking
+  submissionId: null,
+  deliveryStatus: null,           // null | 'sent' | 'delivered' | 'bounced' | 'complained' | 'failed'
+  pollIntervalId: null,
+  pollStartedAt: null,
+  // Anti-distraction
+  originalTitle: document.title,
 };
 
 function saveState() {
@@ -924,6 +1331,9 @@ function saveState() {
     const payload = {
       messages: state.messages,
       currentSection: state.currentSection,
+      finalSummary: state.finalSummary || null,
+      submissionId: state.submissionId || null,
+      deliveryStatus: state.deliveryStatus || null,
       savedAt: Date.now(),
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -955,6 +1365,7 @@ function clearState() {
   state.messages = [];
   state.currentSection = 0;
   state.started = false;
+  firedMilestones = new Set();
 }
 
 const welcomeEl = document.getElementById('welcome');
@@ -987,6 +1398,26 @@ const progressStep = document.getElementById('progressStep');
 const saveOverlay = document.getElementById('saveOverlay');
 const saveCloseBtn = document.getElementById('saveCloseBtn');
 
+// Review modal + delivery state refs
+const reviewOverlay = document.getElementById('reviewOverlay');
+const reviewBody = document.getElementById('reviewBody');
+const reviewSendBtn = document.getElementById('reviewSendBtn');
+const reviewBackBtn = document.getElementById('reviewBackBtn');
+const reviewSaveBtn = document.getElementById('reviewSaveBtn');
+const reviewNudge = document.getElementById('reviewNudge');
+const stateSending = document.getElementById('stateSending');
+const stateDelivered = document.getElementById('stateDelivered');
+const stateFailed = document.getElementById('stateFailed');
+const sendingStepText = document.getElementById('sendingStepText');
+const sendingSmallText = document.getElementById('sendingSmallText');
+const founderEmailEcho = document.getElementById('founderEmailEcho');
+const submissionRefDelivered = document.getElementById('submissionRefDelivered');
+const submissionRefFailed = document.getElementById('submissionRefFailed');
+const leaveOverlay = document.getElementById('leaveOverlay');
+const leavePct = document.getElementById('leavePct');
+const leaveCloseBtn = document.getElementById('leaveCloseBtn');
+const leaveResumeBtn = document.getElementById('leaveResumeBtn');
+
 const SECTION_LABELS = [
   'Getting started',
   'Company snapshot',
@@ -1003,22 +1434,39 @@ const SECTION_LABELS = [
 ];
 
 const THINKING_VARIANTS = [
-  'Luna is thinking',
-  'Luna is making sense of your response',
-  'Luna is matching the threads',
-  'Luna is canoodling the details',
-  'Luna is consulting the playbook',
-  'Luna is reading between the lines',
-  'Luna is pulling it together',
-  'Luna is finding the right next question',
-  'Luna is letting that sink in',
-  'Luna is composing',
+  'Thinking',
+  'Cogitating',
+  'Noodling',
+  'Percolating',
+  'Pondering',
+  'Marinating',
+  'Ruminating',
+  'Triangulating',
+  'Synthesizing',
+  'Canoodling the details',
+  'Consulting the playbook',
+  'Channeling the investors',
+  'Flipping through 200 books',
+  'Reading between the lines',
+  'Connecting the dots',
+  'Mulling it over',
+  'Sharpening the thread',
+  'Finding the right question',
 ];
 let typingCycleInterval = null;
 
 startBtn.addEventListener('click', () => startConversation());
 sendBtn.addEventListener('click', () => sendMessage());
-doneBtn.addEventListener('click', () => openConfirmModal());
+// "I'm done" button at bottom of chat: if a preview has been generated, open the review modal
+// (where SEND is the only forward action). Otherwise fall back to the legacy confirm modal so
+// founders can still send a partial assessment from earlier in the flow.
+doneBtn.addEventListener('click', () => {
+  if (state.pendingPreviewMarkdown) {
+    openReviewModal();
+  } else {
+    openConfirmModal();
+  }
+});
 confirmAddMoreBtn.addEventListener('click', () => closeConfirmModal());
 confirmSendBtn.addEventListener('click', () => { closeConfirmModal(); finishAndSend(); });
 saveBtn.addEventListener('click', () => openSaveModal());
@@ -1026,6 +1474,36 @@ saveCloseBtn.addEventListener('click', () => closeSaveModal());
 privacyLink.addEventListener('click', (e) => { e.preventDefault(); privacyOverlay.classList.add('active'); });
 privacyCloseBtn.addEventListener('click', () => privacyOverlay.classList.remove('active'));
 privacyOverlay.addEventListener('click', (e) => { if (e.target === privacyOverlay) privacyOverlay.classList.remove('active'); });
+
+// Review modal — the new primary send gate
+reviewSendBtn.addEventListener('click', () => {
+  closeReviewModal();
+  finishAndSend();
+});
+reviewBackBtn.addEventListener('click', () => closeReviewModal({ allowTweaks: true }));
+reviewSaveBtn.addEventListener('click', () => {
+  saveState();
+  closeReviewModal();
+  openSaveModal();
+});
+// Backdrop click NOT dismissible — only via the explicit buttons. This is intentional:
+// the bug we're fixing is founders treating the preview as completion.
+
+// Leave-session reminder modal
+leaveCloseBtn.addEventListener('click', () => leaveOverlay.classList.remove('active'));
+leaveResumeBtn.addEventListener('click', () => {
+  leaveOverlay.classList.remove('active');
+  // If we have a preview already, jump straight to the send modal.
+  if (state.pendingPreviewMarkdown) {
+    openReviewModal();
+  } else {
+    // Otherwise scroll the input bar into view + focus done button.
+    if (doneBtn) {
+      doneBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      doneBtn.focus();
+    }
+  }
+});
 
 // ============ VOICE INPUT (Web Speech API) ============
 // Supported in Chrome/Edge/Safari (with webkit prefix). Fails silently elsewhere.
@@ -1321,16 +1799,67 @@ function setInputLocked(locked) {
   if (locked && isRecording) stopRecording();
 }
 
+// ============ REVIEW MODAL ============
+let reviewIdleTimer = null;
+
+function openReviewModal() {
+  if (!state.pendingPreviewMarkdown) {
+    // Nothing to review — fall back to legacy confirm modal so the user isn't blocked.
+    openConfirmModal();
+    return;
+  }
+  state.hasShownPreview = true;
+  reviewBody.innerHTML = renderMarkdownToHtml(state.pendingPreviewMarkdown);
+  reviewBody.scrollTop = 0;
+  reviewOverlay.classList.add('active');
+  reviewSendBtn.classList.remove('pulse-cta');
+  reviewNudge.classList.remove('active');
+
+  // Idle nudge — if user hasn't clicked anything inside the modal for 60s,
+  // pulse the SEND button + show a small hint line. This is the gamification /
+  // loss-aversion nudge: assessment-as-reward only arrives if they click SEND.
+  if (reviewIdleTimer) clearTimeout(reviewIdleTimer);
+  reviewIdleTimer = setTimeout(() => {
+    reviewSendBtn.classList.add('pulse-cta');
+    reviewNudge.classList.add('active');
+  }, 60_000);
+
+  // Update progress bar label phase
+  updateProgressPhase('review');
+}
+
+function closeReviewModal(opts = {}) {
+  reviewOverlay.classList.remove('active');
+  if (reviewIdleTimer) { clearTimeout(reviewIdleTimer); reviewIdleTimer = null; }
+  reviewSendBtn.classList.remove('pulse-cta');
+  reviewNudge.classList.remove('active');
+  // If user clicked "go back to tweak", we leave pendingPreviewMarkdown in place
+  // so they can reopen via the "I'm done" button. The fact that a preview exists
+  // means the SEND path is one click away.
+  if (opts.allowTweaks) {
+    updateProgressPhase('chat');
+  }
+}
+
 async function finishAndSend() {
   if (state.isLoading) return;
 
+  // Stop any active polling from a previous attempt
+  stopPolling();
+
   state.isLoading = true;
+  state.deliveryStatus = null;
   sendBtn.disabled = true;
   doneBtn.disabled = true;
+  updateProgressPhase('sending');
 
   // Show progress overlay immediately
   sendingOverlay.classList.add('active');
   startProgressMessages();
+
+  const founderEmail = extractFounderEmail(state.messages);
+  const founderName = extractFounderName(state.messages);
+  const companyName = extractCompanyName(state.messages);
 
   try {
     const response = await fetch(WORKER_URL + '/api/done', {
@@ -1338,52 +1867,319 @@ async function finishAndSend() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: state.messages,
-        founderName: extractFounderName(state.messages),
-        founderEmail: extractFounderEmail(state.messages),
-        companyName: extractCompanyName(state.messages),
+        founderName,
+        founderEmail,
+        companyName,
+        preGeneratedSummary: state.pendingPreviewMarkdown || null,
       }),
     });
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error('Server error: ' + response.status + ' — ' + errText);
+    const data = await response.json().catch(() => ({}));
+
+    // Worker returns 502 when persisted but Resend rejected. Treat as failed-but-saved.
+    if (response.status === 502 && data && data.submissionId) {
+      state.submissionId = data.submissionId;
+      transitionToFailedState({ founderEmail, submissionId: data.submissionId, knownReason: data.error });
+      return;
     }
+
+    if (!response.ok) {
+      const errText = (data && data.error) || ('Server returned ' + response.status);
+      throw new Error(errText);
+    }
+
+    state.submissionId = data.submissionId || null;
+    state.finalSummary = (data && typeof data.summary === 'string' && data.summary.length > 20)
+      ? data.summary
+      : (state.pendingPreviewMarkdown || '');
+
+    // Switch screens to the result view.
     stopProgressMessages();
     sendingOverlay.classList.remove('active');
     chatEl.classList.remove('active');
     inputBarEl.style.display = 'none';
-    progressWrap.classList.remove('active');
-    summaryEl.classList.add('active');
-    clearState();
+
+    // ALWAYS show the founder their full assessment on screen + the email-us fallback —
+    // independent of whether email or delivery confirmation succeeds. The dependency-free safety net.
+    renderAssessmentCopy(state.finalSummary);
+
+    showDeliveryState('sending');
+    if (founderEmail && founderEmailEcho) {
+      founderEmailEcho.innerHTML = '<strong>' + escapeHtml(founderEmail) + '</strong>';
+    }
+    if (submissionRefDelivered && state.submissionId) submissionRefDelivered.textContent = state.submissionId;
+    if (submissionRefFailed && state.submissionId) submissionRefFailed.textContent = state.submissionId;
+
+    // Do NOT wipe their work — persist the final summary so they can come back to it.
+    state.deliveryStatus = 'sent';
+    try { saveState(); } catch (e) {}
+
+    // Poll ONLY to upgrade the badge to a confirmed "delivered". It never fabricates one;
+    // if confirmation never comes, the honest "sent — your copy is below" screen stays.
+    if (state.submissionId) {
+      startPolling(state.submissionId, founderEmail);
+    }
   } catch (err) {
     stopProgressMessages();
     sendingOverlay.classList.remove('active');
-    alert('⚠️ Could not send to the team right now. Error: ' + err.message + ' — Your conversation is saved, please try again in a moment.');
+    alert('⚠️ Could not send to the team right now: ' + err.message + ' — Your conversation is saved on your device, please try again in a moment.');
     state.isLoading = false;
     sendBtn.disabled = false;
     doneBtn.disabled = false;
+    updateProgressPhase('chat');
   }
+}
+
+// ============ DELIVERY STATE MACHINE ============
+function showDeliveryState(which) {
+  // Make sure the summary screen container is visible
+  summaryEl.classList.add('active');
+  progressWrap.classList.remove('active');
+  stateSending.classList.toggle('active', which === 'sending');
+  stateDelivered.classList.toggle('active', which === 'delivered');
+  stateFailed.classList.toggle('active', which === 'failed');
+}
+
+// Render the founder's full assessment into the always-visible copy box + wire the Copy button.
+// This is the dependency-free fail-safe: even if email + delivery confirmation both fail,
+// the founder can copy their assessment and send it to pas@pas-ventures.com themselves.
+function renderAssessmentCopy(text) {
+  try {
+    const box = document.getElementById('assessmentCopy');
+    const ta = document.getElementById('assessmentText');
+    if (!box || !ta) return;
+    ta.value = (text && text.trim())
+      ? text
+      : 'Your assessment was sent to the Unleash team. If you need a copy, email pas@pas-ventures.com.';
+    box.style.display = 'block';
+    const btn = document.getElementById('copyAssessmentBtn');
+    if (btn && !btn.dataset.wired) {
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(ta.value);
+        } catch (e) {
+          ta.focus(); ta.select(); try { document.execCommand('copy'); } catch (e2) {}
+        }
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }
+  } catch (e) { /* never let the fail-safe itself throw */ }
+}
+
+function transitionToDeliveredState({ founderEmail, submissionId }) {
+  state.deliveryStatus = 'delivered';
+  stopPolling();
+  showDeliveryState('delivered');
+  if (founderEmail && founderEmailEcho) {
+    founderEmailEcho.innerHTML = '<strong>' + escapeHtml(founderEmail) + '</strong>';
+  }
+  if (submissionId) {
+    if (submissionRefDelivered) submissionRefDelivered.textContent = submissionId;
+  }
+  // Restore tab title (no more "Almost done — Unleash Assessment" flash)
+  document.title = state.originalTitle;
+}
+
+function transitionToFailedState({ founderEmail, submissionId, knownReason }) {
+  state.deliveryStatus = 'failed';
+  stopPolling();
+  // Make sure other screens are dismissed first
+  stopProgressMessages();
+  sendingOverlay.classList.remove('active');
+  chatEl.classList.remove('active');
+  inputBarEl.style.display = 'none';
+  showDeliveryState('failed');
+  renderAssessmentCopy(state.finalSummary || state.pendingPreviewMarkdown || '');
+  if (submissionId && submissionRefFailed) submissionRefFailed.textContent = submissionId;
+  document.title = state.originalTitle;
+  // Log for Phil's debugging visibility
+  console.warn('Delivery failed', { founderEmail, submissionId, knownReason });
+}
+
+function startPolling(submissionId, founderEmail) {
+  if (state.pollIntervalId) clearInterval(state.pollIntervalId);
+  state.pollStartedAt = Date.now();
+
+  // Update copy at the 30s and 90s marks if still not delivered.
+  let stillSendingNudgeFired = false;
+  let longerThanUsualFired = false;
+
+  const tick = async () => {
+    const elapsedMs = Date.now() - state.pollStartedAt;
+    const elapsedSec = Math.floor(elapsedMs / 1000);
+
+    if (elapsedSec >= 30 && !stillSendingNudgeFired) {
+      stillSendingNudgeFired = true;
+      if (sendingStepText) sendingStepText.textContent = 'Still confirming delivery…';
+      if (sendingSmallText) sendingSmallText.textContent = 'Some inboxes take a little longer';
+    }
+    if (elapsedSec >= 90 && !longerThanUsualFired) {
+      longerThanUsualFired = true;
+      if (sendingStepText) sendingStepText.textContent = 'Taking longer than usual';
+      if (sendingSmallText) {
+        sendingSmallText.innerHTML =
+          'Your assessment is safely stored — Phil &amp; Nicolene have it. Check your inbox in the next 5 minutes; if no copy lands, email <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a> with ref&nbsp;' +
+          '<code style="font-family: monospace; color: var(--accent);">' + escapeHtml(submissionId) + '</code>.';
+      }
+    }
+    if (elapsedSec >= 180) {
+      // 3-min cap. Do NOT claim "delivered" — we never confirmed it. Stop spinning and stay honest:
+      // their assessment is stored with us AND shown on screen to copy. No false green check.
+      stopPolling();
+      if (sendingStepText) sendingStepText.textContent = 'Saved with the team ✓';
+      if (sendingSmallText) {
+        sendingSmallText.innerHTML =
+          "We couldn't auto-confirm the email landed — but your assessment is safely stored with us and shown below. " +
+          'If no email arrives shortly, just copy it and send it to <a href="mailto:pas@pas-ventures.com" style="color: var(--accent);">pas@pas-ventures.com</a>.';
+      }
+      return;
+    }
+
+    try {
+      const res = await fetch(WORKER_URL + '/api/status/' + encodeURIComponent(submissionId), {
+        method: 'GET',
+      });
+      if (!res.ok) return; // try again next tick
+      const data = await res.json();
+      if (!data || !data.status) return;
+      state.deliveryStatus = data.status;
+
+      if (data.status === 'delivered') {
+        transitionToDeliveredState({ founderEmail, submissionId });
+      } else if (data.status === 'bounced' || data.status === 'complained' || data.status === 'failed') {
+        transitionToFailedState({ founderEmail, submissionId, knownReason: data.status });
+      }
+      // 'sent', 'queued', 'delayed' — keep polling
+    } catch (err) {
+      // Transient network error — just try again next tick.
+    }
+  };
+
+  // Kick once immediately so confident webhooks resolve fast, then every 3s.
+  tick();
+  state.pollIntervalId = setInterval(tick, 3000);
+}
+
+function stopPolling() {
+  if (state.pollIntervalId) {
+    clearInterval(state.pollIntervalId);
+    state.pollIntervalId = null;
+  }
+}
+
+// ============ PROGRESS BAR — phase-aware labels ============
+function updateProgressPhase(phase) {
+  // phase: 'chat' | 'review' | 'sending'
+  if (!progressText) return;
+  if (phase === 'review') {
+    progressText.textContent = 'Review · click SEND to deliver';
+    progressFill.style.width = '92%';
+    progressPct.textContent = '92%';
+  } else if (phase === 'sending') {
+    progressText.textContent = 'Sending to the Unleash team…';
+    progressFill.style.width = '98%';
+    progressPct.textContent = '98%';
+  }
+  // 'chat' phase — leave whatever updateProgress set
+}
+
+// ============ MARKDOWN → HTML (for the review modal body) ============
+// Lightweight: headers, bold, italic, bullets, paragraphs. Mirrors worker's markdownToHtml.
+function renderMarkdownToHtml(md) {
+  if (!md) return '';
+  let html = md.replace(/\r\n/g, '\n');
+
+  // Escape HTML first so we don't double-escape after replacements
+  html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // Headers (longest first)
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+  // Bold + italic
+  html = html.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+
+  // Bullet lists
+  html = html.replace(/(^- .+(\n- .+)*)/gm, function (block) {
+    const items = block.split('\n').map(line => line.replace(/^- (.+)$/, '<li>$1</li>')).join('');
+    return '<ul>' + items + '</ul>';
+  });
+
+  // Paragraphs
+  html = html.split(/\n\n+/).map(block => {
+    block = block.trim();
+    if (!block) return '';
+    if (/^<(h[1-6]|ul|ol|li|p|div|blockquote|hr)/i.test(block)) return block;
+    return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+  }).join('\n');
+
+  return html;
+}
+
+// Detect whether a Luna message is the structured Venture Assessment preview.
+// Robust against minor formatting drift — we look for the two strong signals:
+//   1. an h2 line containing "Venture Assessment"
+//   2. at least 5 "### Section N" headers (the 11-section structure)
+function isVenturePreview(content) {
+  if (!content || typeof content !== 'string') return false;
+  const hasH2 = /^##\s+.*Venture Assessment/im.test(content);
+  const sectionHeaders = content.match(/^###\s+Section\s+\d/gim) || [];
+  return hasH2 && sectionHeaders.length >= 5;
 }
 
 function renderMessages() {
   messagesEl.innerHTML = '';
-  for (const msg of state.messages) {
+  for (let i = 0; i < state.messages.length; i++) {
+    const msg = state.messages[i];
+    const isLast = i === state.messages.length - 1;
+
     if (msg.role === 'user') {
       const el = document.createElement('div');
       el.className = 'msg user';
       el.innerHTML = '<div class="role">You</div>' + formatContent(msg.content);
       messagesEl.appendChild(el);
-    } else {
-      // Luna messages: split on `---` delimiter (on its own line) into separate bubbles.
-      // Only the first bubble shows the "Luna" role label. Tight visual coupling for follow-on bubbles.
-      const parts = msg.content.split(/\n\s*---\s*\n/).map(s => s.trim()).filter(Boolean);
-      parts.forEach((part, idx) => {
-        const el = document.createElement('div');
-        el.className = 'msg luna' + (idx > 0 ? ' luna-follow' : '');
-        const roleLabel = idx === 0 ? '<div class="role">Luna</div>' : '';
-        el.innerHTML = roleLabel + formatContent(part);
-        messagesEl.appendChild(el);
-      });
+      continue;
     }
+
+    // Luna message — check first whether it's the structured preview.
+    // If so: render a short summary bubble in the chat and DO NOT dump the
+    // full structured assessment as a chat bubble. The full text lives in
+    // state.pendingPreviewMarkdown and is shown in the review modal.
+    if (isVenturePreview(msg.content)) {
+      state.pendingPreviewMarkdown = msg.content;
+
+      const stub = document.createElement('div');
+      stub.className = 'msg luna';
+      stub.innerHTML =
+        '<div class="role">Luna</div>' +
+        '<strong>✅ Your Venture Assessment is ready.</strong><br>' +
+        "I've prepared the full structured write-up across all the sections we covered. " +
+        "Opening the review panel so you can read it through and send it to the team — " +
+        "<em>your written assessment lands in your inbox once you click SEND.</em>";
+      messagesEl.appendChild(stub);
+
+      // If this is the most recent message (i.e. Luna just emitted the preview),
+      // auto-open the review modal so the founder can't miss the send step.
+      if (isLast && !reviewOverlay.classList.contains('active')) {
+        // Slight delay so the chat scroll lands before the modal opens.
+        setTimeout(() => openReviewModal(), 350);
+      }
+      continue;
+    }
+
+    // Normal Luna message — split on `---` delimiter into separate bubbles.
+    const parts = msg.content.split(/\n\s*---\s*\n/).map(s => s.trim()).filter(Boolean);
+    parts.forEach((part, idx) => {
+      const el = document.createElement('div');
+      el.className = 'msg luna' + (idx > 0 ? ' luna-follow' : '');
+      const roleLabel = idx === 0 ? '<div class="role">Luna</div>' : '';
+      el.innerHTML = roleLabel + formatContent(part);
+      messagesEl.appendChild(el);
+    });
   }
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
@@ -1401,7 +2197,7 @@ function showTyping() {
   typingCycleInterval = setInterval(() => {
     idx = (idx + 1) % THINKING_VARIANTS.length;
     el.textContent = THINKING_VARIANTS[idx];
-  }, 2600);
+  }, 1900);
 }
 function hideTyping() {
   if (typingCycleInterval) {
@@ -1435,9 +2231,61 @@ function updateProgress(lunaReply) {
     const pct = Math.min(100, Math.round((detected / 11) * 100));
     progressFill.style.width = pct + '%';
     progressPct.textContent = pct + '%';
-    // Show next section coming up (detected + 1, or "Wrapping up" past 11)
-    const nextIdx = detected < 11 ? detected + 1 : 11;
-    progressText.textContent = SECTION_LABELS[nextIdx] || 'Wrapping up';
+    celebrate(pct);
+    // Show exactly where they are in the 11-section framework — "Section X of 11 · <name>".
+    progressText.textContent = detected < 11
+      ? ('Section ' + detected + ' of 11 · ' + (SECTION_LABELS[detected] || ''))
+      : 'Final section · wrapping up';
+  }
+}
+
+// ============ MILESTONE CELEBRATIONS ============
+// Honest positive reinforcement at real progress thresholds — no fake urgency, no dark patterns.
+const MILESTONES = [
+  { at: 25,  emoji: '🐱', text: "Quarter of the way — you're rolling." },
+  { at: 50,  emoji: '🎉', text: 'Halfway there! Biggest stretch behind you.' },
+  { at: 75,  emoji: '🙌', text: '75% — nearly home.' },
+  { at: 100, emoji: '🔥', text: 'All 11 done. Legend.' },
+];
+let firedMilestones = new Set();
+function celebrate(pct) {
+  for (const m of MILESTONES) {
+    if (pct >= m.at && !firedMilestones.has(m.at)) {
+      firedMilestones.add(m.at);
+      showCelebrateToast(m.emoji, m.text);
+    }
+  }
+}
+function showCelebrateToast(emoji, text) {
+  const toast = document.getElementById('celebrateToast');
+  if (!toast) return;
+  const e = document.getElementById('celebrateEmoji');
+  const t = document.getElementById('celebrateText');
+  if (e) e.textContent = emoji;
+  if (t) t.textContent = text;
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  burstConfetti();
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => {
+    toast.style.transform = 'translateX(-50%) translateY(-150%)';
+  }, 2800);
+}
+function burstConfetti() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = ['#FF6719', '#FFD166', '#06D6A0', '#118AB2', '#EF476F', '#ffffff'];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    const size = 6 + Math.random() * 6;
+    p.style.cssText = 'position:fixed;top:64px;left:50%;width:' + size + 'px;height:' + size + 'px;background:' + colors[i % colors.length] + ';border-radius:2px;z-index:199;pointer-events:none;';
+    document.body.appendChild(p);
+    const dx = (Math.random() - 0.5) * 440;
+    const dy = 220 + Math.random() * 280;
+    const rot = Math.random() * 720 - 360;
+    p.animate(
+      [{ transform: 'translate(0,0) rotate(0)', opacity: 1 },
+       { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg)', opacity: 0 }],
+      { duration: 1400 + Math.random() * 700, easing: 'cubic-bezier(.2,.7,.3,1)' }
+    ).onfinish = () => p.remove();
   }
 }
 
@@ -1484,6 +2332,79 @@ function extractCompanyName(msgs) {
   }
   return 'Unknown';
 }
+
+// ============ LEAVE-SESSION GUARDS ============
+// Three layers, ordered from least to most intrusive:
+//   1. Title flash on tab-blur — pulls them back if they tab away
+//   2. Custom in-app reminder modal on tab return — only if they have meaningful progress
+//   3. Browser-native beforeunload prompt on close — last-resort guard
+//
+// All three only fire once the founder is past §3 (meaningful progress) and the
+// assessment hasn't been sent yet. We never harass people who are barely started.
+
+function hasMeaningfulProgress() {
+  return state.started
+    && !state.deliveryStatus
+    && (state.currentSection >= 3 || state.pendingPreviewMarkdown);
+}
+
+// 1. Tab-blur title flash. Standard SaaS pattern (Notion, Linear, Stripe Checkout).
+//    When the founder switches tabs, the title flashes a reminder so they remember
+//    to come back. Reverts when they refocus.
+let titleFlashTimer = null;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (!hasMeaningfulProgress()) return;
+    // Flash between two messages every 1.4s
+    const msgs = state.pendingPreviewMarkdown
+      ? ['👀 1 step to go — Unleash', '📬 Click SEND to receive your assessment']
+      : ['👋 Don\'t forget your assessment', '✍️ Unleash Venture Intake'];
+    let idx = 0;
+    document.title = msgs[0];
+    if (titleFlashTimer) clearInterval(titleFlashTimer);
+    titleFlashTimer = setInterval(() => {
+      idx = (idx + 1) % msgs.length;
+      document.title = msgs[idx];
+    }, 1400);
+  } else {
+    if (titleFlashTimer) { clearInterval(titleFlashTimer); titleFlashTimer = null; }
+    document.title = state.originalTitle;
+
+    // If they return to a session that has the preview ready and haven't sent —
+    // show a friendly reminder. Loss-aversion framing: assessment is reward,
+    // SEND is the unlock. (Skip if already-active modals would clash.)
+    if (
+      state.pendingPreviewMarkdown
+      && !state.deliveryStatus
+      && !reviewOverlay.classList.contains('active')
+      && !sendingOverlay.classList.contains('active')
+      && !leaveOverlay.classList.contains('active')
+    ) {
+      showLeaveReminder();
+    }
+  }
+});
+
+function showLeaveReminder() {
+  const pct = state.pendingPreviewMarkdown
+    ? 'all the way'
+    : (Math.round((state.currentSection / 11) * 100) + '%');
+  if (leavePct) leavePct.textContent = pct;
+  leaveOverlay.classList.add('active');
+}
+
+// 2. beforeunload — browser-native confirmation when closing tab with meaningful progress.
+//    Browsers strip custom messages (security hardening from 2017+) so the user sees
+//    "Changes you made may not be saved" or similar generic copy. Still useful as a
+//    catch-net for accidental closes.
+window.addEventListener('beforeunload', (e) => {
+  if (!hasMeaningfulProgress()) return;
+  e.preventDefault();
+  // The returnValue setter is what triggers the prompt in legacy browsers;
+  // modern browsers ignore the string but show their generic dialog.
+  e.returnValue = 'Your Venture Assessment is not sent yet. Are you sure you want to leave?';
+  return e.returnValue;
+});
 </script>
 </body>
 </html>
