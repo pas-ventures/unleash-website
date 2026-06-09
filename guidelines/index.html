@@ -30,12 +30,9 @@
 
   /* intro video */
   .video-wrap { max-width: 720px; margin: 0 auto; padding: 8px 28px 0; }
-  .video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--card); border: 1px dashed rgba(255,103,25,0.5); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; cursor: pointer; transition: border-color 0.2s; }
-  .video-frame:hover { border-color: var(--accent); }
-  .video-frame .vtag { position: absolute; top: 14px; left: 16px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
-  .video-frame .play { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(255,103,25,0.35); }
-  .video-frame .play svg { margin-left: 4px; }
-  .video-frame .vcap { font-size: 13px; color: var(--muted); font-weight: 500; text-align: center; padding: 0 16px; }
+  .video-embed { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: var(--card); border: 1px solid var(--border); }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-cap { max-width: 720px; margin: 12px auto 0; padding: 0 28px; font-size: 13px; color: var(--muted); text-align: center; }
 
   .content { max-width: 720px; margin: 0 auto; padding: 20px 28px 80px; }
   .content section { padding: 44px 0; border-top: 1px solid var(--border); }
@@ -101,14 +98,13 @@
 </div>
 
 <div class="video-wrap">
-  <div class="video-frame" role="button" aria-label="Play introduction video">
-    <div class="vtag">▶ Video placeholder — embed YouTube</div>
-    <div class="play">
-      <svg width="22" height="24" viewBox="0 0 22 24" fill="none"><path d="M20 10.27a2 2 0 0 1 0 3.46L3 23.66A2 2 0 0 1 0 21.93V2.07A2 2 0 0 1 3 .34L20 10.27Z" fill="#111"/></svg>
-    </div>
-    <div class="vcap">Phil walks you through how the Unleash Community works · ~5 min</div>
+  <div class="video-embed">
+    <iframe src="https://www.tella.tv/video/philipps-video-5rsw/embed?b=0&amp;title=0&amp;a=0&amp;loop=0&amp;t=0&amp;muted=0&amp;wt=0"
+            allow="fullscreen; autoplay" allowfullscreen loading="lazy"
+            title="Introduction to the Unleash Community"></iframe>
   </div>
 </div>
+<p class="video-cap">Phil walks you through how the Unleash Community works · ~5 min</p>
 
 <div class="content">
 
