@@ -248,6 +248,26 @@
   .datelist .dl-row { padding: 19px 0; }
   .datelist .dl-when { font-size: 19px; }
   .datelist .dl-what { font-size: 20px; }
+
+  /* roomier result cards */
+  .res-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+  .res { padding: 20px 22px; border-radius: 12px; }
+  .res .who { font-size: 12.5px; margin-bottom: 8px; }
+  .res .what { font-size: 15.5px; line-height: 1.5; }
+  /* bench chips */
+  .bench { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .bench .b { background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; font-size: 14.5px; color: var(--text); }
+  .bench .b strong { color: var(--white); font-weight: 600; }
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 18px 0 4px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: 14px; padding: 18px 22px; }
+  .stat .n { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 34px; color: var(--white); line-height: 1; }
+  .stat .l { font-size: 14px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+  .arm { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; border-top: 3px solid var(--accent); }
+  .arm .al { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px; }
+  .arm h3 { font-family: 'Spectral', serif; font-size: 27px; color: var(--white); margin-bottom: 10px; }
+  .arm p { font-size: 15.5px; color: var(--text); line-height: 1.5; margin-bottom: 9px; }
+  .arm p strong { color: var(--white); }
+  .arms { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; }
 </style>
 </head>
 <body>
@@ -298,31 +318,20 @@
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">03</div>
   <h2>How this came to life</h2>
-  <p class="intro-line">Around <strong>100 top-level early-stage founders from across South Africa</strong> &mdash; and the two of us.</p>
-  <div class="hosts-row">
-    <div class="host-card">
-      <img class="host-avatar-lg" src="../../img/phil.jpeg" alt="Philipp Str&ouml;hemann">
-      <div>
-        <div class="h-name">Philipp Str&ouml;hemann</div>
-        <div class="h-role">Founding Partner &amp; Lead Investor</div>
-        <div class="h-bio">From northern Germany, first came to Cape Town in 2014 and has split his life between the two since. Bootstrapped a CRM automation business here with a South African co-founder to <strong>150 people and R100M+ EBIT</strong>, then sold it to a German PE firm. Invests his own money.</div>
-      </div>
-    </div>
-    <div class="host-card">
-      <img class="host-avatar-lg" src="../../img/nicolene.jpeg" alt="Nicolene Faulkner">
-      <div>
-        <div class="h-name">Nicolene Faulkner</div>
-        <div class="h-role">Head of Community &amp; Portfolio</div>
-        <div class="h-bio">Previously <strong>Yoco, Bain and Absa Capital</strong>. Runs the community day to day, and is your first point of contact for anything practical.</div>
-      </div>
-    </div>
+  <p class="intro-line">It started as <strong>a dinner in Cape Town</strong>. Instead of another networking evening we invited a few mentors and worked on real problems on the spot. So we spent the last year building a format that does that continuously.</p>
+  <div class="stat-row">
+    <div class="stat"><div class="n">100+</div><div class="l">founders running through the programme right now</div></div>
+    <div class="stat"><div class="n">2026</div><div class="l">the year we grow it further again</div></div>
+    <div class="stat"><div class="n">Free</div><div class="l">no fee, and no equity for being here</div></div>
   </div>
-  <div class="act-deadline">This started as <strong>a dinner in Cape Town</strong>. Instead of another networking evening we invited a few mentors and worked on real problems on the spot. So we spent the last year building a format that does that continuously. <strong>That's Unleash.</strong></div>
-  <div class="partner-row">
-    <span class="pl">We work with</span>
-    <span class="partner-chip"><strong>AMES</strong></span>
-    <span class="partner-chip"><strong>The Delta</strong></span>
-    <span class="partner-chip"><strong>Good Grub Dining Club</strong></span>
+  <p class="intro-line" style="margin-top:18px;">Run by <strong>Philipp Str&ouml;hemann</strong>, who invests his own money, and <strong>Nicolene Faulkner</strong>, who runs the community day to day &mdash; alongside the mentors and investors we've met along the way.</p>
+  <div class="bench">
+    <span class="b"><strong>Sizwe Nxumalo</strong> &middot; 3 Capital Ventures</span>
+    <span class="b"><strong>Luyanda Jafta</strong> &middot; founder</span>
+    <span class="b"><strong>Mark Morris</strong> &middot; joining soon</span>
+    <span class="b">AMES</span>
+    <span class="b">The Delta</span>
+    <span class="b">Good Grub Dining Club</span>
   </div>
 </div>
 <!-- 5 -->
@@ -330,70 +339,59 @@
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">04</div>
   <h2>What Unleash is</h2>
-  <div class="hk-grid">
-    <div class="hk-card"><div class="hk-icon">&#128172;</div><div><h3>The WhatsApp group</h3><p>You'll be added shortly &mdash; <strong>Nicolene sorts this once the final cohort is set</strong>. Ask there, so the answer helps everyone.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128197;</div><div><h3>The Q&amp;A calls</h3><p>At least every two weeks, <strong>Tuesdays and Thursdays over lunchtime</strong>. We'll invite you &mdash; watch that space.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128221;</div><div><h3>The venture assessment</h3><p>Start here. Some of you already have. <strong>It's the core of how Unleash works</strong> &mdash; more on it shortly.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128101;</div><div><h3>The platform</h3><p>Every member is in there, <strong>sorted by city</strong>, so you can find each other and reach out directly.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128218;</div><div><h3>Every past session</h3><p>All the Q&amp;A learnings &mdash; from the guest speakers and from the questions the community brought.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#129302;</div><div><h3>The skill repository</h3><p>Where founders share <strong>the AI skills that actually work</strong> &mdash; the same ones we run in our portfolio companies.</p></div></div>
+  <div class="arms">
+    <div class="arm">
+      <div class="al">One</div>
+      <h3>The Unleash Community</h3>
+      <p>Where you are right now. A <strong>free</strong> community for early-stage South African founders.</p>
+      <p>It helps you understand <strong>where you actually are, and what step to take next</strong> &mdash; and it's how we work out whether Unleash invests or not.</p>
+    </div>
+    <div class="arm">
+      <div class="al">Two</div>
+      <h3>Unleash Ventures</h3>
+      <p>Phil's venture investment arm for South Africa, run from a family office working across <strong>Europe and South Africa</strong>.</p>
+      <p>We incubate and start <strong>two to three companies a year</strong>. An AI-enabled studio model with the funding behind it &mdash; <strong>up to R3M from us</strong>, more from angels alongside.</p>
+      <p>Hands-on: incubation, early traction, the right first customers, the product, co-founders where they're needed, and the right advisors.</p>
+    </div>
   </div>
 </div>
 <!-- 6 -->
 <div class="slide" id="slide-6">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">05</div>
-  <h2>The investment</h2>
-  <p class="intro-line">We also look at your business <strong>alongside everything else we see</strong>, and tell you honestly where it stands.</p>
-  <div class="offer-grid">
-    <div class="offer"><div class="ol">The cheque</div><p><strong>R1M to R3M</strong> (&euro;50k&ndash;150k) into businesses we believe can reach <strong>cash-flow positive in 18 to 24 months</strong>.</p></div>
-    <div class="offer"><div class="ol">Alongside us</div><p>We bring in <strong>strategic angels and top-up funding</strong> where a round needs more than we put in.</p></div>
-    <div class="offer"><div class="ol">The terms</div><p><strong>The same share class as you.</strong> No preferences, no special rights &mdash; we dilute when you dilute, so everyone is incentivised the same way.</p></div>
-    <div class="offer"><div class="ol">The bench</div><p>Our network, the right company structure and <strong>the lawyer bench</strong>. Plus the go-to-market and tech repositories, and co-founder scouting from our database.</p></div>
+  <h2>Inside the community</h2>
+  <p class="intro-line">Free, and yours to use as much or as little as you want. <strong>What you get out of it follows what you put in.</strong></p>
+  <div class="hk-grid">
+    <div class="hk-card"><div class="hk-icon">&#128172;</div><div><h3>The WhatsApp group</h3><p>Nicolene adds you once the cohort is set. Ask there, so the answer helps everyone.</p></div></div>
+    <div class="hk-card"><div class="hk-icon">&#128197;</div><div><h3>The Q&amp;A calls</h3><p>At least every two weeks, shaped by what's actually coming up in the group.</p></div></div>
+    <div class="hk-card"><div class="hk-icon">&#128221;</div><div><h3>The venture assessment</h3><p>The written document that gets you feedback, and a one-to-one if there's a fit.</p></div></div>
+    <div class="hk-card"><div class="hk-icon">&#128202;</div><div><h3>The progress board</h3><p>Your week, in three lines. It's how you get unblocked and how you get our attention.</p></div></div>
+    <div class="hk-card"><div class="hk-icon">&#128101;</div><div><h3>The platform</h3><p>Every member, <strong>sorted by city</strong>, plus every past session and its learnings.</p></div></div>
+    <div class="hk-card"><div class="hk-icon">&#129302;</div><div><h3>The skill repository</h3><p>The AI skills that actually work &mdash; the same ones we run in our portfolio companies.</p></div></div>
   </div>
-  <div class="act-deadline">We also bring in the operators to push it forward &mdash; <strong>product, marketing and sales</strong>.</div>
 </div>
 <!-- 7 -->
 <div class="slide" id="slide-7">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">06</div>
-  <h2>What's in it for you</h2>
-  <div class="hk-grid">
-    <div class="hk-card"><div class="hk-icon">&#127919;</div><div><h3>Straight feedback</h3><p>From people who have <strong>built and sold companies here</strong> &mdash; not theory, and not a pitch deck review.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#129309;</div><div><h3>A room of peers</h3><p>Founders at your stage, across the country, who will answer when you ask.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128279;</div><div><h3>Introductions</h3><p>To advisors, customers and investors &mdash; <strong>when you tell us who you need and why</strong>.</p></div></div>
-    <div class="hk-card"><div class="hk-icon">&#128736;</div><div><h3>The tools</h3><p>The assessment, the playbooks, the AI skills we run in our own portfolio companies.</p></div></div>
+  <h2>What founders got out of it</h2>
+  <p class="intro-line">From the last two cohorts, in their own words.</p>
+  <div class="res-grid">
+    <div class="res"><div class="who">Ben &middot; hospitality software</div><div class="what">Went after hotels properly and <strong>won his first 34-room property</strong>. He's now close to <strong>R50k monthly recurring</strong>.</div></div>
+    <div class="res"><div class="who">Yazid &middot; talent marketplace</div><div class="what">Stopped chasing leads and tightened the sales process. <strong>5 to 17 paying customers</strong>, about <strong>$2,990 MRR</strong>.</div></div>
+    <div class="res"><div class="who">Brendan &middot; workspace platform</div><div class="what">Switched to a business-in-a-box model after a hot seat. <strong>10% growth month on month</strong>, 939 bookings, <strong>R149k gross</strong>.</div></div>
+    <div class="res"><div class="who">Phumi &middot; resale marketplace</div><div class="what">Restructured the growth model once the numbers were honest, then <strong>closed a seed round with external investors</strong>.</div></div>
+    <div class="res"><div class="who">Adrien &middot; HR software</div><div class="what">Stopped validating for free. <strong>Two clients agreed to become paying design partners.</strong></div></div>
+    <div class="res"><div class="who">Katlego &middot; advisory</div><div class="what">Used client work to sharpen a scalable offer. <strong>R300,000</strong> in consulting, facilitation and advisory revenue.</div></div>
+    <div class="res"><div class="who">Anna &middot; health</div><div class="what">Got the legal and tax house in order, catching <strong>a missed filing that carried a $25,000 fine</strong> &mdash; then got her CAC numbers straight.</div></div>
+    <div class="res"><div class="who">Sam &middot; enterprise software</div><div class="what">Narrowed to buyers who would actually pay. <strong>Two deals into closing, one worth about R200,000.</strong></div></div>
+    <div class="res"><div class="who">Phinda &middot; health edtech</div><div class="what">Launched a multi-campus ambassador programme and <strong>scaled usage about 7x</strong>, then validated monetisation.</div></div>
   </div>
-  <div class="act-deadline">All of it free. <strong>No fee, and no equity for being here.</strong></div>
 </div>
 <!-- 8 -->
 <div class="slide" id="slide-8">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">07</div>
-  <h2>What founders got out of it</h2>
-  <p class="intro-line">From the last two cohorts, in their own words.</p>
-  <div class="res-grid">
-    <div class="res"><div class="who">Ben &middot; hospitality software</div><div class="what">Won his <strong>first 34-room hotel</strong>, now close to <strong>R50k monthly recurring</strong>.</div></div>
-    <div class="res"><div class="who">Yazid &middot; talent marketplace</div><div class="what">Grew from <strong>5 to 17 paying customers</strong> and about <strong>$2,990 MRR</strong>.</div></div>
-    <div class="res"><div class="who">Brendan &middot; workspace platform</div><div class="what"><strong>10% growth month on month</strong>, 939 bookings, <strong>R149k gross revenue</strong>.</div></div>
-    <div class="res"><div class="who">Katlego &middot; advisory</div><div class="what"><strong>R300,000</strong> in consulting, facilitation and advisory revenue.</div></div>
-    <div class="res"><div class="who">Jamie &middot; hospitality tech</div><div class="what"><strong>R40,000 generated</strong> and <strong>12 paying customers</strong>.</div></div>
-    <div class="res"><div class="who">Phumi &middot; resale marketplace</div><div class="what">Restructured the growth model, then <strong>closed a seed round with external investors</strong>.</div></div>
-    <div class="res"><div class="who">Adrien &middot; HR software</div><div class="what">Two clients agreed to become <strong>paying design partners</strong> instead of free pilots.</div></div>
-    <div class="res"><div class="who">Phinda &middot; health edtech</div><div class="what">Scaled usage <strong>about 7x</strong> through a student ambassador programme.</div></div>
-    <div class="res"><div class="who">Dennis &middot; food tech</div><div class="what">Added <strong>5 company customers</strong> and 400 employees onto the platform.</div></div>
-    <div class="res"><div class="who">Keron &middot; enterprise software</div><div class="what">Landed a <strong>large enterprise design partner</strong>, two clusters heading into pilot.</div></div>
-    <div class="res"><div class="who">Shona &middot; executive search</div><div class="what">Launched, took first live roles, built a <strong>2,000+ candidate database</strong>.</div></div>
-    <div class="res"><div class="who">Gavin &middot; digital skills</div><div class="what"><strong>Revenue positive</strong> in a hard quarter, three new deals into contracting.</div></div>
-    <div class="res"><div class="who">Thomas &middot; games</div><div class="what">Lined up an integration reaching <strong>67 million users</strong>, plus a first paying customer.</div></div>
-    <div class="res"><div class="who">Anna &middot; health</div><div class="what">Caught a missed filing carrying a <strong>$25,000 fine</strong> &mdash; and got her CAC numbers straight.</div></div>
-    <div class="res"><div class="who">Sam &middot; enterprise software</div><div class="what">Two deals into closing, <strong>one worth about R200,000</strong>, after narrowing to buyers who would pay.</div></div>
-  </div>
-</div>
-<!-- 9 -->
-<div class="slide" id="slide-9">
-  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
-  <div class="sec">08</div>
   <h2>How to get the most out of it</h2>
   <div class="calls-split">
     <div class="calls-col">
@@ -418,10 +416,10 @@
     <p>Unleash is not responsible for your success. We're not an accelerator that runs you through a programme and hands you a fundable startup at the end. <span class="accent">The founders who are most proactive get the most of our time</span>, and they're the ones this community gets to know.</p>
   </div>
 </div>
-<!-- 10 -->
-<div class="slide" id="slide-10">
+<!-- 9 -->
+<div class="slide" id="slide-9">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
-  <div class="sec">09</div>
+  <div class="sec">08</div>
   <h2>Moving to a trimester</h2>
   <p class="intro-line">We ran quarters. The community is bigger now, there are more ventures to get through, and a quarter that ends in January runs straight into the South African holidays. <strong>So this one is four months</strong> &mdash; that way we don't lose the time, and everyone gets the attention.</p>
   <div class="tl">
@@ -434,115 +432,88 @@
     </div>
   </div>
 </div>
+<!-- 10 -->
+<div class="slide" id="slide-10">
+  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="sec">09</div>
+  <h2>Getting started</h2>
+  <div class="act-grid">
+    <div class="act-card"><div class="act-n">First</div><h3>Get acquainted</h3><p>Nicolene adds you to <strong>the WhatsApp group</strong>. Have a look around the platform, and come to a Q&amp;A &mdash; you don't need to have done anything first.</p></div>
+    <div class="act-card"><div class="act-n">Second</div><h3>Use the progress board</h3><p>One row a week, on a Friday. <strong>Your goal, your blockers, your win and learning.</strong> We read it and reply in the sheet, so you get unblocked weekly.</p></div>
+    <div class="act-card"><div class="act-n">Third</div><h3>Do the venture assessment</h3><p>If you want feedback on your venture, <strong>this is the format we work in</strong>. It's also what earns you a one-to-one.</p></div>
+  </div>
+  <div class="act-deadline">That's it for the start of the trimester. <strong>The board is the one to start today.</strong></div>
+</div>
 <!-- 11 -->
 <div class="slide" id="slide-11">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">10</div>
-  <h2>The progress board</h2>
-  <div class="board-split">
-    <div class="board-left">
-      <p class="lede2">The single most important habit here. One row per founder, three columns a week.</p>
-      <ul>
-        <li><strong>Goal for the week</strong> &mdash; what you're actually going after.</li>
-        <li><strong>Current blockers and help needed</strong> &mdash; specific enough that someone can act on it.</li>
-        <li><strong>Win and learning</strong> &mdash; what moved, and what you now know.</li>
-        <li>We read it and <strong>reply in the sheet</strong>, so you get unblocked weekly.</li>
-        <li>It shapes what the Q&amp;A calls cover &mdash; and the <strong>call schedule lives on it too</strong>, in a tab called Q&amp;A sessions.</li>
-      </ul>
-    </div>
-    <div class="board-mock">
-      <table>
-        <tr><th>Founder</th><th>Wk 1</th><th>Wk 2</th><th>Wk 3</th><th>Wk 4</th></tr>
-        <tr><td>You</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td></tr>
-        <tr><td>&nbsp;</td><td class="cell-done">&#10003;</td><td class="cell-empty">&mdash;</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td></tr>
-        <tr><td>&nbsp;</td><td class="cell-empty">&mdash;</td><td class="cell-empty">&mdash;</td><td class="cell-empty">&mdash;</td><td class="cell-empty">&mdash;</td></tr>
-        <tr><td>&nbsp;</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td><td class="cell-done">&#10003;</td><td class="cell-empty">&mdash;</td></tr>
-      </table>
-    </div>
-  </div>
-  <div class="note-strip">It only works if you're on it. <strong>Add your domain so people know what you're about &mdash; and tell us if your name isn't there.</strong></div>
-</div>
-<!-- 12 -->
-<div class="slide" id="slide-12">
-  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
-  <div class="sec">11</div>
   <h2>The venture assessment, and your one-to-one</h2>
-  <p class="intro-line">Eleven sections &mdash; snapshot, founders, customer and problem, product, market, traction, economics, go-to-market, roadmap, fundraising, risks. <strong>Everyone who submits one gets written feedback.</strong> Questions after that go on the progress board.</p>
+  <p class="intro-line">It replaces playing whack-a-mole with a pitch deck. <strong>A written document, in plain text, not slides you can hide things in</strong> &mdash; meant to give you clarity, and to show anyone outside where your venture actually stands.</p>
   <div class="calls-split">
     <div class="calls-col">
+      <div class="col-label">Why this format</div>
+      <ul class="call-list">
+        <li>You don't have to share it with us. <strong>If you want feedback on your venture, this is the format we choose.</strong></li>
+        <li>Written out, we can run <strong>our analysis tools</strong> against it &mdash; the same ones we've used to give feedback on <strong>hundreds of ventures over the last two years</strong>, and against everything else we've seen.</li>
+        <li>Afterwards we add our notes and share the document back with you.</li>
+      </ul>
+    </div>
+    <div class="calls-col right">
       <div class="col-label">The session is yours, and it's not a pitch</div>
       <ul class="call-list">
         <li>It can be <strong>sparring</strong> until you're investment-ready, whoever ends up investing.</li>
         <li>It can be <strong>a partnership</strong> &mdash; us looking seriously at investing, and what that would take.</li>
         <li>It can be <strong>no raise at all</strong>, and we work on the business instead.</li>
-      </ul>
-    </div>
-    <div class="calls-col right">
-      <div class="col-label">Who we meet in person</div>
-      <ul class="call-list">
-        <li>We can't meet everyone. We prioritise <strong>early ventures with a real customer problem and a market worth going after</strong>.</li>
-        <li>And the founders our network should meet &mdash; strongest traction, or a space we find interesting.</li>
-        <li>Last quarter we met <strong>around 70% of founders</strong>. This cohort is bigger, so it may take longer.</li>
+        <li>We can't meet everyone. Last quarter we met <strong>around 70% of founders</strong>; this cohort is bigger, so it may take longer.</li>
       </ul>
     </div>
   </div>
+</div>
+<!-- 12 -->
+<div class="slide" id="slide-12">
+  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
+  <div class="sec">11</div>
+  <h2>The Q&amp;A calls</h2>
+  <div class="act-grid">
+    <div class="act-card"><div class="act-n">When</div><h3>Tuesdays &amp; Thursdays</h3><p>Between <strong>11:00 and 14:00</strong>, over lunchtime. You'll be invited at least every two weeks &mdash; watch that space.</p></div>
+    <div class="act-card"><div class="act-n">How long</div><h3>One to 1.5 hours</h3><p>Depending on how much demand there is on the day. We'd rather run long than rush you.</p></div>
+    <div class="act-card"><div class="act-n">What's on</div><h3>You shape it</h3><p>Built from <strong>your questions and what we see on the progress board</strong>. Post a blocker and it can end up on the agenda.</p></div>
+  </div>
+  <div class="fmt-grid" style="margin-top:16px;">
+    <div class="fmt"><div class="e">&#128172;</div><h3>A community topic</h3><p>Whatever the room is wrestling with.</p></div>
+    <div class="fmt"><div class="e">&#127908;</div><h3>A guest speaker</h3><p>Real depth on one topic.</p></div>
+    <div class="fmt"><div class="e">&#128293;</div><h3>The hot seat</h3><p>One founder, questioned live.</p></div>
+    <div class="fmt"><div class="e">&#128640;</div><h3>A founder from here</h3><p>A problem they solved.</p></div>
+  </div>
+  <div class="note-strip">Someone you'd love to hear from, or something you want to share yourself? <strong>Tell Nicolene and we'll reach out.</strong> Not a pitch: a problem you solved.</div>
 </div>
 <!-- 13 -->
 <div class="slide" id="slide-13">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">12</div>
-  <h2>The Q&amp;A calls</h2>
-  <ul class="call-list dots">
-    <li><strong>At least every two weeks</strong> &mdash; more when something urgent comes up that's worth everyone's time.</li>
-    <li><strong>Tuesdays and Thursdays, between 11:00 and 14:00.</strong> Over lunchtime, so it fits around a working day.</li>
-    <li><strong>One to one and a half hours</strong>, depending on how much demand there is on the day.</li>
-    <li>Scheduled <strong>two to four weeks ahead</strong>. You'll be invited, so watch that space.</li>
-    <li>Your questions answered directly, or the room answering each other &mdash; sometimes with mentors and senior founders in with us. <strong>It's interactive.</strong></li>
-  </ul>
+  <h2>Questions we get a lot</h2>
+  <div class="faq">
+    <div class="faq-row"><div class="n">1</div><div><div class="q">What can I expect this quarter?</div><div class="a">October to get acquainted and onto the board. <strong>Assessment in by the end of October.</strong> One-to-ones from then through mid-December. November and December to execute, and we decide together in January.</div></div></div>
+    <div class="faq-row"><div class="n">2</div><div><div class="q">How do I use the progress board?</div><div class="a">One row a week, on a Friday. Your goal, your blockers, your win and learning. <strong>We reply in the sheet</strong>, and it shapes what the calls cover.</div></div></div>
+    <div class="faq-row"><div class="n">3</div><div><div class="q">What can I expect in a one-to-one with Phil?</div><div class="a">An hour on <strong>your</strong> agenda, worked from the assessment you sent. Where the business actually stands, what to do next, and a straight read on whether Unleash could be a partner &mdash; <strong>and what we'd need to see if not yet</strong>.</div></div></div>
+  </div>
 </div>
 <!-- 14 -->
 <div class="slide" id="slide-14">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">13</div>
-  <h2>What a session can be</h2>
-  <div class="fmt-grid">
-    <div class="fmt"><div class="e">&#128172;</div><h3>A community topic</h3><p>A Q&amp;A on whatever the room is wrestling with right now.</p></div>
-    <div class="fmt"><div class="e">&#127908;</div><h3>A guest speaker</h3><p>Someone with real depth on one specific topic.</p></div>
-    <div class="fmt"><div class="e">&#128293;</div><h3>The hot seat</h3><p>A founder volunteers and gets questioned. Like the assessment, but shorter.</p></div>
-    <div class="fmt"><div class="e">&#128640;</div><h3>A founder from here</h3><p>Someone from this community, on a problem they solved.</p></div>
-  </div>
-  <div class="proc-warning">
-    <div class="label">Tell Nicolene</div>
-    <p>Is there someone you'd love to hear from, or something you want to share yourself? A guest speaker, a founder you find inspiring, an investor, a subject-matter expert &mdash; <span class="accent">let us know and we'll reach out</span>. Not a pitch: a problem you solved.</p>
-  </div>
-</div>
-<!-- 15 -->
-<div class="slide" id="slide-15">
-  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
-  <div class="sec">14</div>
-  <h2>Questions we get a lot</h2>
-  <div class="faq">
-    <div class="faq-row"><div class="n">1</div><div><div class="q">What can I expect this quarter?</div><div class="a">October to get acquainted and onto the board. Assessment in by <strong>1 November</strong>. One-to-ones from end of October. November and December to execute, and we decide together in January.</div></div></div>
-    <div class="faq-row"><div class="n">2</div><div><div class="q">How do I use the progress board?</div><div class="a">One row a week, on a Friday. Your goal, your blockers, your win and learning. <strong>We reply in the sheet</strong>, and it shapes what the calls cover.</div></div></div>
-    <div class="faq-row"><div class="n">3</div><div><div class="q">When can I expect a one-to-one with Phil?</div><div class="a">Between <strong>mid-October and mid-December</strong>. First come, first served &mdash; so it's worth starting the assessment in detail now.</div></div></div>
-    <div class="faq-row"><div class="n">4</div><div><div class="q">How often do you invest?</div><div class="a"><strong>Two to three a year</strong>, at R1M to R3M, with strategic angels alongside where a round needs more.</div></div></div>
-    <div class="faq-row"><div class="n">5</div><div><div class="q">What if you don't invest &mdash; what happens then?</div><div class="a">That's the normal outcome, and it isn't a failure. <strong>You keep the written feedback and stay in the community</strong> &mdash; the calls, the introductions, all of it &mdash; and we tell you what we see in our network for you.</div></div></div>
-  </div>
-</div>
-<!-- 16 -->
-<div class="slide" id="slide-16">
-  <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
-  <div class="sec">15</div>
   <h2>Key upcoming dates</h2>
   <div class="datelist">
     <div class="dl-row"><span class="dl-when">Tue 22 September</span><span class="dl-what">Guest session with <strong>Luyanda Jafta</strong>, 13:00. Everyone welcome.</span></div>
-    <div class="dl-row"><span class="dl-when">From end October</span><span class="dl-what"><strong>One-to-one sessions begin</strong>, running through to mid-December.</span></div>
-    <div class="dl-row"><span class="dl-when">1 November</span><span class="dl-what"><strong>Venture assessment deadline</strong> &mdash; at the latest.</span></div>
-    <div class="dl-row"><span class="dl-when">End of January</span><span class="dl-what">The trimester closes.</span></div>
+    <div class="dl-row"><span class="dl-when">1 October</span><span class="dl-what"><strong>The trimester starts.</strong> Get acquainted, and get onto the progress board.</span></div>
+    <div class="dl-row"><span class="dl-when">Every Friday</span><span class="dl-what">Update the progress board. <strong>The one habit that carries the rest.</strong></span></div>
+    <div class="dl-row"><span class="dl-when">End of October</span><span class="dl-what"><strong>Venture assessment in</strong> &mdash; and one-to-one sessions begin.</span></div>
+    <div class="dl-row"><span class="dl-when">To mid-December</span><span class="dl-what">One-to-ones run through. Then we decide together in January.</span></div>
   </div>
 </div>
-<!-- 17 -->
-<div class="slide qa-slide slide-title" id="slide-17">
+<!-- 15 -->
+<div class="slide qa-slide slide-title" id="slide-15">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="glow-dot glow-dot-1"></div><div class="glow-dot glow-dot-2"></div><div class="glow-dot glow-dot-3"></div>
   <div class="community-tag">Over to you</div>
@@ -555,27 +526,14 @@
   </div>
 </div>
 
-<div class="slide-counter"><span id="current">1</span> / <span id="total">17</span></div>
-<div class="nav">
-  <button onclick="prev()">&larr; Back</button>
-  <button onclick="next()">Next &rarr;</button>
-</div>
-
+<div class="slide-counter"><span id="current">1</span> / <span id="total">15</span></div>
+<div class="nav"><button onclick="prev()">&larr; Back</button><button onclick="next()">Next &rarr;</button></div>
 <script>
-  let current = 1;
-  const total = 17;
-  function show(n) {
-    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    document.getElementById('slide-' + n).classList.add('active');
-    document.getElementById('current').textContent = n;
-  }
+  let current = 1; const total = 15;
+  function show(n) { document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById('slide-'+n).classList.add('active'); document.getElementById('current').textContent = n; }
   function next() { if (current < total) { current++; show(current); } }
   function prev() { if (current > 1) { current--; show(current); } }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
-  });
+  document.addEventListener('keydown', (e) => { if (e.key==='ArrowRight'||e.key===' ') { e.preventDefault(); next(); } if (e.key==='ArrowLeft') { e.preventDefault(); prev(); } });
 </script>
-
 </body>
 </html>
