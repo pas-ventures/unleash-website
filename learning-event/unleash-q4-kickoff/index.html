@@ -277,6 +277,14 @@
   .arm p { font-size: 15.5px; color: var(--text); line-height: 1.5; margin-bottom: 9px; }
   .arm p strong { color: var(--white); }
   .arms { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 18px; }
+  .th-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+  .th-tile { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; display: flex; gap: 18px; align-items: flex-start; }
+  .th-n { flex: 0 0 44px; height: 44px; border-radius: 10px; background: var(--accent-light); border: 1px solid var(--accent-border); color: var(--accent); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center; }
+  .th-tile p { font-size: 19px; line-height: 1.45; color: var(--text); margin: 0; }
+  .th-tile strong { color: var(--white); }
+  .bench-label { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 14px; }
+  .dinner-row { display: flex; gap: 12px; margin-top: 14px; }
+  .dinner-row img { flex: 1; min-width: 0; height: 150px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -313,18 +321,18 @@
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">02</div>
   <h2>What if South African founders built revenue-driven businesses instead of depending on investors?</h2>
-  <ul class="call-list dots big" style="margin-top:26px;">
-    <li>Since 2024 we've spoken to hundreds of founders. The same pattern: <strong>a perceived lack of funding, and a perceived dependency on VC</strong> &mdash; which pushes founders into building pitch decks instead of working on customer outcomes.</li>
-    <li>Venture capital is a good path for some. <strong>Our analysis says it isn't the reality for most companies anywhere in the world.</strong> Why would South Africa be different? It costs years &mdash; and even when the exit comes, often little of it lands with you.</li>
-    <li>We think the next wave of <strong>AI businesses in South Africa gets funded differently</strong>. That's what Unleash Ventures invests in, and what this community is for.</li>
-    <li>The result for you: <strong>more optionality, more control of your business, and more flexibility when things get uncertain.</strong></li>
-  </ul>
+  <div class="th-grid">
+    <div class="th-tile"><div class="th-n">1</div><p>Since 2024 we've spoken to hundreds of founders. The same pattern: <strong>a perceived lack of funding, and a perceived dependency on VC</strong> &mdash; which pushes founders into building pitch decks instead of working on customer outcomes.</p></div>
+    <div class="th-tile"><div class="th-n">2</div><p>Venture capital is a good path for some. <strong>Our analysis says it isn't the reality for most companies anywhere in the world.</strong> Why would South Africa be different? It costs years &mdash; and even when the exit comes, often little of it lands with you.</p></div>
+    <div class="th-tile"><div class="th-n">3</div><p>We think the next wave of <strong>AI businesses in South Africa gets funded differently</strong>. That's what Unleash Ventures invests in, and what this community is for.</p></div>
+    <div class="th-tile"><div class="th-n">4</div><p>The result for you: <strong>more optionality, more control of your business, and more flexibility when things get uncertain.</strong></p></div>
+  </div>
 </div>
 <!-- 4 -->
 <div class="slide" id="slide-4">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">03</div>
-  <h2>How this came to life</h2>
+  <h2>How this came to life, and who is behind it</h2>
   <p class="lead-orange">We started with <strong>a dinner in Cape Town</strong> instead of another networking event. We invited mentors with a track record and <strong>solved founders' problems on the spot</strong>. The feedback was overwhelmingly positive &mdash; so we built an online community that does it continuously.</p>
   <div class="hosts-row">
     <div class="host-card">
@@ -344,6 +352,7 @@
       </div>
     </div>
   </div>
+  <div class="bench-label">Partners and mentors, 2024&ndash;2026 &mdash; with many more to come</div>
   <div class="bench">
     <span class="b"><strong>AMES</strong></span>
     <span class="b"><strong>The Delta</strong></span>
@@ -361,7 +370,7 @@
 <div class="slide" id="slide-5">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">04</div>
-  <h2>The Unleash ecosystem</h2>
+  <h2>Unleash Ventures: a new studio approach for South Africa</h2>
   <div class="arms">
     <div class="arm">
       <div class="al">One</div>
@@ -372,7 +381,7 @@
     </div>
     <div class="arm">
       <div class="al">Two</div>
-      <h3>Unleash Ventures</h3>
+      <h3>Unleash Ventures, the investing arm</h3>
       <p>Our venture investment arm, part of <strong>Philipp's family office</strong>.</p>
       <p>We incubate and start <strong>two to three companies a year</strong> on an AI-enabled studio model.</p>
       <p>That means we help with whatever it takes &mdash; <strong>a shadow co-founder from tech through to go-to-market</strong>, the right angels alongside, and introductions to first customers and advisors.</p>
@@ -401,29 +410,28 @@
   <h2>Founder results from 2026</h2>
   <div class="res-grid">
     <div class="res"><div class="who">Ben &middot; hospitality software</div><div class="what">Went after hotels properly and <strong>won his first 34-room property</strong>. Now close to <strong>R50k monthly recurring</strong>.</div></div>
-    <div class="res"><div class="who">Yazid &middot; talent marketplace</div><div class="what">Tightened the sales process instead of chasing leads. from <strong>5 to 17 paying customers</strong>, about <strong>$2,990 MRR</strong>.</div></div>
+    <div class="res"><div class="who">Yazid &middot; talent marketplace</div><div class="what">Tightened the sales process instead of chasing leads. From <strong>5 to 17 paying customers</strong>, about <strong>$2,990 MRR</strong>.</div></div>
     <div class="res"><div class="who">Brendan &middot; workspace platform</div><div class="what">Switched to a business-in-a-box model after a hot seat. <strong>10% growth month on month</strong>, 939 bookings, <strong>R149k gross</strong>.</div></div>
-    <div class="res"><div class="who">Phumi &middot; resale marketplace</div><div class="what">Restructured the growth model once the numbers were honest, then <strong>closed a seed round with external investors</strong>.</div></div>
+    <div class="res"><div class="who">Phumi &middot; fashion marketplace</div><div class="what">Restructured the growth model once the numbers were honest, then <strong>closed a seed round with external investors</strong>.</div></div>
     <div class="res"><div class="who">Adrien &middot; HR software</div><div class="what">Stopped validating for free. <strong>Two clients agreed to become paying design partners.</strong></div></div>
-    <div class="res"><div class="who">Katlego &middot; advisory</div><div class="what">Used client work to sharpen a scalable offer. <strong>R300,000</strong> in consulting and advisory revenue.</div></div>
-    <div class="res"><div class="who">Anna &middot; health</div><div class="what">Got legal and tax in order, catching <strong>a missed filing carrying a $25,000 fine</strong> &mdash; then got her CAC numbers straight.</div></div>
+    <div class="res"><div class="who">Katlego &middot; advisory and analytics</div><div class="what">Used client work to sharpen a scalable offer. <strong>R300,000</strong> in consulting and advisory revenue.</div></div>
+    <div class="res"><div class="who">Anna &middot; health platform</div><div class="what">Got legal and tax in order, catching <strong>a missed filing carrying a $25,000 fine</strong> &mdash; then got her CAC numbers straight.</div></div>
     <div class="res"><div class="who">Sam &middot; enterprise software</div><div class="what">Narrowed to buyers who would actually pay. <strong>Two deals into closing, one worth about R200,000.</strong></div></div>
-    <div class="res"><div class="who">Phinda &middot; health edtech</div><div class="what">Ran a multi-campus ambassador programme and <strong>scaled usage about 7x</strong>, then validated monetisation.</div></div>
-    <div class="res"><div class="who">Jamie &middot; hospitality tech</div><div class="what"><strong>R40,000 generated</strong> and <strong>12 paying customers</strong> in a single quarter.</div></div>
-    <div class="res"><div class="who">Dennis &middot; food tech</div><div class="what">Added <strong>5 company customers</strong> and 400 employees onto the platform.</div></div>
+    <div class="res"><div class="who">Phinda &middot; health tech</div><div class="what">Ran a multi-campus ambassador programme and <strong>scaled usage about 7x</strong>, then validated monetisation.</div></div>
+    <div class="res"><div class="who">Jamie &middot; event space SaaS</div><div class="what"><strong>R40,000 generated</strong> and <strong>12 paying customers</strong> in a single quarter.</div></div>
+    <div class="res"><div class="who">Dennis &middot; company benefits platform</div><div class="what">Added <strong>5 company customers</strong> and 400 employees onto the platform.</div></div>
     <div class="res"><div class="who">Keron &middot; enterprise software</div><div class="what">Landed a <strong>large enterprise design partner</strong>, with two business clusters heading into pilot.</div></div>
-    <div class="res"><div class="who">Shona &middot; executive search</div><div class="what">Launched, took her first live roles, and built a <strong>2,000+ candidate database</strong>.</div></div>
-    <div class="res"><div class="who">Gavin &middot; digital skills</div><div class="what"><strong>Revenue positive</strong> in a hard quarter, with three new deals moving into contracting.</div></div>
-    <div class="res"><div class="who">Thomas &middot; games</div><div class="what">Lined up an integration reaching <strong>67 million users</strong>, plus a first paying customer.</div></div>
+    <div class="res"><div class="who">Shona &middot; two-sided hiring marketplace</div><div class="what">Launched, took her first live roles, and built a <strong>2,000+ candidate database</strong>.</div></div>
+    <div class="res"><div class="who">Gavin &middot; e-learning platform</div><div class="what"><strong>Revenue positive</strong> in a hard quarter, with three new deals moving into contracting.</div></div>
+    <div class="res"><div class="who">Thomas &middot; consumer gaming</div><div class="what">Lined up an integration reaching <strong>67 million users</strong>, plus a first paying customer.</div></div>
   </div>
 </div>
 <!-- 8 -->
 <div class="slide" id="slide-8">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">07</div>
-  <h2>How to get the most out of it</h2>
-  <p class="intro-line">Those founders did it the right way. <strong>You have to find your own way of using and absorbing what's here</strong> &mdash; but this is what we'd recommend.</p>
-  <div class="calls-split">
+  <h2>Agency and proactivity</h2>
+  <div class="calls-split" style="grid-template-columns:1fr;">
     <div class="calls-col">
       <div class="col-label">Stay active</div>
       <ul class="call-list">
@@ -431,13 +439,6 @@
         <li><strong>Bring your questions.</strong> Come prepared.</li>
         <li><strong>Work with the progress board</strong> every week.</li>
         <li><strong>Help other people out.</strong> It's how the room &mdash; and we &mdash; get to see how you work.</li>
-      </ul>
-    </div>
-    <div class="calls-col right">
-      <div class="col-label">How we show up</div>
-      <ul class="call-list">
-        <li><strong>Keep it confidential.</strong> People share openly here and we expect everyone to honour that.</li>
-        <li><strong>No pitching, no spam.</strong> We want to hear about your venture &mdash; keep side offers out of it.</li>
       </ul>
     </div>
   </div>
@@ -450,8 +451,8 @@
 <div class="slide" id="slide-9">
   <div class="top-bar"></div><div class="logo-bar"><img src="../../unleash-logo-transparent.png" alt="Unleash"></div>
   <div class="sec">08</div>
-  <h2>Unleash works in cohorts</h2>
-  <p class="intro-line">One cohort per trimester, and <strong>this one runs October to January</strong>. Cohorts give everyone the same focus and proper sprints, instead of everybody drifting at their own pace. The cohort is your anchor &mdash; you stay in the community as long as you like.</p>
+  <h2>Unleash works in focused cohorts</h2>
+  <p class="intro-line">One cohort per trimester. <strong>We shape each cohort around what the companies in it need</strong> &mdash; that's how we give you the best help we can. <strong>This one runs October to January</strong>, and we run three to four cohorts a year, depending on the businesses and the cohort size.</p>
   <div class="tl">
     <div class="tl-rail"></div>
     <div class="tl-row">
@@ -469,9 +470,9 @@
   <h2>Getting started</h2>
   <p class="intro-line">As easy as one, two, three.</p>
   <div class="act-grid">
-    <div class="act-card"><div class="act-n">One</div><h3>&#128172;&nbsp; Join the group</h3><p><strong>Nicolene will invite you</strong> once the cohort is set. Introduce yourself when you land.</p></div>
-    <div class="act-card"><div class="act-n">Two</div><h3>&#128202;&nbsp; Use the progress board</h3><p>One row a week. <strong>Share what you're comfortable sharing</strong> &mdash; that's enough to work with.</p></div>
-    <div class="act-card"><div class="act-n">Three</div><h3>&#128221;&nbsp; Start the assessment</h3><p>It takes longer than people expect, so start early. <strong>In by 1 November to be included in this round.</strong> Stuck on anything? Bring it to a call or the board.</p></div>
+    <div class="act-card"><div class="act-n">One</div><h3>&#128172;&nbsp; Join the group and get acquainted</h3><p><strong>Nicolene adds you</strong> once the cohort is set. Introduce yourself when you land.</p></div>
+    <div class="act-card"><div class="act-n">Two</div><h3>&#128202;&nbsp; Use the progress board from 1 October</h3><p>One row a week. <strong>Share what you're comfortable sharing</strong> &mdash; that's enough to work with.</p></div>
+    <div class="act-card"><div class="act-n">Three</div><h3>&#128221;&nbsp; Join the Q&amp;A and start the assessment</h3><p>Come to the calls. Start the assessment early &mdash; <strong>in by 1 November to be included in this round.</strong></p></div>
   </div>
 </div>
 <!-- 11 -->
@@ -529,9 +530,8 @@
   <div class="faq">
     <div class="faq-row"><div class="q">What can I expect this trimester?</div><div class="a">Get acquainted and onto the board in October. <strong>Submit the assessment by 1 November to be included in this round</strong>, then your one-to-one, with feedback and sessions running <strong>through December</strong>. We decide together in January.</div></div>
     <div class="faq-row"><div class="q">Will Unleash Ventures invest in my business?</div><div class="a">If it's the right fit, we'd love to. Full disclosure: <strong>we invest in two to three companies a year</strong>, so most of the time the answer is no &mdash; and you still get the feedback and, where we can, introductions to the right next step. <strong>You get value either way.</strong></div></div>
-    <div class="faq-row"><div class="q">What do most people actually come for?</div><div class="a"><strong>The right community, the right peer group, and the right introductions</strong> to move the business forward. That's what founders tell us afterwards.</div></div>
     <div class="faq-row"><div class="q">Why do you spend so much time on this?</div><div class="a">Because it's the job. Seeing businesses, meeting founders and building relationships is what any investor does &mdash; <strong>we just do it in a way that's useful to the community while we're at it</strong>. Instead of networking, a value exchange. And we get to meet the people we want to do business with for the rest of our lives.</div></div>
-    <div class="faq-row"><div class="q">Will you introduce me to angels and advisors?</div><div class="a">Where we can be useful and it's a genuine fit, <strong>we love sharing our connections</strong>. No guarantees &mdash; our partners' preferences count too. If it matches, we make the introduction. If it doesn't, we tell you why.</div></div>
+    <div class="faq-row"><div class="q">Will you introduce me to angels and advisors?</div><div class="a">We do our best, but <strong>we can't promise it</strong>. When we see a fit, we share you with our network &mdash; send us a one-pager and we'll pass it on and ask them to reach out. If you don't hear back, it wasn't relevant enough for them. And the right moment rarely lands inside one cohort: we meet in October, and the right investor turns up next May. <strong>So keep in touch and keep us updated</strong> &mdash; that's how it actually works.</div></div>
     <div class="faq-row"><div class="q">How do I connect with other founders?</div><div class="a">The WhatsApp group and <strong>the platform, where members are sorted by city</strong>. Nicolene also matches founders directly.</div></div>
     <div class="faq-row"><div class="q">How can I trust you?</div><div class="a">Don't take our word for it. <strong>Take the references, speak to people in our network, and ask other members</strong> what it's actually been like.</div></div>
   </div>
