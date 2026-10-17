@@ -363,8 +363,14 @@ async function checkRateLimit(env, ip, kind) {
   }
 }
 
+// Retired 17.10.2026: the member pages are gone; the code stays for later reuse.
+// Before switching RETIRED off, add real auth (Turnstile or a signed session) — an Origin check is not auth,
+// and /api/done must only email verified or internal addresses.
+const RETIRED = true;
+
 export default {
   async fetch(request, env, ctx) {
+    if (RETIRED) return new Response("This tool has been retired.", { status: 410 });
     const url = new URL(request.url);
     const origin = request.headers.get('Origin') || '';
     const corsHeaders = { ...getCorsHeaders(origin), 'Content-Type': 'application/json' };
