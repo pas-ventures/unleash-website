@@ -1,0 +1,15 @@
+name = "luna-go-to-market-deep-dive"
+main = "worker.js"
+compatibility_date = "2026-05-11"
+
+# Workers Logs — visible in Cloudflare dashboard
+[observability]
+enabled = true
+
+# Rate limiting: 20 chat requests per minute, 5 done-submissions per day per IP
+# (Cloudflare Workers Rate Limiting binding — free tier)
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 20, period = 60 }
