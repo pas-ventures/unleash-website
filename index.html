@@ -1,346 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unleash — For South African Founders</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root { --accent: #FF6719; --dark: #111; --card: #181818; --border: rgba(255,255,255,0.06); --text: #c8c8c8; --muted: #777; --white: #f0f0f0; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--dark); line-height: 1.65; -webkit-font-smoothing: antialiased; }
-  a { color: var(--accent); text-decoration: none; }
-
-  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(17,17,17,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-  .nav-inner { max-width: 980px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
-  nav img { height: 26px; opacity: 0.85; }
-  .nav-links { display: flex; gap: 26px; align-items: center; }
-  .nav-links a { color: var(--muted); font-size: 13px; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--white); }
-  .nav-cta { background: var(--white); color: var(--dark) !important; padding: 7px 20px; border-radius: 5px; font-weight: 600; font-size: 13px; }
-  .nav-cta:hover { background: #ddd; }
-
-  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; }
-  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0.15; filter: grayscale(30%); }
-  .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(17,17,17,0.97) 35%, rgba(17,17,17,0.75) 100%); }
-  .hero-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; padding: 140px 28px 100px; }
-  .hero-tag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
-  .hero h1 { font-family: 'Spectral', serif; font-size: clamp(34px, 4.5vw, 52px); font-weight: 700; color: var(--white); line-height: 1.12; margin-bottom: 22px; max-width: 600px; }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 460px; margin-bottom: 36px; line-height: 1.7; }
-  .btn-w { display: inline-block; background: var(--white); color: var(--dark); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.2s; }
-  .btn-w:hover { background: #ddd; transform: translateY(-1px); }
-  .btn-o { display: inline-block; border: 1px solid rgba(255,255,255,0.12); color: var(--white); padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s; }
-  .btn-o:hover { border-color: rgba(255,255,255,0.25); }
-  .hero-sub { margin-top: 12px; font-size: 12px; color: var(--muted); }
-  .hero-stats { display: flex; gap: 36px; margin-top: 56px; }
-  .hero-stat .n { font-family: 'Spectral', serif; font-size: 26px; font-weight: 700; color: var(--white); }
-  .hero-stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
-
-  section { padding: 90px 28px; max-width: 980px; margin: 0 auto; }
-  .stag { font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
-  h2 { font-family: 'Spectral', serif; font-size: clamp(24px, 3vw, 34px); font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
-  .sub { font-size: 14px; color: var(--muted); max-width: 500px; margin-bottom: 44px; line-height: 1.6; }
-  .sep { max-width: 980px; margin: 0 auto; padding: 0 28px; }
-  .sep hr { border: none; border-top: 1px solid var(--border); }
-
-  /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: 260px 1fr; gap: 44px; align-items: start; }
-  .about-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; filter: grayscale(20%); }
-  .about-body h3 { font-family: 'Spectral', serif; font-size: 22px; color: var(--white); margin-bottom: 16px; line-height: 1.3; }
-  .about-body p { font-size: 14px; color: var(--text); margin-bottom: 14px; line-height: 1.7; }
-  .about-body .hl { color: var(--white); font-weight: 600; }
-  .about-metrics { display: flex; gap: 32px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
-  .about-metric .n { font-family: 'Spectral', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
-  .about-metric .l { font-size: 11px; color: var(--muted); }
-
-  /* BELIEFS */
-  .beliefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-  .belief { padding: 18px 0; border-bottom: 1px solid var(--border); }
-  .belief h3 { font-size: 13px; color: var(--white); font-weight: 600; margin-bottom: 3px; }
-  .belief p { font-size: 12px; color: var(--muted); }
-
-  /* FUNNEL */
-  .funnel { display: flex; flex-direction: column; max-width: 560px; }
-  .funnel-step { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; position: relative; }
-  .funnel-step:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 52px; bottom: -2px; width: 1px; background: rgba(255,255,255,0.04); }
-  .funnel-num { min-width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; background: var(--card); border: 1px solid var(--border); color: var(--muted); position: relative; z-index: 1; }
-  .funnel-step.active .funnel-num { background: var(--accent); color: white; border-color: var(--accent); }
-  .funnel-body h3 { font-size: 14px; color: var(--white); font-weight: 600; margin-bottom: 3px; }
-  .funnel-body p { font-size: 12px; color: var(--muted); line-height: 1.5; }
-
-  /* TESTIMONIALS */
-  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  .test { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
-  .test blockquote { font-size: 13px; color: var(--text); line-height: 1.65; margin-bottom: 18px; }
-  .test blockquote::before { content: '\201C'; font-family: 'Spectral', serif; font-size: 28px; color: var(--accent); display: block; margin-bottom: -8px; }
-  .test .author { display: flex; align-items: center; gap: 10px; }
-  .test .avatar { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--muted); font-size: 12px; }
-  .test .name { font-size: 12px; color: var(--white); font-weight: 600; }
-  .test .name a { color: var(--white); } .test .name a:hover { color: var(--accent); }
-  .test .role { font-size: 11px; color: var(--muted); }
-
-  /* SUBSTACK ARTICLES */
-  .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
-  .art { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; display: block; color: var(--text); }
-  .art:hover { border-color: rgba(255,255,255,0.12); }
-  .art-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-  .art-body { padding: 18px; }
-  .art-tag { font-size: 10px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-  .art h3 { font-size: 14px; color: var(--white); font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
-  .art p { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .art .read { font-size: 11px; color: var(--accent); margin-top: 8px; display: inline-block; }
-
-  /* EVENTS */
-  .events-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .ev { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
-  .ev:hover { border-color: rgba(255,255,255,0.1); }
-  .ev .thumb { width: 100%; aspect-ratio: 16/9; background: #1a1a1a; display: flex; align-items: center; justify-content: center; position: relative; }
-  .ev .thumb .play { width: 44px; height: 44px; background: rgba(255,103,25,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .ev .thumb .play::after { content: ''; border-style: solid; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent white; margin-left: 2px; }
-  .ev .thumb a { position: absolute; inset: 0; z-index: 1; }
-  .ev-info { padding: 16px; }
-  .ev-date { font-size: 10px; color: var(--accent); font-weight: 600; letter-spacing: 0.5px; margin-bottom: 3px; }
-  .ev h3 { font-size: 14px; color: var(--white); margin-bottom: 4px; font-weight: 600; }
-  .ev p { font-size: 11px; color: var(--muted); }
-  .ev.next { border-color: var(--accent); }
-  .ev.next .thumb { background: linear-gradient(135deg, #cc5210, var(--accent)); }
-
-  .talks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 24px; }
-  .talk { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; display: flex; align-items: center; gap: 8px; transition: border-color 0.2s; color: var(--text); }
-  .talk:hover { border-color: rgba(255,255,255,0.1); }
-  .talk-play { color: var(--accent); font-size: 14px; }
-  .talk-name { font-size: 12px; }
-  .talk-name small { color: var(--muted); display: block; font-size: 11px; }
-
-  .final-cta { text-align: center; padding: 110px 28px; }
-  .final-cta h2 { font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 14px; }
-  .final-cta p { max-width: 420px; margin: 0 auto 32px; font-size: 15px; color: var(--muted); }
-
-  footer { border-top: 1px solid var(--border); padding: 32px 28px; text-align: center; }
-  footer .f-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
-  footer .f-links a { color: var(--muted); font-size: 12px; } footer .f-links a:hover { color: var(--accent); }
-  footer .copy { font-size: 11px; color: #383838; }
-
-  /* FLYING QUOTES */
-  .hero-quotes { margin-top: 32px; max-width: 560px; height: 56px; overflow: hidden; position: relative; border-left: 2px solid var(--accent); padding-left: 16px; }
-  .hero-quotes .quote-track { display: flex; flex-direction: column; animation: quoteScroll 12s ease-in-out infinite; }
-  .hero-quotes .hq { padding: 8px 0; font-size: 15px; color: var(--accent); font-style: italic; height: 56px; display: flex; align-items: center; font-weight: 500; }
-  .hero-quotes .hq span { color: var(--muted); font-style: normal; font-size: 11px; margin-left: 12px; white-space: nowrap; font-weight: 400; }
-  @keyframes quoteScroll {
-    0%, 20% { transform: translateY(0); }
-    25%, 45% { transform: translateY(-56px); }
-    50%, 70% { transform: translateY(-112px); }
-    75%, 95% { transform: translateY(-168px); }
-    100% { transform: translateY(-224px); }
-  }
-
-  @media (max-width: 700px) {
-    .nav-links a:not(.nav-cta) { display: none; }
-    .hero-stats { flex-direction: column; gap: 16px; }
-    .about-grid { grid-template-columns: 1fr; }
-    .about-photo { max-width: 260px; }
-    .about-metrics { flex-wrap: wrap; }
-    .testimonials { grid-template-columns: 1fr; }
-    .articles-grid { grid-template-columns: 1fr; }
-  }
-</style>
+<meta charset="utf-8">
+<link rel="canonical" href="https://unleash-ventures.com/">
+<meta name="description" content="Unleash is a free, application-only community for early-stage South African founders, run by people who have founded, scaled and exited their own companies.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unleash Ventures — For South African Founders</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23FF6719'/%3E%3Ctext x='50%25' y='54' text-anchor='middle' font-family='Anton,Impact,sans-serif' font-size='52' fill='%23111'%3EU.%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/collage.css">
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <img src="img/logo.png" alt="Unleash">
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#how">How It Works</a>
-      <a href="https://app.unleash-ventures.com/">Members</a>
-      <a href="/resources">Resources</a>
-      <a href="https://tally.so/r/7Rx9z2" target="_blank" class="nav-cta">Apply</a>
-    </div>
-  </div>
-</nav>
+<header class="nav"><div class="wrap">
+<a href="/" class="wm" aria-label="Unleash home">Unleash<i>.</i></a>
+<button class="menu" type="button" aria-expanded="false" aria-controls="navlist" onclick="const n=this.closest('.nav');const o=n.classList.toggle('open');this.setAttribute('aria-expanded',o);this.textContent=o?'Close':'Menu'">Menu</button>
+<ul id="navlist">
+<li><a href="/#phil">About</a></li>
+<li><a href="/venture-studio/">Venture Studio</a></li>
+<li><a href="/founder-stories/">Founder stories</a></li>
+<li><a href="/community/">Community &amp; support</a></li>
+<li><a href="/resources/">Resources &amp; tools</a></li>
+<li><a href="/investors/">Investors</a></li>
+<li><a href="https://app.unleash-ventures.com/">Members</a></li>
+<li><a class="cta" href="https://tally.so/r/7Rx9z2" target="_blank" rel="noopener">Apply</a></li>
+</ul>
+</div></header>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg"><img src="img/phil-cape-town.jpg" alt=""></div>
-  <div class="hero-content">
-    <div class="hero-tag">For South African Founders</div>
-    <h1>Get access to the capital and mentors who have built, scaled, and sold their tech businesses internationally.</h1>
-    <p>Unleash is a community of former builders for South African founders. Access the right capital at the right time — without entering the fundraising rat race.</p>
-    <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply Now</a>
-    <a href="https://philunleashed.substack.com/p/the-biggest-issue-for-south-african" target="_blank" class="btn-o" style="margin-left: 12px;">Learn More</a>
-    <div class="hero-sub">Free to join. Active commitment required. Apply in 5 minutes.</div>
-    <div class="hero-quotes">
-      <div class="quote-track">
-        <div class="hq">"A single conversation broke through clouds I'd been stuck in for months." <span>— Gavin W., Digify Africa</span></div>
-        <div class="hq">"The most detailed and constructive input I've received so far." <span>— Phumi K., Kloset Klub</span></div>
-        <div class="hq">"We've used what I learned to completely reframe our strategy." <span>— Phinda N., Four Minute Medicine</span></div>
-        <div class="hq">"We are now moving full steam ahead to implement these." <span>— Rene H., Proco</span></div>
-        <div class="hq">"A single conversation broke through clouds I'd been stuck in for months." <span>— Gavin W., Digify Africa</span></div>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="n">Billions ZAR</div><div class="l">Enterprise Value Generated</div></div>
-      <div class="hero-stat"><div class="n">1,000+</div><div class="l">Founders Supported</div></div>
-      <div class="hero-stat"><div class="n">Incubation → Exit</div><div class="l">Full-Cycle Track Record</div></div>
-    </div>
-  </div>
+<section class="hero" data-screen-label="01 Hero"><div class="wrap">
+<div class="split">
+<h1 class="big">For South<br>African<br>founders</h1>
+<div class="photo tr"><img src="/assets/phil-cape-town.jpg" alt="Phil speaking in Cape Town"></div>
 </div>
-
-<div class="sep"><hr></div>
-
-<!-- ABOUT PHIL -->
-<section id="about">
-  <div class="stag">Who's Behind This</div>
-  <h2>Meet Phil</h2>
-  <div class="about-grid">
-    <img class="about-photo" src="img/phil-cape-town.jpg" alt="Philipp Ströhemann">
-    <div class="about-body">
-      <h3>Exited Founder & Investor</h3>
-      <p>Philipp Ströhemann first landed in Cape Town in 2014 for a business school exchange — and never really left. He co-founded his first company with a South African partner that same year.</p>
-      <p>Over 15 years, Phil has built and scaled multiple businesses across B2B SaaS, marketplaces, and tech-enabled services — from founding to exit. He's been through the full cycle: <span class="hl">bootstrapping, building sales teams, scaling revenue, and selling to private equity.</span></p>
-      <p>Now he's putting that experience — and his own capital — behind the next generation of South African founders. Not as a fund manager, but as someone who shows up, rolls up his sleeves, and works alongside you on GTM, sales, pricing, hiring, and execution.</p>
-      <p><span class="hl">The ecosystem doesn't need more advice. It needs people who have done it.</span></p>
-      <p style="margin-top: 8px;">
-        <a href="https://pas-ventures.com" target="_blank" style="color: var(--accent); font-size: 13px; font-weight: 600;">Learn more about Phil &rarr;</a>
-        &nbsp;&nbsp;
-        <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank" style="color: var(--muted); font-size: 13px; font-weight: 500;">LinkedIn</a>
-        &nbsp;&middot;&nbsp;
-        <a href="https://philunleashed.substack.com" target="_blank" style="color: var(--muted); font-size: 13px; font-weight: 500;">Substack</a>
-      </p>
-      <div class="about-metrics">
-        <div class="about-metric"><div class="n">15+</div><div class="l">Years Building</div></div>
-        <div class="about-metric"><div class="n">Multiple Exits</div><div class="l">to PE & Strategic Buyers</div></div>
-        <div class="about-metric"><div class="n">2-3</div><div class="l">Deep Engagements/Year</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="sep"><hr></div>
-
-<!-- WHAT WE BELIEVE -->
-<section>
-  <div class="stag">What We Believe</div>
-  <h2>Our Principles</h2>
-  <div class="sub">A community of operators who've built real companies. Sharing what they know with the founders in the room.</div>
-  <div class="beliefs">
-    <div class="belief"><h3>Community, Not a Fund</h3><p>Unleash is a peer group of operators who have built real companies. Founders get a room of people who show up when it matters and share what they know.</p></div>
-    <div class="belief"><h3>Experience, Not Advice</h3><p>Every insight comes from having built, scaled, and exited. Not from reading about it. From doing it.</p></div>
-    <div class="belief"><h3>Funded for SA Reality</h3><p>SA tech startups need to be funded for South African reality and for flexibility — not shoehorned into Silicon Valley playbooks.</p></div>
-    <div class="belief"><h3>Cash-Flow First</h3><p>SA rewards efficiency, not burn. Companies reach customers and revenue early — without fundraising dependency.</p></div>
-    <div class="belief"><h3>Value First</h3><p>Every founder who engages with Unleash should walk away with something useful — a sharper plan, a better connection, a real answer — whether Unleash invests or not.</p></div>
-  </div>
-</section>
-
-<div class="sep"><hr></div>
-
-<!-- WHO THIS IS FOR -->
-<section id="fit">
-  <div class="stag">Who This Is For</div>
-  <h2>Are We Right For You?</h2>
-  <div class="sub">We work with South African early-stage founders. A good fit usually looks like one or more of these:</div>
-  <div class="beliefs">
-    <div class="belief"><h3>Early-stage</h3><p>Pre-revenue or up to R500k in annual revenue.</p></div>
-    <div class="belief"><h3>A real problem identified</h3><p>You know what you're solving, and you want to build further.</p></div>
-    <div class="belief"><h3>Looking for honest feedback</h3><p>You want operator-level input from people who've built and sold.</p></div>
-    <div class="belief"><h3>Thinking about fundraising</h3><p>You're prepping for or working through your next round.</p></div>
-    <div class="belief"><h3>Ready to scale</h3><p>You have your first paying customers and want to figure out how to scale.</p></div>
-  </div>
-</section>
-
-<div class="sep"><hr></div>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="stag">How It Works</div>
-  <h2>From Application to Access</h2>
-  <div class="sub">We work with South African founders at pre-revenue or up to R500k in revenue. One application. Up to 15 new founders per cohort. Clear feedback within 14 days.</div>
-  <div class="funnel">
-    <div class="funnel-step active">
-      <div class="funnel-num">1</div>
-      <div class="funnel-body"><h3>Apply</h3><p>Tell us about your business, your stage, and what you're building. Takes 5 minutes via our application form.</p></div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-num">2</div>
-      <div class="funnel-body"><h3>Review &amp; Feedback</h3><p>We review every application personally. You'll get feedback within <strong>14 days</strong> — and if it's a yes, you join the cohort starting next quarter.</p></div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-num">3</div>
-      <div class="funnel-body"><h3>Join the Cohort</h3><p>If you're a fit, you're in. Immediate access to the WhatsApp community, playbooks, spreadsheets, GPT tools, mentors, and investors.</p></div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-num">4</div>
-      <div class="funnel-body"><h3>Work the Quarter</h3><p>Three community calls (attend at least two). Ongoing peer group in WhatsApp. By the end of the quarter: an honest assessment of where you are with your business and a clear picture of your funding options.</p></div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-num">5</div>
-      <div class="funnel-body"><h3>What's Next</h3><p>We'll tell you whether there's an investment fit with Unleash — and if not, why. Stay in the community for up to three quarters total as long as you show up for 2 of 3 calls each quarter.</p></div>
-    </div>
-  </div>
-  <div style="margin-top: 36px;"><a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w">Apply Now</a></div>
-</section>
-
-<div class="sep"><hr></div>
-
-<!-- WHAT FOUNDERS SAY -->
-<section id="founders">
-  <div class="stag">What Unleash Members Say</div>
-  <h2>From Our Founders</h2>
-  <div class="sub">Real feedback. Real founders. No fluff.</div>
-  <div class="testimonials">
-    <div class="test">
-      <blockquote>I walked away with a breakthrough in my thinking. Amazing how a single conversation can break through some clouds. I've started discussing it with the team and it's definitely the way we need to go into 2026.</blockquote>
-      <div class="author"><div class="avatar">GW</div><div><div class="name"><a href="https://www.linkedin.com/in/gavin-weale-9366189/" target="_blank">Gavin Weale</a></div><div class="role">Founder & CEO, Digify Africa</div></div></div>
-    </div>
-    <div class="test">
-      <blockquote>This is genuinely the most detailed and constructive input I've received so far. The process was hugely valuable — rebuilding the model and pressure-testing assumptions gave me much more clarity.</blockquote>
-      <div class="author"><div class="avatar">PK</div><div><div class="name"><a href="https://www.linkedin.com/in/phumi-k%C3%B6rber/" target="_blank">Phumi Korber</a></div><div class="role">Founder & CEO, Kloset Klub</div></div></div>
-    </div>
-    <div class="test">
-      <blockquote>It gave me a lot to report back and think about with the team. We've used what I learned to reframe our strategy and I'm still working through the frameworks.</blockquote>
-      <div class="author"><div class="avatar">PN</div><div><div class="name"><a href="https://www.linkedin.com/in/phindanjisane/" target="_blank">Phinda Njisane</a></div><div class="role">Co-founder, Four Minute Medicine</div></div></div>
-    </div>
-    <div class="test">
-      <blockquote>Tremendously helpful. The call crystallised key points I've been reflecting on — we are now moving full steam ahead to implement these.</blockquote>
-      <div class="author"><div class="avatar">RH</div><div><div class="name"><a href="https://www.linkedin.com/company/askproco/" target="_blank">Rene Hartmann</a></div><div class="role">Co-Founder, Proco</div></div></div>
-    </div>
-  </div>
-</section>
-
-
-<div class="sep"><hr></div>
-
-<!-- FOR INVESTORS -->
-<section>
-  <div class="stag">For Investors</div>
-  <h2>Co-Invest With Us</h2>
-  <div class="sub" style="max-width: 540px;">We invest our own money into South African founders and are always looking for co-investors who'd like to share the journey — angels and operators who want to back real builders.</div>
-  <a href="https://tally.so/r/WO80yR" target="_blank" class="btn-o">Get in Touch</a>
-</section>
-
-<!-- FINAL CTA -->
-<div class="final-cta">
-  <h2>Ready to Get Truly Unleashed?</h2>
-  <p>Community. Capital. Mentorship. Built for South African founders, funded for South African reality.</p>
-  <a href="https://tally.so/r/7Rx9z2" target="_blank" class="btn-w" style="font-size: 15px; padding: 16px 40px;">Apply Now</a>
-  <div style="margin-top: 16px;"><a href="https://philunleashed.substack.com" target="_blank" style="color: var(--muted); font-size: 12px;">Or read the Substack first &rarr;</a></div>
+<div class="hero-foot">
+<p>Get access to the capital and mentors who have built, scaled, and sold their tech businesses internationally.</p>
+<div class="act"><a class="btn" href="https://tally.so/r/7Rx9z2" target="_blank" rel="noopener">Apply now →</a><span class="small">Free to join. Active commitment required. Apply in 5 minutes.</span></div>
 </div>
+</div></section>
 
-<footer>
-  <div class="f-links">
-    <a href="https://philunleashed.substack.com" target="_blank">Substack</a>
-    <a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank">LinkedIn</a>
-    <a href="https://pas-ventures.com" target="_blank">PAS Ventures</a>
-    <a href="https://tally.so/r/7Rx9z2" target="_blank">Apply</a>
-    <a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a>
-    <a href="/privacy/">Privacy Policy</a>
-  </div>
-  <div class="copy">Unleash &mdash; PAS Ventures &bull; Cape Town & Berlin</div>
-</footer>
+<section class="voices" data-screen-label="02 What founders say"><div class="wrap">
+<div class="vhead"><h2 class="big">What other<br>founders say</h2><div class="ctrl"><button type="button" id="qPrev" aria-label="Previous">←</button><button type="button" id="qNext" aria-label="Next">→</button></div></div>
+</div>
+<div class="rail" id="qRail">
+<figure class="qc"><blockquote>“I walked away with a breakthrough in my thinking. Amazing how a single conversation can break through some clouds.”</blockquote><figcaption><span class="who"><b>Gavin Weale</b><span>Digify Africa</span></span><a class="li" href="https://www.linkedin.com/in/gavin-weale-9366189/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“This cohort was three months in which I experienced maybe five years of growth. It's the shortest period of time that I've grown the most.”</blockquote><figcaption><span class="who"><b>Yazid Bohardien</b><span>LaunchPath</span></span><a class="li" href="https://www.linkedin.com/in/yazid-bohardien-b2071b9b/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“I found the feedback confronting, but also incredibly helpful. The exact scrutiny I've been seeking. Great to have an investor's lens applied to our business.”</blockquote><figcaption><span class="who"><b>Dani Gama</b><span>MeetDemi</span></span><a class="li" href="https://www.linkedin.com/in/dani-gama" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“The big word I got out of it was optionality. Not needing to raise because you have to — it's raising when you have other choices.”</blockquote><figcaption><span class="who"><b>Anna Insam</b><span>Kleo Health</span></span><a class="li" href="https://www.linkedin.com/in/annamariainsam/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“That conversation genuinely shifted how we're thinking about the business. Really appreciate the time and the honesty.”</blockquote><figcaption><span class="who"><b>Thabo Mashego</b><span>Swift Quote AI</span></span><a class="li" href="https://www.linkedin.com/in/thabo-mashego-a807942a2" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“In a world where there's no such thing as a free lunch, this is just unbelievable. To share as much as you guys share, and to give as much feedback as you do, is genuinely something that I never expected in 2026.”</blockquote><figcaption><span class="who"><b>Adrien Padayachee</b><span>Nexum HR</span></span><a class="li" href="https://www.linkedin.com/in/thefractionalcpo/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“We're incredibly grateful for being part of the Unleash community. It came at an important stage of our journey and we appreciate the time you've invested in sharing your thoughts, challenging our assumptions and helping us think through our current challenges.”</blockquote><figcaption><span class="who"><b>Claudia Snyman</b><a href="https://mybento.net/" target="_blank" rel="noopener">MyBento</a></span><a class="li" href="https://www.linkedin.com/in/claudia-snyman-82b6911a/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“The single most biggest thing for me as part of the group is that you're not going through it alone.”</blockquote><figcaption><span class="who"><b>Chris Terblanche</b><span>DraggonnB</span></span><a class="li" href="https://www.linkedin.com/in/chris-terblanche-27b0b114a" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“This is genuinely the most detailed and constructive input I've received so far.”</blockquote><figcaption><span class="who"><b>Phumi Körber</b><span>Kloset Klub</span></span><a class="li" href="https://www.linkedin.com/in/phumi-k%C3%B6rber/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“It's evident that Phil has got the experience of having exited multiple businesses, invested in multiple businesses, and has been around the block. This is not like an accelerator where someone is hired to give advice.”</blockquote><figcaption><span class="who"><b>Anna Insam</b><span>Kleo Health</span></span><a class="li" href="https://www.linkedin.com/in/annamariainsam/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“The Unleashed community has been extremely valuable to us and our business, the knowledge shared from Phil has helped us avoid a few battle scars”</blockquote><figcaption><span class="who"><b>Travis Meadows</b><span>VestraOne</span></span><a class="li" href="https://www.linkedin.com/in/travis-meadows/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“He made me question myself. Whenever you make someone question themselves, it's far better than telling them what is wrong.”</blockquote><figcaption><span class="who"><b>Adrien Padayachee</b><span>Nexum HR</span></span><a class="li" href="https://www.linkedin.com/in/thefractionalcpo/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“Thank you for sharing the analysis and for the time you put into the session. Both were more useful than I suspect you realised in the moment.”</blockquote><figcaption><span class="who"><b>Louis Botha</b><span>2am</span></span><a class="li" href="https://linkedin.com/in/louisbotha1" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“So many other accelerators, incubators, venture studios all focus on pitch polishing and making sure your business is venture-ready and funding-ready, as opposed to building a company that's sustainable.”</blockquote><figcaption><span class="who"><b>Yazid Bohardien</b><span>LaunchPath</span></span><a class="li" href="https://www.linkedin.com/in/yazid-bohardien-b2071b9b/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“A complete rethink of how we sell — and a big thanks for the guidance and sharp insights along the way.”</blockquote><figcaption><span class="who"><b>René Hartmann</b><span>Proco</span></span><a class="li" href="https://www.linkedin.com/in/ren%C3%A9hartmannprocurementunleashed/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“The whole process made it a lot easier for me to identify the gaps in my own business before going to market.”</blockquote><figcaption><span class="who"><b>Chris Terblanche</b><span>DraggonnB</span></span><a class="li" href="https://www.linkedin.com/in/chris-terblanche-27b0b114a" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“Thank you again for your time, candid feedback and the Unleash assessment.”</blockquote><figcaption><span class="who"><b>Aldo Victor</b><span>Chirongen</span></span><a class="li" href="https://www.linkedin.com/in/aavictor/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“Really glad I found this — I'll be active in the community and won't sit on anything alone if I get stuck.”</blockquote><figcaption><span class="who"><b>Thabo Mashego</b><span>Swift Quote AI</span></span><a class="li" href="https://www.linkedin.com/in/thabo-mashego-a807942a2" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+<figure class="qc"><blockquote>“We've used what I learned to reframe our strategy.”</blockquote><figcaption><span class="who"><b>Phinda Njisane</b><span>Four Minute Medicine</span></span><a class="li" href="https://www.linkedin.com/in/phindanjisane/" target="_blank" rel="noopener">LinkedIn ↗</a></figcaption></figure>
+</div></section>
 
+<section class="phil" id="phil" data-screen-label="03 Meet Phil"><div class="wrap">
+<h2 class="big">Meet<br>Phil</h2>
+<div class="split">
+<div>
+<div class="label">Exited founder &amp; investor</div>
+<p class="lead">The ecosystem doesn't need more advice. It needs people who have done it.</p>
+<p>Philipp Ströhemann first landed in Cape Town in 2014 for a business school exchange, and never really left. He co-founded his first company with a South African partner that same year.</p>
+<p>Over 15 years, Phil has built and scaled multiple businesses across B2B SaaS, marketplaces and tech-enabled services, from founding to exit: bootstrapping, building sales teams, scaling revenue, and selling to private equity.</p>
+<p>Now he's putting that experience, and his own capital, behind the next generation of South African founders. He is not a fund manager, but someone who works alongside you on:</p>
+<ul class="plist"><li>Getting the right idea</li><li>Finding the right target group</li><li>Building products and services people want to use and pay for</li><li>Finding the right co-founder</li><li>Building the team and scaling</li></ul>
+<div class="stats"><div><b>15+</b><span>Years building</span></div><div><b>2–3</b><span>Deep engagements / year</span></div></div>
+<div class="links"><a href="https://pas-ventures.com" target="_blank" rel="noopener">More about Phil</a><a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank" rel="noopener">LinkedIn</a><a href="https://philunleashed.substack.com" target="_blank" rel="noopener">Substack</a></div>
+</div>
+<div class="photo"><img src="/assets/phil.jpeg" alt="Philipp Ströhemann"></div>
+</div>
+</div></section>
+
+<section class="prin" data-screen-label="04 Principles"><div class="wrap">
+<div class="label">What we believe</div>
+<div class="row"><span class="n">01</span><h3>Community, not a fund</h3><p>A peer group of operators who have built real companies, who show up when it matters.</p></div>
+<div class="row"><span class="n">02</span><h3>Experience, not advice</h3><p>Every insight comes from having built, scaled and exited. Not from reading about it.</p></div>
+<div class="row"><span class="n">03</span><h3>Funded for SA reality</h3><p>Funded for South African reality and flexibility, not shoehorned into Silicon Valley playbooks.</p></div>
+<div class="row"><span class="n">04</span><h3>Cash-flow first</h3><p>SA rewards efficiency, not burn. Reach customers and revenue early, without fundraising dependency.</p></div>
+<div class="row"><span class="n">05</span><h3>Value first</h3><p>Every founder walks away with something useful, whether Unleash invests or not.</p></div>
+</div></section>
+
+<section class="stories" id="stories" data-screen-label="05 Founder stories"><div class="wrap">
+<div class="head"><h2 class="big">Founder<br>stories</h2><a href="/founder-stories/">All founder stories →</a></div>
+<div class="grid">
+<a class="vid" href="https://www.youtube.com/watch?v=kXuJJcJ6cIQ" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/yazid.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Growth</span><div class="t">Maybe five years of growth in three months</div><div class="w">Yazid Bohardien, LaunchPath · Cape Town</div></a>
+<a class="vid" href="https://www.youtube.com/watch?v=wB3qNi3QD-M" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/anna.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Fundraising</span><div class="t">Raise when you have other options</div><div class="w">Anna Insam, Kleo Health</div></a>
+<a class="vid" href="https://www.youtube.com/watch?v=KfQAqXb1Cyc" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/gavin.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Sales</span><div class="t">You cannot sell to everyone</div><div class="w">Gavin Weale, Digify Africa</div></a>
+<a class="vid" href="https://www.youtube.com/watch?v=riDjsnymtbc" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/phumi.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Fundraising</span><div class="t">How I closed my pre-seed</div><div class="w">Phumi Körber, Kloset Klub</div></a>
+<a class="vid" href="https://www.youtube.com/watch?v=dym351YdhLs" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/dennis.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Sales</span><div class="t">Stop counting customers, count contract value</div><div class="w">Dennis Williams, MyBento · Cape Town</div></a>
+<a class="vid" href="https://www.youtube.com/watch?v=S074JpoGGvs" target="_blank" rel="noopener"><div class="th"><img src="/assets/stories/ryan.jpg" alt="" loading="lazy"></div><span class="tag">Founder story · Co-founders</span><div class="t">Get founder alignment right first</div><div class="w">Ryan Kloppers, Hyperion · Johannesburg</div></a>
+</div>
+</div></section>
+
+<section class="how" id="how" data-screen-label="06 How it works"><div class="wrap">
+<div class="split">
+<h2 class="big">From application<br>to access</h2>
+<div class="photo tr"><img src="/assets/dinner-4.jpg" alt="Founders at an Unleash session"></div>
+</div>
+<div class="steps">
+<div class="step"><b>01</b><h4>Apply</h4><p>Tell us about your business, your stage and what you're building. Takes 5 minutes.</p></div>
+<div class="step"><b>02</b><h4>Review &amp; feedback</h4><p>We review every application personally and come back to you before the next cohort starts. Applications close 15 days before each start.</p></div>
+<div class="step"><b>03</b><h4>Join the cohort</h4><p>WhatsApp community, playbooks, spreadsheets, GPT tools and the mentor network.</p></div>
+<div class="step"><b>04</b><h4>Work the quarter</h4><p>Three community calls, attend at least two. An honest assessment and a clear picture of your funding options.</p></div>
+<div class="step"><b>05</b><h4>What's next</h4><p>We tell you whether there's an investment fit, and if not, why. Stay up to three quarters.</p></div>
+</div>
+<div class="dates"><div class="cohort"><small>Next cohort starts</small><span>1 February 2027</span><em>Apply by 17 January</em></div><div class="cohort"><small>Following cohort</small><span>1 May 2027</span><em>Apply by 16 April</em></div><div class="cohort note">Up to 15 founders per cohort. Applications close 15 days before each start.</div></div>
+</div></section>
+
+<section class="final" data-screen-label="07 Apply"><div class="wrap">
+<div class="split">
+<h2 class="big">Ready to get<br>truly unleashed?</h2>
+<div class="photo tl"><img src="/assets/dinner-3.jpg" alt="Unleash dinner"></div>
+</div>
+<div class="row2">
+<p>Community. Capital. Mentorship. Built for South African founders, funded for South African reality.</p>
+<div class="act"><a class="btn o" href="https://tally.so/r/7Rx9z2" target="_blank" rel="noopener">Apply now →</a><a class="t" href="/investors/">Co-invest with us</a></div>
+</div>
+</div></section>
+
+<footer><div class="wrap">
+<span class="lock"><span class="wm">Unleash.</span><small>Ventures</small></span>
+<nav><a href="https://philunleashed.substack.com" target="_blank" rel="noopener">Substack</a><a href="https://www.linkedin.com/in/phil-ber-cpt/" target="_blank" rel="noopener">LinkedIn</a><a href="https://pas-ventures.com" target="_blank" rel="noopener">PAS Ventures</a><a href="mailto:pas@pas-ventures.com">pas@pas-ventures.com</a></nav>
+<span>Unleash — PAS Ventures · Cape Town</span>
+</div></footer>
+
+<script>
+const r=document.getElementById('qRail');const step=()=>r.querySelector('.qc').offsetWidth+16;
+document.getElementById('qPrev').onclick=()=>r.scrollBy({left:-step(),behavior:'smooth'});
+document.getElementById('qNext').onclick=()=>r.scrollBy({left:step(),behavior:'smooth'});
+</script>
+<script src="/carousel.js" defer></script>
 </body>
 </html>
