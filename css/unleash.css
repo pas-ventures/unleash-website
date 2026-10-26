@@ -230,6 +230,13 @@ footer .copy { font-size: 11px; color: #383838; }
 .qcard .nm a { color: var(--white); }
 .qcard .nm a:hover { color: var(--accent); }
 .qcard .co { font-size: 10.5px; color: var(--muted); line-height: 1.25; }
+/* Whole card opens the founder's LinkedIn; a company link (if any) sits above that layer. */
+.qcard .li { white-space: nowrap; }
+.qcard .li::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.qcard .in { display: inline-block; margin-left: 5px; padding: 0 3px; border-radius: 2px; background: #0a66c2;
+  color: #fff; font-size: 8.5px; font-weight: 700; line-height: 12px; vertical-align: 1px; }
+.qcard .co-link { position: relative; z-index: 2; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+.qcard .co-link:hover { color: var(--accent); }
 
 .rail-nav { display: flex; justify-content: center; gap: 12px; margin-top: -110px; position: relative; z-index: 1; }
 .rail-nav button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.16);
