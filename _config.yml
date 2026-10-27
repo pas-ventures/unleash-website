@@ -1,0 +1,4 @@
+# GitHub Pages build: keep the Cloudflare worker code off the public site
+exclude:
+  - workers
+  - .github
