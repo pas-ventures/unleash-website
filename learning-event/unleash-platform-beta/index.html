@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unleash Platform Beta | Unleash</title>
+<meta name="description" content="The Unleash Platform Beta: the board, the Playbook and the resources in one place. 15 beta seats.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --o:#FF6719; --k:#111111; --paper:#F4F0E9; --g:#E6E1D9; --body-dark:#CFC9BF; --muted-light:#5D574F; --card-dark:#1c1c1c;
+          --disp:"Anton", Impact, sans-serif; --sans:"Archivo", system-ui, sans-serif; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body { font-family:var(--sans); background:var(--k); color:var(--k); overflow:hidden; -webkit-font-smoothing:antialiased; }
+
+  /* 1920×1080 stage, scaled to the window */
+  .stage { position:absolute; left:50%; top:50%; width:1920px; height:1080px; transform-origin:center center; }
+  .slide { display:none; position:absolute; inset:0; padding:120px 128px 110px; flex-direction:column; justify-content:center; overflow:hidden; }
+  .slide.active { display:flex; }
+  .ink { background:var(--k); color:var(--body-dark); }
+  .paper { background:var(--paper); color:var(--k); }
+  .orange { background:var(--o); color:var(--k); }
+
+  .wm { position:absolute; top:48px; left:128px; font-family:var(--disp); text-transform:uppercase; font-size:40px; line-height:1; letter-spacing:.01em; }
+  .wm i { font-style:normal; color:var(--o); }
+  .ink .wm { color:var(--paper); } .paper .wm { color:var(--k); } .orange .wm { color:var(--k); } .orange .wm i { color:var(--k); }
+  .pg { position:absolute; bottom:48px; right:128px; font-size:20px; font-weight:600; letter-spacing:.14em; }
+  .ink .pg { color:#8a857d; } .paper .pg { color:var(--muted-light); } .orange .pg { color:var(--k); }
+
+  .big { font-family:var(--disp); text-transform:uppercase; line-height:1; font-weight:400; }
+  .ink .big { color:var(--paper); }
+  h1.big { font-size:150px; }
+  h2.big { font-size:104px; margin-bottom:40px; }
+  .label { font-size:22px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-bottom:28px; }
+  .ink .label { color:var(--o); }
+  .paper .label { color:var(--k); }
+  .paper .label::before { content:""; display:inline-block; width:44px; height:8px; background:var(--o); margin-right:16px; vertical-align:middle; }
+  .lead { font-size:36px; line-height:1.45; max-width:1400px; font-weight:500; }
+  .sub { font-size:34px; line-height:1.4; margin-top:36px; font-weight:500; }
+
+  /* cards */
+  .grid { display:grid; gap:28px; }
+  .g3 { grid-template-columns:repeat(3, 1fr); }
+  .g4 { grid-template-columns:repeat(4, 1fr); }
+  .card { padding:40px; border-top:8px solid var(--o); }
+  .ink .card { background:var(--card-dark); }
+  .paper .card { background:#fff; background:#FBF9F5; border:1px solid #d9d3c8; border-top:8px solid var(--o); }
+  .card .n { font-family:var(--disp); font-size:44px; color:var(--o); line-height:1; margin-bottom:16px; }
+  .card h3 { font-family:var(--disp); text-transform:uppercase; font-weight:400; font-size:44px; line-height:1.05; margin-bottom:16px; }
+  .ink .card h3 { color:var(--paper); }
+  .card p { font-size:27px; line-height:1.45; }
+  .paper .card p { color:#2a2724; }
+
+  .compact .card { padding:30px 34px; }
+  .compact .card .n { font-size:36px; margin-bottom:10px; }
+  .compact .card h3 { font-size:38px; margin-bottom:12px; }
+  .compact .card p { font-size:25px; line-height:1.4; }
+  .news b { white-space:nowrap; }
+  .card p.quote { font-family:var(--disp); text-transform:uppercase; font-size:58px; line-height:1.05; }
+
+
+  /* text + screenshot */
+  .split { display:grid; grid-template-columns:600px 1fr; gap:72px; align-items:center; height:100%; }
+  .split .shot { height:850px; display:flex; align-items:center; justify-content:center; }
+  .shot img { max-width:100%; max-height:850px; display:block; border-radius:10px; box-shadow:0 30px 70px rgba(0,0,0,.35); }
+  .paper .shot img { border:8px solid var(--k); }
+  .ink .shot img { border:1px solid #333; }
+  .split p { font-size:32px; line-height:1.45; }
+  .split ul { list-style:none; margin-top:8px; }
+  .split li { font-size:30px; line-height:1.4; padding:8px 0 8px 40px; position:relative; }
+  .split li::before { content:""; position:absolute; left:0; top:24px; width:20px; height:6px; background:var(--o); }
+  .muted { color:var(--muted-light); }
+
+  .phase { font-size:27px; line-height:1.4; margin-bottom:22px; }
+  .phase b { display:block; font-weight:700; }
+  .p1 b { color:#2f6f9f; } .p2 b { color:#6b4aa8; } .p3 b { color:#9a7414; } .p4 b { color:#2f7d4a; }
+  .phase-card h4 { font-size:26px; font-weight:700; margin-bottom:18px; }
+  .phase-card p { font-size:25px !important; line-height:1.4; margin-bottom:12px; }
+
+  .list-big { list-style:none; }
+  .list-big li { font-size:42px; line-height:1.35; padding:16px 0 16px 64px; position:relative; }
+  .list-big li::before { content:""; position:absolute; left:0; top:40px; width:36px; height:8px; background:var(--o); }
+
+  .refer { background:var(--o); color:var(--k); padding:56px; }
+  .refer .label { color:var(--k); }
+  .refer h3 { font-family:var(--disp); text-transform:uppercase; font-weight:400; font-size:72px; line-height:1; margin-bottom:24px; color:var(--k); }
+  .refer p { font-size:30px; line-height:1.45; }
+  .news p { font-size:32px; line-height:1.4; margin-bottom:22px; color:var(--body-dark); }
+  .news b { color:var(--paper); }
+
+  .nav { position:fixed; bottom:20px; right:24px; display:flex; gap:8px; z-index:10; }
+  .nav button { background:rgba(17,17,17,.75); border:1px solid rgba(255,255,255,.18); color:#f4f0e9; padding:8px 18px; border-radius:100px; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:600; }
+  .nav button:hover { background:var(--o); color:var(--k); }
+  .counter { position:fixed; bottom:20px; left:24px; font-size:13px; font-weight:600; color:#f4f0e9; background:rgba(17,17,17,.75); padding:8px 14px; border-radius:100px; z-index:10; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- 1 -->
+<section class="slide orange" id="slide-1">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">Unleash Platform Beta</div>
+  <h1 class="big">The new Unleash member platform</h1>
+  <p class="sub">Blocker Sprint · 29 October 2026</p>
+</section>
+
+<!-- 2 -->
+<section class="slide paper" id="slide-2">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">The problem</div>
+  <h2 class="big">What you told us</h2>
+  <div class="grid g3">
+    <div class="card"><p class="quote">The WhatsApp group is getting very busy.</p></div>
+    <div class="card"><p class="quote">I can’t find all of the resources.</p></div>
+    <div class="card"><p class="quote">The Progress Board and the spreadsheets are not ideal.</p></div>
+  </div>
+  <p class="sub muted">We got a lot of this feedback.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide ink" id="slide-3">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">What we did</div>
+  <h2 class="big">Beta testers wanted</h2>
+  <p class="lead">We’ve been building an alternative inside the Unleash platform since the beginning of October. Before we release it to the whole community, we’re looking for a few beta users to test it with us and help us make it amazing.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide paper" id="slide-4" style="padding-top:150px">
+  <div class="wm">Unleash<i>.</i></div>
+  <h2 class="big" style="font-size:96px;margin-bottom:32px">What you get</h2>
+  <div class="grid g3 compact">
+    <div class="card"><div class="n">01</div><h3>Less noise, one source</h3><p>The board, the exercises, the Q&amp;A sessions and the answers sit in one place inside the platform.</p></div>
+    <div class="card"><div class="n">02</div><h3>Email instead of WhatsApp</h3><p>You get an email when Phil answers your blocker, not a message lost in the group.</p></div>
+    <div class="card"><div class="n">03</div><h3>Reminders</h3><p>The platform reminds you when your weekly plan is due and when an exercise has gone quiet.</p></div>
+    <div class="card"><div class="n">04</div><h3>Guidance on every blocker</h3><p>Each blocker points you to the exercise that helps, with steps to work through, instead of articles spread across the web.</p></div>
+    <div class="card"><div class="n">05</div><h3>The right step at the right time</h3><p>A step-by-step guide for the phase your business is in, so you know what to do next.</p></div>
+    <div class="card"><div class="n">06</div><h3>One-on-one feedback</h3><p>Send your work through the platform and get our feedback there, without the email back and forth.</p></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide ink" id="slide-5">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split">
+    <div>
+      <div class="label">Here’s how it looks</div>
+      <h2 class="big">Home shows your week</h2>
+      <p>Your next exercise, the days left in your four weeks, your phase doc, and where to get help.</p>
+    </div>
+    <div class="shot"><img src="img/home.jpg" alt="The Home screen: next exercise, days left, phase doc, and a Get help panel"></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide paper" id="slide-6">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:700px 1fr">
+    <div>
+      <h2 class="big" style="font-size:84px">Four phases and what you have at the end of each</h2>
+      <div class="phase p1"><b>Phase 1 · Problem confirmation</b>At least 10 transcribed interviews with your target group.</div>
+      <div class="phase p2"><b>Phase 2 · First paying customers</b>2 to 3 signed design partners and a paid pilot.</div>
+      <div class="phase p3"><b>Phase 3 · Value delivery and case studies</b>5 to 10 design partners turned into paying customers, with video testimonials.</div>
+      <div class="phase p4"><b>Phase 4 · Make this a business</b>Your eleven-point framework from the venture assessment, and your round if you choose to raise.</div>
+    </div>
+    <div class="shot"><img src="img/phases.jpg" alt="The Playbook overview: four phase cards with when to use each and its main output"></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide ink" id="slide-7">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:660px 1fr">
+    <div>
+      <h2 class="big" style="font-size:96px">What an exercise looks like</h2>
+      <p>Each exercise has five parts:</p>
+      <ul>
+        <li>What you’ll have at the end</li>
+        <li>Why it matters</li>
+        <li>The steps</li>
+        <li>Where to write it down</li>
+        <li>Which Q&amp;A clip or tool helps</li>
+      </ul>
+      <p style="margin-top:20px;color:#a9a399">If you’re stuck, write what’s in the way and the app shows you the Q&amp;A clips and tools that help.</p>
+    </div>
+    <div class="shot"><img src="img/exercise.jpg" alt="One exercise: Customer journey, with the outcome, why it matters, an example and five steps"></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide paper" id="slide-8">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">The Playbook</div>
+  <h2 class="big">29 exercises across the four phases</h2>
+  <div class="grid g4">
+    <div class="card phase-card"><h4 style="color:#2f6f9f">Phase 1 · 4 exercises</h4><p>Pick your target group</p><p>Get the best information from every conversation</p><p>Analyse your transcripts to confirm the right problem</p></div>
+    <div class="card phase-card"><h4 style="color:#6b4aa8">Phase 2 · 9 exercises</h4><p>Outreach and getting meetings</p><p>Your sales pitch and script</p><p>Win design partners and a paid pilot</p></div>
+    <div class="card phase-card"><h4 style="color:#9a7414">Phase 3 · 8 exercises</h4><p>Structure your design partner trial</p><p>Turn design partners into paying customers</p><p>Case studies and video testimonials</p></div>
+    <div class="card phase-card"><h4 style="color:#2f7d4a">Phase 4 · 8 exercises</h4><p>Your acquisition and sales model</p><p>Your revenue engine: from goal to weekly numbers</p><p>Your funding model: raise or fund it yourself</p></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide ink" id="slide-9">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:640px 1fr">
+    <div>
+      <div class="label">The board</div>
+      <h2 class="big">Your week on the board</h2>
+      <p>Each week you post a plan with a number in it, your blocker with what you tried and the help you need, and one learning. Luna, our assistant, checks your post while you write, so Phil has enough to give you a specific answer.</p>
+    </div>
+    <div class="shot"><img src="img/board.jpg" alt="The board in the app: plan, blocker, what you tried, help needed and main learning"></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide paper" id="slide-10">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:640px 1fr">
+    <div>
+      <div class="label">Resources</div>
+      <h2 class="big">Resources, sorted by exercise</h2>
+      <p>The Q&amp;A sessions, tools and reading, and every blocker Phil has answered, are sorted by the exercise they help with. You no longer have to search through recordings.</p>
+    </div>
+    <div class="shot"><img src="img/resources.jpg" alt="The Resources page: Q&amp;A clips and tools listed under each exercise"></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide ink" id="slide-11">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:1fr 700px">
+    <div class="news">
+      <div class="label">Also new</div>
+      <h2 class="big">News at Unleash</h2>
+      <p>We have a new logo and brand, and you will see it on everything we send.</p>
+      <p>The website at <b>unleash-ventures.com</b> has been updated.</p>
+      <p>Founder stories from members are at <b>unleash-ventures.com/founder-stories</b>.</p>
+      <p>Q&amp;A talks from earlier sessions are now public on YouTube.</p>
+    </div>
+    <div class="refer">
+      <div class="label">Refer a founder</div>
+      <h3>Sparring sessions with Phil</h3>
+      <p>Do you know a founder who belongs in next quarter’s cohort? Send them to the application at tally.so/r/7Rx9z2. If you refer a founder, you can win sparring sessions with Phil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide paper" id="slide-12">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">The beta</div>
+  <h2 class="big">Your part in the beta</h2>
+  <ul class="list-big">
+    <li>Four weeks per phase. Ask for more time if you need it.</li>
+    <li>Post your week on the board.</li>
+    <li>Tell us what works and what doesn’t. Every page has a feedback button.</li>
+  </ul>
+</section>
+
+<!-- 13 -->
+<section class="slide orange" id="slide-13">
+  <div class="wm">Unleash<i>.</i></div>
+  <h1 class="big" style="font-size:180px">8 of the 15 beta seats are left</h1>
+  <p class="sub" style="font-size:42px;max-width:1500px">7 seats are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
+</section>
+
+</div>
+
+<div class="counter"><span id="current">1</span> / <span id="total">13</span></div>
+<div class="nav"><button onclick="prev()">&larr; Back</button><button onclick="next()">Next &rarr;</button></div>
+<script>
+  const total = document.querySelectorAll('.slide').length;
+  document.getElementById('total').textContent = total;
+  let current = Math.min(Math.max(parseInt(location.hash.replace('#','')) || 1, 1), total);
+  function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); document.getElementById('stage').style.transform = 'translate(-50%,-50%) scale(' + s + ')'; }
+  function show(n) { document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById('slide-' + n).classList.add('active'); document.getElementById('current').textContent = n; history.replaceState(null, '', '#' + n); }
+  function next() { if (current < total) { current++; show(current); } }
+  function prev() { if (current > 1) { current--; show(current); } }
+  document.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); } if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); } });
+  let tx = null; document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }); document.addEventListener('touchend', e => { if (tx === null) return; const d = e.changedTouches[0].clientX - tx; if (d < -50) next(); if (d > 50) prev(); tx = null; });
+  addEventListener('resize', fit); fit(); show(current);
+</script>
+</body>
+</html>
