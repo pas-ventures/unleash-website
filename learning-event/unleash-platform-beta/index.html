@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unleash Platform Beta | Unleash</title>
+<title>Blocker Sprint with Brendan Pistorius and Ken Walton | Unleash</title>
 <meta name="description" content="The Unleash Platform Beta: the board, the Playbook and the resources in one place. 15 beta seats.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,6 +90,12 @@
   .news p { font-size:32px; line-height:1.4; margin-bottom:22px; color:var(--body-dark); }
   .news b { color:var(--paper); }
 
+  .list-num { list-style:none; counter-reset:n; }
+  .list-num li { counter-increment:n; font-family:var(--disp); text-transform:uppercase; font-size:64px; line-height:1.1; color:var(--paper); padding:18px 0 18px 110px; position:relative; }
+  .list-num li::before { content:counter(n, decimal-leading-zero); position:absolute; left:0; top:18px; color:var(--o); }
+  .chips { display:flex; gap:20px; flex-wrap:wrap; margin-top:44px; }
+  .chips span { font-size:30px; font-weight:700; padding:18px 30px; border-radius:100px; background:var(--k); color:var(--paper); }
+  .chips.dark span { background:var(--paper); color:var(--k); }
   .nav { position:fixed; bottom:20px; right:24px; display:flex; gap:8px; z-index:10; }
   .nav button { background:rgba(17,17,17,.75); border:1px solid rgba(255,255,255,.18); color:#f4f0e9; padding:8px 18px; border-radius:100px; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:600; }
   .nav button:hover { background:var(--o); color:var(--k); }
@@ -99,18 +105,51 @@
 <body>
 <div class="stage" id="stage">
 
-<!-- 1 -->
 <section class="slide orange" id="slide-1">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="label">Unleash Platform Beta</div>
-  <h1 class="big">The new Unleash member platform</h1>
-  <p class="sub">Blocker Sprint · 29 October 2026</p>
+  <div class="label">Unleash · 29 October 2026</div>
+  <h1 class="big">The Blocker Sprint with Brendan Pistorius and Ken Walton</h1>
 </section>
 
-<!-- 2 -->
-<section class="slide paper" id="slide-2">
+<section class="slide ink" id="slide-2">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="label">The problem</div>
+  <div class="label">Before the blockers</div>
+  <h2 class="big">Three updates first</h2>
+  <ol class="list-num">
+    <li>Unleash has a new website.</li>
+    <li>Applications for the new cohort are open.</li>
+    <li>We’re looking for beta testers for the new platform.</li>
+  </ol>
+</section>
+
+<section class="slide paper" id="slide-3">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">Update 1</div>
+  <h2 class="big">The new Unleash website</h2>
+  <p class="lead">It has more on the programme, more founder stories from past cohorts, and answers to the questions we get most. Please share it.</p>
+  <div class="chips"><span>unleash-ventures.com</span><span>unleash-ventures.com/founder-stories</span></div>
+</section>
+
+<section class="slide ink" id="slide-4">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="split" style="grid-template-columns:1fr 700px">
+    <div>
+      <div class="label">Update 2</div>
+      <h2 class="big">Applications for the new cohort are open</h2>
+      <p class="lead" style="color:var(--body-dark)">If you know a founder who is a good fit, please send them to Nicolene. If they become part of the community, we’ll let you know.</p>
+      <div class="chips dark"><span>Apply: tally.so/r/7Rx9z2</span><span>nicolene@pas-ventures.com</span></div>
+    </div>
+    <div class="refer">
+      <div class="label">Referral prize</div>
+      <h3>Three months of free sparring</h3>
+      <p>The founder who brings in the most referrals gets three months of free sparring with Phil.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide paper" id="slide-5">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">Update 3 · The new platform</div>
   <h2 class="big">What you told us</h2>
   <div class="grid g3">
     <div class="card"><p class="quote">The WhatsApp group is getting very busy.</p></div>
@@ -120,16 +159,14 @@
   <p class="sub muted">We got a lot of this feedback.</p>
 </section>
 
-<!-- 3 -->
-<section class="slide ink" id="slide-3">
+<section class="slide ink" id="slide-6">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">What we did</div>
   <h2 class="big">Beta testers wanted</h2>
   <p class="lead">We’ve been building an alternative inside the Unleash platform since the beginning of October. Before we release it to the whole community, we’re looking for a few beta users to test it with us and help us make it amazing.</p>
 </section>
 
-<!-- 4 -->
-<section class="slide paper" id="slide-4" style="padding-top:150px">
+<section class="slide paper" id="slide-7" style="padding-top:150px">
   <div class="wm">Unleash<i>.</i></div>
   <h2 class="big" style="font-size:96px;margin-bottom:32px">What you get</h2>
   <div class="grid g3 compact">
@@ -142,8 +179,7 @@
   </div>
 </section>
 
-<!-- 5 -->
-<section class="slide ink" id="slide-5">
+<section class="slide ink" id="slide-8">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split">
     <div>
@@ -155,8 +191,7 @@
   </div>
 </section>
 
-<!-- 6 -->
-<section class="slide paper" id="slide-6">
+<section class="slide paper" id="slide-9">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:700px 1fr">
     <div>
@@ -170,8 +205,7 @@
   </div>
 </section>
 
-<!-- 7 -->
-<section class="slide ink" id="slide-7">
+<section class="slide ink" id="slide-10">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:660px 1fr">
     <div>
@@ -190,8 +224,7 @@
   </div>
 </section>
 
-<!-- 8 -->
-<section class="slide paper" id="slide-8">
+<section class="slide paper" id="slide-11">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The Playbook</div>
   <h2 class="big">29 exercises across the four phases</h2>
@@ -203,8 +236,7 @@
   </div>
 </section>
 
-<!-- 9 -->
-<section class="slide ink" id="slide-9">
+<section class="slide ink" id="slide-12">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:640px 1fr">
     <div>
@@ -216,8 +248,7 @@
   </div>
 </section>
 
-<!-- 10 -->
-<section class="slide paper" id="slide-10">
+<section class="slide paper" id="slide-13">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:640px 1fr">
     <div>
@@ -229,28 +260,7 @@
   </div>
 </section>
 
-<!-- 11 -->
-<section class="slide ink" id="slide-11">
-  <div class="wm">Unleash<i>.</i></div>
-  <div class="split" style="grid-template-columns:1fr 700px">
-    <div class="news">
-      <div class="label">Also new</div>
-      <h2 class="big">News at Unleash</h2>
-      <p>We have a new logo and brand, and you will see it on everything we send.</p>
-      <p>The website at <b>unleash-ventures.com</b> has been updated.</p>
-      <p>Founder stories from members are at <b>unleash-ventures.com/founder-stories</b>.</p>
-      <p>Q&amp;A talks from earlier sessions are now public on YouTube.</p>
-    </div>
-    <div class="refer">
-      <div class="label">Refer a founder</div>
-      <h3>Sparring sessions with Phil</h3>
-      <p>Do you know a founder who belongs in next quarter’s cohort? Send them to the application at tally.so/r/7Rx9z2. If you refer a founder, you can win sparring sessions with Phil.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 12 -->
-<section class="slide paper" id="slide-12">
+<section class="slide ink" id="slide-14">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The beta</div>
   <h2 class="big">Your part in the beta</h2>
@@ -261,8 +271,7 @@
   </ul>
 </section>
 
-<!-- 13 -->
-<section class="slide orange" id="slide-13">
+<section class="slide orange" id="slide-15">
   <div class="wm">Unleash<i>.</i></div>
   <h1 class="big" style="font-size:180px">8 of the 15 beta seats are left</h1>
   <p class="sub" style="font-size:42px;max-width:1500px">7 seats are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
