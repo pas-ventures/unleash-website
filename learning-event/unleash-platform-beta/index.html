@@ -101,6 +101,12 @@
   .refer { background:var(--card-dark) !important; color:var(--body-dark) !important; border-top:8px solid var(--o); }
   .refer .label { color:var(--o) !important; }
   .refer h3 { color:var(--paper) !important; }
+  .pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; margin-top:72px; }
+  .pillars div { font-family:var(--disp); text-transform:uppercase; font-size:76px; line-height:1; color:var(--paper); border-top:8px solid var(--o); padding-top:28px; }
+  .pillars span { display:block; font-size:40px; color:var(--o); margin-bottom:14px; }
+  .heard .card { padding:34px 38px; }
+  .heard .card h3 { font-size:48px; margin-bottom:22px; }
+  .heard .card p { font-size:28px; line-height:1.4; margin-bottom:20px; }
   .nav { position:fixed; bottom:20px; right:24px; display:flex; gap:8px; z-index:10; }
   .nav button { background:rgba(17,17,17,.75); border:1px solid rgba(255,255,255,.18); color:#f4f0e9; padding:8px 18px; border-radius:100px; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:600; }
   .nav button:hover { background:var(--o); color:var(--k); }
@@ -153,39 +159,55 @@
   </div>
 </section>
 
-<section class="slide paper" id="slide-5">
+<section class="slide ink glow" id="slide-5">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="label">Update 3 · The new platform</div>
-  <h2 class="big">What you told us</h2>
-  <div class="grid g3">
-    <div class="card"><p class="quote">The WhatsApp group is getting very busy.</p></div>
-    <div class="card"><p class="quote">I can’t find all of the resources.</p></div>
-    <div class="card"><p class="quote">The Progress Board and the spreadsheets are not ideal.</p></div>
+  <div class="label">Update 3 · The platform</div>
+  <h1 class="big" style="font-size:190px">New updates coming</h1>
+  <div class="pillars">
+    <div><span>01</span>Progress board</div>
+    <div><span>02</span>Support</div>
+    <div><span>03</span>Structure</div>
   </div>
-  <p class="sub muted">We got a lot of this feedback.</p>
 </section>
 
-<section class="slide ink" id="slide-6">
+<section class="slide paper" id="slide-6" style="padding-top:150px">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="label">What we did</div>
-  <h2 class="big">Beta testers wanted</h2>
-  <p class="lead">We’ve been building an alternative inside the Unleash platform since the beginning of October. Before we release it to the whole community, we’re looking for a few beta users to test it with us and help us make it amazing.</p>
+  <div class="label">What you told us</div>
+  <h2 class="big" style="font-size:96px;margin-bottom:36px">We have heard you</h2>
+  <div class="grid g3 heard">
+    <div class="card"><h3>Progress board</h3><p>“More structured accountability around execution.”</p><p>“Handing out tasks/KPIs to monitor growth.”</p></div>
+    <div class="card"><h3>Support</h3><p>“Getting personalized responses from Phil on the excel sheet was super great.”</p><p>“…the best channel to drop quick updates and get async feedback.”</p></div>
+    <div class="card"><h3>Structure</h3><p>“The current WhatsApp volume can be overwhelming to track during work hours.”</p><p>“…clearer directory of the use of the resources available, defined user journey in the Unleash program.”</p></div>
+  </div>
+  <p class="sub muted" style="font-size:26px;margin-top:28px">From your answers to the Q2 and Q3 founder surveys.</p>
 </section>
 
-<section class="slide paper" id="slide-7" style="padding-top:150px">
+<section class="slide ink" id="slide-7">
+  <div class="wm">Unleash<i>.</i></div>
+  <div class="label">Built into the platform since the beginning of October</div>
+  <h2 class="big">What we have improved</h2>
+  <ul class="list-big">
+    <li>A better progress board.</li>
+    <li>Exercises for the phase your business is in.</li>
+    <li>All our content in one place.</li>
+    <li>One-on-one review of your blockers. Send us your document and we answer in the platform.</li>
+  </ul>
+</section>
+
+<section class="slide paper" id="slide-8" style="padding-top:150px">
   <div class="wm">Unleash<i>.</i></div>
   <h2 class="big" style="font-size:96px;margin-bottom:32px">What you get</h2>
   <div class="grid g3 compact">
     <div class="card"><div class="n">01</div><h3>Less noise, one source</h3><p>The board, the exercises, the Q&amp;A sessions and the answers sit in one place inside the platform.</p></div>
-    <div class="card"><div class="n">02</div><h3>Email instead of WhatsApp</h3><p>You get an email when Phil answers your blocker, not a message lost in the group.</p></div>
-    <div class="card"><div class="n">03</div><h3>Reminders</h3><p>The platform reminds you when your weekly plan is due and when an exercise has gone quiet.</p></div>
+    <div class="card"><div class="n">02</div><h3>A cleaned-up WhatsApp group</h3><p>Blockers, answers and reminders move to the platform, so the group gets quieter.</p></div>
+    <div class="card"><div class="n">03</div><h3>Reminders for where you are</h3><p>Individual reminders based on your phase and your exercises. You can turn them on and off.</p></div>
     <div class="card"><div class="n">04</div><h3>Guidance on every blocker</h3><p>Each blocker points you to the exercise that helps, with steps to work through, instead of articles spread across the web.</p></div>
     <div class="card"><div class="n">05</div><h3>The right step at the right time</h3><p>A step-by-step guide for the phase your business is in, so you know what to do next.</p></div>
     <div class="card"><div class="n">06</div><h3>One-on-one feedback</h3><p>Send your work through the platform and get our feedback there, without the email back and forth.</p></div>
   </div>
 </section>
 
-<section class="slide ink" id="slide-8">
+<section class="slide ink" id="slide-9">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split">
     <div>
@@ -197,7 +219,7 @@
   </div>
 </section>
 
-<section class="slide paper" id="slide-9">
+<section class="slide paper" id="slide-10">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:700px 1fr">
     <div>
@@ -211,7 +233,7 @@
   </div>
 </section>
 
-<section class="slide ink" id="slide-10">
+<section class="slide ink" id="slide-11">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:660px 1fr">
     <div>
@@ -230,7 +252,7 @@
   </div>
 </section>
 
-<section class="slide paper" id="slide-11">
+<section class="slide paper" id="slide-12">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The Playbook</div>
   <h2 class="big">29 exercises across the four phases</h2>
@@ -242,7 +264,7 @@
   </div>
 </section>
 
-<section class="slide ink" id="slide-12">
+<section class="slide ink" id="slide-13">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:640px 1fr">
     <div>
@@ -254,7 +276,7 @@
   </div>
 </section>
 
-<section class="slide paper" id="slide-13">
+<section class="slide paper" id="slide-14">
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:640px 1fr">
     <div>
@@ -266,7 +288,7 @@
   </div>
 </section>
 
-<section class="slide ink" id="slide-14">
+<section class="slide ink" id="slide-15">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The beta</div>
   <h2 class="big">Your part in the beta</h2>
@@ -277,10 +299,12 @@
   </ul>
 </section>
 
-<section class="slide ink glow" id="slide-15">
+<section class="slide ink glow" id="slide-16">
   <div class="wm">Unleash<i>.</i></div>
-  <h1 class="big" style="font-size:180px"><span style="color:var(--o)">8</span> of the 15 beta seats are left</h1>
-  <p class="sub" style="font-size:42px;max-width:1500px;color:var(--body-dark)">7 seats are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
+  <div class="label">The beta test starts next week</div>
+  <h1 class="big" style="font-size:180px">Want early access?</h1>
+  <p class="guests">Become a beta tester.</p>
+  <p class="sub" style="font-size:42px;max-width:1500px;color:var(--body-dark);margin-top:56px"><b style="color:var(--o)">7 of the 15 seats are left,</b> 8 are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
 </section>
 
 </div>
