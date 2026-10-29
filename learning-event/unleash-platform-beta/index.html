@@ -111,6 +111,31 @@
   .nav button { background:rgba(17,17,17,.75); border:1px solid rgba(255,255,255,.18); color:#f4f0e9; padding:8px 18px; border-radius:100px; cursor:pointer; font-family:var(--sans); font-size:14px; font-weight:600; }
   .nav button:hover { background:var(--o); color:var(--k); }
   .counter { position:fixed; bottom:20px; left:24px; font-size:13px; font-weight:600; color:#f4f0e9; background:rgba(17,17,17,.75); padding:8px 14px; border-radius:100px; z-index:10; letter-spacing:.1em; }
+  /* design pass 29.10: hide nav until hover, less orange on paper cards, balanced headings */
+  .nav, .counter { opacity:0; transition:opacity .2s; }
+  .nav:hover, .counter:hover { opacity:1; }
+  .paper .card { border-top:6px solid var(--k) !important; }
+  .card h3, .big, .guests { text-wrap:balance; }
+  .compact .card h3 { font-size:34px; }
+  .compact .card .n { margin-bottom:6px; }
+  .list-big { max-width:1400px; }
+  .pillars div { border-top-width:4px; }
+  /* design pass 2 (29.10): one top line, one title scale, one label style */
+  .slide { justify-content:flex-start; padding-top:180px; }
+  .slide.glow { justify-content:center; padding-top:120px; }
+  .slide:has(> .split) { padding-top:110px; }
+  h1.big { font-size:180px; }
+  h2.big { font-size:96px; margin-bottom:36px; }
+  .split { grid-template-columns:640px 1fr; align-items:start; padding-top:40px; }
+  .split h2.big { font-size:84px; margin-bottom:32px; }
+  .split .shot { justify-content:flex-end; align-items:flex-start; }
+  .label::before { content:""; display:inline-block; width:44px; height:8px; background:var(--o); margin-right:16px; vertical-align:middle; }
+  .ink .label { color:var(--paper); }
+  .glow .label { color:var(--o); }
+  .glow .sub { font-size:40px; }
+  .guests { margin-top:36px; }
+  #slide-19 .card h3 { min-height:2.1em; }
+  .refer { border-top-color:#333 !important; }
 </style>
 </head>
 <body>
@@ -119,19 +144,19 @@
 <section class="slide ink glow" id="slide-1">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">Unleash Q&amp;A · 29 October 2026</div>
-  <h1 class="big" style="font-size:200px">Blocker Sprint</h1>
+  <h1 class="big">Blocker Sprint</h1>
   <p class="guests">with Brendan Pistorius and Ken Walton</p>
 </section>
 
-<section class="slide paper" id="slide-2" style="padding-top:150px">
+<section class="slide paper" id="slide-2">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">Before we start</div>
   <h2 class="big">How we run the call</h2>
-  <div class="grid g4">
+  <div class="grid g4" style="align-items:start">
     <div class="card"><div class="n">01</div><h3>Mute</h3><p>Please go on mute while others present.</p></div>
     <div class="card"><div class="n">02</div><h3>Camera on</h3><p>Please turn on your camera.</p></div>
     <div class="card"><div class="n">03</div><h3>Chat</h3><p>Please engage in the chat.</p></div>
-    <div class="card"><div class="n">04</div><h3>Slido</h3><p>Please send your questions via Slido.</p><img src="img/slido-qr.png" alt="QR code for the Slido questions" style="width:150px;height:150px;margin-top:20px;display:block"><p style="font-size:19px;font-weight:700;margin-top:14px;line-height:1.35;white-space:nowrap">app.sli.do/event/<br>2mxRTrpX8Z3yV1e7tVW6A4</p></div>
+    <div class="card"><div class="n">04</div><h3>Slido</h3><p>Please send your questions via Slido.</p><img src="img/slido-qr.png" alt="QR code for the Slido questions" style="width:220px;height:220px;margin-top:20px;display:block"><p style="font-size:22px;font-weight:700;margin-top:14px;line-height:1.35;white-space:nowrap">app.sli.do/event/<br>2mxRTrpX8Z3yV1e7tVW6A4</p></div>
   </div>
 </section>
 
@@ -156,7 +181,7 @@
 
 <section class="slide ink" id="slide-5">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="split" style="grid-template-columns:1fr 700px">
+  <div class="split">
     <div>
       <div class="label">Update 2</div>
       <h2 class="big">Applications for the new cohort are open</h2>
@@ -182,10 +207,10 @@
   </div>
 </section>
 
-<section class="slide paper" id="slide-7" style="padding-top:150px">
+<section class="slide paper" id="slide-7">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">What you told us</div>
-  <h2 class="big" style="font-size:96px;margin-bottom:36px">Feedback we kept hearing</h2>
+  <h2 class="big">Feedback we kept hearing</h2>
   <div class="grid g3 heard">
     <div class="card"><div class="n">01</div><h3>Progress board</h3><p>“More structured accountability around execution.”</p><p>“Handing out tasks/KPIs to monitor growth.”</p></div>
     <div class="card"><div class="n">02</div><h3>Support</h3><p>“Getting personalized responses from Phil on the excel sheet was super great.”</p><p>“…the best channel to drop quick updates and get async feedback.”</p></div>
@@ -209,13 +234,13 @@
 <section class="slide ink glow" id="slide-9">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The beta</div>
-  <h1 class="big" style="font-size:190px">Beta users wanted</h1>
+  <h1 class="big">Beta users wanted</h1>
   <p class="guests">Help us make this great.</p>
 </section>
 
-<section class="slide paper" id="slide-10" style="padding-top:150px">
+<section class="slide paper" id="slide-10">
   <div class="wm">Unleash<i>.</i></div>
-  <h2 class="big" style="font-size:96px;margin-bottom:32px">What you get</h2>
+  <h2 class="big">What you get</h2>
   <div class="grid g3 compact">
     <div class="card"><div class="n">01</div><h3>Less noise, one source</h3><p>The board, the exercises, the Q&amp;A sessions and the answers sit in one place inside the platform.</p></div>
     <div class="card"><div class="n">02</div><h3>A cleaned-up WhatsApp group</h3><p>Blockers, answers and reminders move to the platform, so the group gets quieter.</p></div>
@@ -242,7 +267,7 @@
   <div class="wm">Unleash<i>.</i></div>
   <div class="split" style="grid-template-columns:700px 1fr">
     <div>
-      <h2 class="big" style="font-size:84px">Four phases and what you have at the end of each</h2>
+      <h2 class="big">Four phases and what you have at the end of each</h2>
       <div class="phase p1"><b>Phase 1 · Problem confirmation</b>At least 10 transcribed interviews with your target group.</div>
       <div class="phase p2"><b>Phase 2 · First paying customers</b>2 to 3 signed design partners and a paid pilot.</div>
       <div class="phase p3"><b>Phase 3 · Value delivery and case studies</b>5 to 10 design partners turned into paying customers, with video testimonials.</div>
@@ -254,9 +279,9 @@
 
 <section class="slide ink" id="slide-13">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="split" style="grid-template-columns:660px 1fr">
+  <div class="split">
     <div>
-      <h2 class="big" style="font-size:96px">What an exercise looks like</h2>
+      <h2 class="big">What an exercise looks like</h2>
       <p>Each exercise has five parts:</p>
       <ul>
         <li>What you’ll have at the end</li>
@@ -265,7 +290,7 @@
         <li>Where to write it down</li>
         <li>Which Q&amp;A clip or tool helps</li>
       </ul>
-      <p style="margin-top:20px;color:#a9a399">If you’re stuck, write what’s in the way and the app shows you the Q&amp;A clips and tools that help.</p>
+      <p style="margin-top:20px;color:var(--body-dark)">If you’re stuck, write what’s in the way and the app shows you the Q&amp;A clips and tools that help.</p>
     </div>
     <div class="shot"><img src="img/exercise.jpg" alt="One exercise: Customer journey, with the outcome, why it matters, an example and five steps"></div>
   </div>
@@ -285,7 +310,7 @@
 
 <section class="slide ink" id="slide-15">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="split" style="grid-template-columns:640px 1fr">
+  <div class="split">
     <div>
       <div class="label">The board</div>
       <h2 class="big">Your week on the board</h2>
@@ -297,7 +322,7 @@
 
 <section class="slide paper" id="slide-16">
   <div class="wm">Unleash<i>.</i></div>
-  <div class="split" style="grid-template-columns:640px 1fr">
+  <div class="split">
     <div>
       <div class="label">Resources</div>
       <h2 class="big">Resources, sorted by exercise</h2>
@@ -321,21 +346,21 @@
 <section class="slide ink glow" id="slide-18">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">The beta test starts next week</div>
-  <h1 class="big" style="font-size:180px">Want early access?</h1>
+  <h1 class="big">Want early access?</h1>
   <p class="guests">Become a beta tester.</p>
-  <p class="sub" style="font-size:42px;max-width:1500px;color:var(--body-dark);margin-top:56px"><b style="color:var(--o)">7 of the 15 seats are left,</b> 8 are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
+  <p class="sub" style="max-width:1500px;color:var(--body-dark);margin-top:56px"><b style="color:var(--o)">7 of the 15 seats are left,</b> 8 are taken. Reply to the beta email from 28 October by Friday 30 October to take one of them.</p>
 </section>
 
 <section class="slide paper" id="slide-19">
   <div class="wm">Unleash<i>.</i></div>
   <div class="label">Next up</div>
   <h2 class="big">How the Blocker Sprint works</h2>
-  <div class="grid" style="grid-template-columns:1fr 1fr 330px;gap:36px;align-items:stretch">
+  <div class="grid" style="grid-template-columns:1fr 1fr 400px;gap:36px;align-items:stretch">
     <div class="card"><div class="n">01</div><h3>One or two founders, 30 minutes each</h3><p>Each founder brings one blocker. Today: Brendan Pistorius and Ken Walton.</p></div>
     <div class="card"><div class="n">02</div><h3>Then open Q&amp;A</h3><p>Bring your own questions. We solve them live. Ask them on Slido.</p></div>
     <div style="background:#fff;border:1px solid #d9d3c8;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
       <img src="img/slido-qr.png" alt="QR code for the Slido questions" style="width:260px;height:260px;display:block">
-      <p style="font-size:18px;font-weight:700;text-align:center;line-height:1.35;white-space:nowrap">app.sli.do/event/<br>2mxRTrpX8Z3yV1e7tVW6A4</p>
+      <p style="font-size:24px;font-weight:700;text-align:center;line-height:1.35;white-space:nowrap">app.sli.do/event/<br>2mxRTrpX8Z3yV1e7tVW6A4</p>
     </div>
   </div>
 </section>
